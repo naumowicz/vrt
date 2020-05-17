@@ -29,6 +29,6 @@
 	"jest": "^26.0.1"
   },
   "dependencies": {
-    "jest": "^26.0.1"
+    "resemblejs": "^3.2.4"
   }
 }

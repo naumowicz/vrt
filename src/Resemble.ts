@@ -38,7 +38,7 @@ class Resemble {
 		}
 	}
 
-	getErrorColor(): { red: number; green: number; blue: number } {
+	public getErrorColor(): { red: number; green: number; blue: number } {
 		return this.options.output.errorColor;
 	}
 
@@ -48,7 +48,7 @@ class Resemble {
 		}
 	}
 
-	getTransparencyLevel(): number {
+	public getTransparencyLevel(): number {
 		return this.options.output.transparency;
 	}
 

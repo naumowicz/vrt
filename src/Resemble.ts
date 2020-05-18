@@ -1,5 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const compareImages = require('resemblejs/compareImages');
-import * as fs from 'fs';
 
 class Resemble {
 	private options = {
@@ -53,26 +53,30 @@ class Resemble {
 	}
 
 	public async getDiff(
-		pathToOriginalImage: string,
-		pathToComparedImage: string,
-	): Promise<boolean> {
-		// The parameters can be Node Buffers
-		// data is the same as usual with an additional getBuffer() function
+		pathToOriginalImage: Buffer,
+		pathToComparedImage: Buffer,
+	): Promise<{
+		isSameDimensions: boolean;
+		dimensionDifference: { width: number; height: number };
+		rawMisMatchPercentage: number;
+		misMatchPercentage: string;
+		diffBounds: {
+			top: number;
+			left: number;
+			bottom: number;
+			right: number;
+		};
+		analysisTime: number;
+		getImageDataUrl: Function;
+		getBuffer: Function;
+	}> {
 		const data = await compareImages(
-			fs.readFile(pathToOriginalImage, (err) => {
-				if (err) throw err;
-			}),
-			fs.readFile(pathToComparedImage, (err) => {
-				if (err) throw err;
-			}),
+			pathToOriginalImage,
+			pathToComparedImage,
 			this.options,
 		);
 
-		fs.writeFile('./output.png', data.getBuffer(), (err) => {
-			if (err) throw err;
-		});
-
-		return true;
+		return data;
 	}
 }
 

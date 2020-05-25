@@ -19,6 +19,7 @@
   "homepage": "https://github.com/naumowicz/vrt#readme",
   "devDependencies": {
     "@types/jest": "^25.2.2",
+    "@types/n-readlines": "^1.0.1",
     "@types/puppeteer": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
@@ -35,6 +36,7 @@
   },
   "dependencies": {
     "dateformat": "^3.0.3",
+    "n-readlines": "^1.0.0",
     "pending-xhr-puppeteer": "^2.1.0",
     "puppeteer": "^3.1.0",
     "resemblejs": "^3.2.4"

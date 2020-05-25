@@ -2,7 +2,7 @@ import FileSystem from './FileSystem';
 import LineByLine from 'n-readlines';
 
 class Scenario {
-	steps: Array<string[]>;
+	steps: Array<Array<string>>;
 	imagesToAnalyze: string[];
 	errorLogs: string[];
 
@@ -67,6 +67,15 @@ class Scenario {
 		} else {
 			return false;
 		}
+	}
+
+	getScenarioSteps(): {
+		steps: Array<Array<string>>;
+		imagesToAnalyze: string[];
+	} {
+		const steps = this.steps;
+		const imagesToAnalyze = this.imagesToAnalyze;
+		return { steps, imagesToAnalyze };
 	}
 }
 

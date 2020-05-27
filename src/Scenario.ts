@@ -1,5 +1,5 @@
 import FileSystem from './FileSystem';
-import LineByLine from 'n-readlines';
+import * as ReadLine from 'readline';
 
 class Scenario {
 	steps: Array<Array<string>>;
@@ -13,17 +13,26 @@ class Scenario {
 		return fileSystem.checkAvailability(pathToScenario);
 	}
 
-	loadScenario(pathToScenario: string): void {
-		const scenario = this.splitScenario(pathToScenario);
+	async loadScenario(
+		pathToScenario: string,
+		fileSystem: FileSystem,
+	): Promise<void> {
+		const scenario = await this.splitScenario(pathToScenario, fileSystem);
 		this.parseScenario(scenario);
 	}
 
-	splitScenario(pathToScenario: string): string[] {
+	async splitScenario(
+		pathToScenario: string,
+		fileSystem: FileSystem,
+	): Promise<string[]> {
 		const scenario = [];
-		const liner = new LineByLine(pathToScenario);
-		let line: boolean | Buffer;
-		while ((line = liner.next())) {
-			scenario.push(line.toString());
+		const fileStream = fileSystem.createReadStream(pathToScenario);
+		const rl = ReadLine.createInterface({
+			input: fileStream,
+			crlfDelay: Infinity,
+		});
+		for await (const line of rl) {
+			scenario.push(line);
 		}
 		return scenario;
 	}

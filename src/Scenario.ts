@@ -38,7 +38,9 @@ class Scenario {
 	}
 
 	parseScenario(scenario: string[]): void {
-		let tmpArray: string[];
+		const urlRegex = /(http:\/\/|https:\/\/)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
+
+		let tmpArray: string[] = [];
 		let endKeywordCount = 0;
 
 		for (let line = 0; line < scenario.length; line++) {
@@ -62,6 +64,9 @@ class Scenario {
 				case scenario[line] === '\n':
 				case scenario[line] === '':
 				case scenario[line] === '\r\n':
+					break;
+				case urlRegex.test(scenario[line]):
+					tmpArray.push(scenario[line]);
 					break;
 				default:
 					//place to log error

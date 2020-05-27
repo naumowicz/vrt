@@ -37,6 +37,22 @@ describe('Checking if scenario is properly configured', () => {
 			'./src/test/scenarioTest/scenario1.txt',
 			fileSystem,
 		);
-		expect(scenario.getScenarioSteps()).toEqual({ steps, imagesToAnalyze });
+
+		const result = scenario.getScenarioSteps();
+		expect(result.isScenarioParsedSuccessfully).toEqual(true);
+		expect(result.steps).toEqual(steps);
+		expect(result.imagesToAnalyze).toEqual(imagesToAnalyze);
+	});
+
+	test('Scenario has two END keyowrds', async () => {
+		const fileSystem = new FileSystem();
+		const scenario = new Scenario();
+		await scenario.loadScenario(
+			'./src/test/scenarioTest/scenarioEND.txt',
+			fileSystem,
+		);
+
+		const result = scenario.getScenarioSteps();
+		expect(result.isScenarioParsedSuccessfully).toEqual(false);
 	});
 });

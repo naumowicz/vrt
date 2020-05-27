@@ -6,6 +6,12 @@ class Scenario {
 	imagesToAnalyze: string[];
 	errorLogs: string[];
 
+	constructor() {
+		this.steps = [];
+		this.imagesToAnalyze = [];
+		this.errorLogs = [];
+	}
+
 	async checkScenarioAvailability(
 		pathToScenario: string,
 		fileSystem: FileSystem,
@@ -43,7 +49,9 @@ class Scenario {
 		let tmpArray: string[] = [];
 		let endKeywordCount = 0;
 
-		for (let line = 0; line < scenario.length; line++) {
+		this.imagesToAnalyze.push(scenario[0]);
+
+		for (let line = 1; line < scenario.length; line++) {
 			switch (true) {
 				case scenario[line].split(' ')[0] === 'SCRIPT:':
 					tmpArray.push(scenario[line]);

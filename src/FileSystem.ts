@@ -63,6 +63,10 @@ class FileSystem {
 		}
 		return true;
 	}
+
+	createReadStream(pathToFile: string): fs.ReadStream {
+		return fs.createReadStream(pathToFile);
+	}
 }
 
 export default FileSystem;

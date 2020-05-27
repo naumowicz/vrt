@@ -91,7 +91,7 @@ class Scenario {
 		if (this.errorLogs.length > 0) {
 			return false;
 		} else {
-			return false;
+			return true;
 		}
 	}
 

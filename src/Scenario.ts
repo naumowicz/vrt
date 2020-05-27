@@ -63,8 +63,10 @@ class Scenario {
 					this.imagesToAnalyze.push(scenario[line]);
 					break;
 				case scenario[line] === 'END':
-					if (endKeywordCount === 1) {
-						//log error
+					if (endKeywordCount >= 1) {
+						this.errorLogs.push(
+							`Received additonal unnecessery END keyword`,
+						);
 					}
 					endKeywordCount++;
 					this.steps.push(tmpArray);
@@ -77,7 +79,9 @@ class Scenario {
 					tmpArray.push(scenario[line]);
 					break;
 				default:
-					//place to log error
+					this.errorLogs.push(
+						`Received ${line} - it is not valid scenario line`,
+					);
 					break;
 			}
 		}
@@ -92,12 +96,14 @@ class Scenario {
 	}
 
 	getScenarioSteps(): {
+		isScenarioParsedSuccessfully: boolean;
 		steps: Array<Array<string>>;
 		imagesToAnalyze: string[];
 	} {
+		const isScenarioParsedSuccessfully = this.isScenarioParsedSuccessfully();
 		const steps = this.steps;
 		const imagesToAnalyze = this.imagesToAnalyze;
-		return { steps, imagesToAnalyze };
+		return { isScenarioParsedSuccessfully, steps, imagesToAnalyze };
 	}
 }
 

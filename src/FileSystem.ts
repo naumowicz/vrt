@@ -1,4 +1,4 @@
-import fs from 'fs';
+import * as fs from 'fs';
 import { promises as fsPromises } from 'fs';
 import * as path from 'path';
 
@@ -31,7 +31,7 @@ class FileSystem {
 
 	public async checkAvailability(pathToFile: string): Promise<boolean> {
 		try {
-			fsPromises.access(
+			await fsPromises.access(
 				Path.resolvePath(pathToFile),
 				fs.constants.R_OK | fs.constants.W_OK,
 			);
@@ -44,7 +44,7 @@ class FileSystem {
 
 	public async deleteFile(pathToFile: string): Promise<boolean> {
 		try {
-			fsPromises.unlink(Path.resolvePath(pathToFile));
+			await fsPromises.unlink(Path.resolvePath(pathToFile));
 		} catch (error) {
 			console.log(error);
 			return false;

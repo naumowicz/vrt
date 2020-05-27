@@ -1,0 +1,6 @@
+./scenarios/test/test1/baseline/1.png
+google.com
+NEXT
+./scenarios/test/test2/baseline/2.png
+google.com/images
+END

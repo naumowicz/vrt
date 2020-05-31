@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/naumowicz/vrt#readme",
   "devDependencies": {
+    "@types/dateformat": "^3.0.1",
     "@types/jest": "^25.2.2",
     "@types/puppeteer": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^2.33.0",

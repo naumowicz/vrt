@@ -67,6 +67,16 @@ class FileSystem {
 	createReadStream(pathToFile: string): fs.ReadStream {
 		return fs.createReadStream(pathToFile);
 	}
+
+	async appendToFile(pathToFile: string, data: string): Promise<boolean> {
+		try {
+			fsPromises.appendFile(pathToFile, data);
+		} catch (error) {
+			console.log(error);
+			return false;
+		}
+		return true;
+	}
 }
 
 export default FileSystem;

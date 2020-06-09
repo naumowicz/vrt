@@ -7,7 +7,7 @@ class Path {
 		return path.posix.resolve(pathToFile);
 	}
 }
-
+// todo: consider static/public methods
 class FileSystem {
 	async writeFile(pathToFile: string, data: Buffer): Promise<boolean> {
 		try {

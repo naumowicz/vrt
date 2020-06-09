@@ -26,17 +26,17 @@ class LocalLog {
 		FileSystem.createFile(pathToLocalLogFolfer);
 	}
 
-	apendErrorToLog(error: string): void {
+	error(error: string): void {
 		FileSystem.appendToFile(this.pathToLocalLogFile, this.errorPrefix);
 		FileSystem.appendToFile(this.pathToLocalLogFile, `${error}\n`);
 	}
 
-	apendWarningToLog(warning: string): void {
+	warning(warning: string): void {
 		FileSystem.appendToFile(this.pathToLocalLogFile, this.warningPrefix);
 		FileSystem.appendToFile(this.pathToLocalLogFile, `${warning}\n`);
 	}
 
-	apendInfoToLog(info: string): void {
+	info(info: string): void {
 		FileSystem.appendToFile(this.pathToLocalLogFile, this.infoPrefix);
 		FileSystem.appendToFile(this.pathToLocalLogFile, `${info}\n`);
 	}

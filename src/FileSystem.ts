@@ -3,13 +3,13 @@ import { promises as fsPromises } from 'fs';
 import * as path from 'path';
 
 class Path {
-	public static resolvePath(pathToFile: string): string {
+	static resolvePath(pathToFile: string): string {
 		return path.posix.resolve(pathToFile);
 	}
 }
 
 class FileSystem {
-	public async writeFile(pathToFile: string, data: Buffer): Promise<boolean> {
+	async writeFile(pathToFile: string, data: Buffer): Promise<boolean> {
 		try {
 			await fsPromises.writeFile(Path.resolvePath(pathToFile), data);
 		} catch (error) {
@@ -19,7 +19,7 @@ class FileSystem {
 		return true;
 	}
 
-	public async readFile(pathToFile: string): Promise<boolean> {
+	async readFile(pathToFile: string): Promise<boolean> {
 		try {
 			await fsPromises.readFile(Path.resolvePath(pathToFile));
 		} catch (error) {
@@ -29,7 +29,7 @@ class FileSystem {
 		return true;
 	}
 
-	public async checkAvailability(pathToFile: string): Promise<boolean> {
+	async checkAvailability(pathToFile: string): Promise<boolean> {
 		try {
 			await fsPromises.access(
 				Path.resolvePath(pathToFile),
@@ -42,7 +42,7 @@ class FileSystem {
 		return true;
 	}
 
-	public async deleteFile(pathToFile: string): Promise<boolean> {
+	async deleteFile(pathToFile: string): Promise<boolean> {
 		try {
 			await fsPromises.unlink(Path.resolvePath(pathToFile));
 		} catch (error) {
@@ -52,9 +52,7 @@ class FileSystem {
 		return true;
 	}
 
-	public async removeFolderRecursively(
-		pathToFolder: string,
-	): Promise<boolean> {
+	async removeFolderRecursively(pathToFolder: string): Promise<boolean> {
 		try {
 			fsPromises.rmdir(pathToFolder, { recursive: true });
 		} catch (error) {

@@ -9,34 +9,31 @@ class GlobalLog {
 	eleventyLayoutFromMarkdownToHTML = 'layout.html';
 	pathToGlobalLog: string;
 
-	constructor(pathToGlobalLog: string, fileSystem: FileSystem) {
+	constructor(pathToGlobalLog: string) {
 		this.pathToGlobalLog = pathToGlobalLog;
-		this.addEleventyLayout(fileSystem);
+		this.addEleventyLayout();
 	}
 
-	async addEleventyLayout(fileSystem: FileSystem): Promise<void> {
-		await fileSystem.appendToFile(this.pathToGlobalLog, '---\n');
-		await fileSystem.appendToFile(
+	async addEleventyLayout(): Promise<void> {
+		await FileSystem.appendToFile(this.pathToGlobalLog, '---\n');
+		await FileSystem.appendToFile(
 			this.pathToGlobalLog,
 			`layout: ${this.eleventyLayoutFromMarkdownToHTML}`,
 		);
-		await fileSystem.appendToFile(this.pathToGlobalLog, '---\n\n');
+		await FileSystem.appendToFile(this.pathToGlobalLog, '---\n\n');
 	}
 
-	async addAdditionalInfoToLogs(
-		info: string,
-		fileSystem: FileSystem,
-	): Promise<void> {
-		await fileSystem.appendToFile(this.pathToGlobalLog, info);
+	async addAdditionalInfoToLogs(info: string): Promise<void> {
+		await FileSystem.appendToFile(this.pathToGlobalLog, info);
 	}
 
-	addHeaderOfTableToLogs(fileSystem: FileSystem): void {
+	addHeaderOfTableToLogs(): void {
 		let header = '|';
 		for (const element of this.globalLogEleventyMarkdownTableHeaders) {
 			header = header.concat(`${element}|`);
 		}
 
-		fileSystem.appendToFile(this.pathToGlobalLog, `${header}\n`);
+		FileSystem.appendToFile(this.pathToGlobalLog, `${header}\n`);
 
 		let separator = '|';
 		for (
@@ -47,10 +44,10 @@ class GlobalLog {
 			separator = separator.concat('---|');
 		}
 
-		fileSystem.appendToFile(this.pathToGlobalLog, `${separator}\n`);
+		FileSystem.appendToFile(this.pathToGlobalLog, `${separator}\n`);
 	}
 
-	appendLineOfLogsToTable(line: string, fileSystem: FileSystem): void {
+	appendLineOfLogsToTable(line: string): void {
 		const log = line.replace(': ', '§').split('§');
 
 		let logLine = '|';
@@ -58,7 +55,7 @@ class GlobalLog {
 			logLine = logLine.concat(`${element}|`);
 		}
 
-		fileSystem.appendToFile(this.pathToGlobalLog, `${logLine}\n`);
+		FileSystem.appendToFile(this.pathToGlobalLog, `${logLine}\n`);
 	}
 }
 

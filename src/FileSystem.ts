@@ -19,14 +19,22 @@ class FileSystem {
 		return true;
 	}
 
-	static async readFile(pathToFile: string): Promise<boolean> {
+	static async readFile(
+		pathToFile: string,
+	): Promise<{
+		status: boolean;
+		fileContent: Buffer;
+	}> {
+		let fileContent: Buffer;
 		try {
-			await fsPromises.readFile(Path.resolvePath(pathToFile));
+			fileContent = await fsPromises.readFile(
+				Path.resolvePath(pathToFile),
+			);
 		} catch (error) {
 			console.log(error);
-			return false;
+			return { status: false, fileContent: new Buffer('') };
 		}
-		return true;
+		return { status: true, fileContent: fileContent };
 	}
 
 	static async checkAvailability(pathToFile: string): Promise<boolean> {

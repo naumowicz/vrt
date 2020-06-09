@@ -7,9 +7,9 @@ class Path {
 		return path.posix.resolve(pathToFile);
 	}
 }
-// todo: consider static/public methods
+
 class FileSystem {
-	async writeFile(pathToFile: string, data: Buffer): Promise<boolean> {
+	static async writeFile(pathToFile: string, data: Buffer): Promise<boolean> {
 		try {
 			await fsPromises.writeFile(Path.resolvePath(pathToFile), data);
 		} catch (error) {
@@ -19,7 +19,7 @@ class FileSystem {
 		return true;
 	}
 
-	async readFile(pathToFile: string): Promise<boolean> {
+	static async readFile(pathToFile: string): Promise<boolean> {
 		try {
 			await fsPromises.readFile(Path.resolvePath(pathToFile));
 		} catch (error) {
@@ -29,7 +29,7 @@ class FileSystem {
 		return true;
 	}
 
-	async checkAvailability(pathToFile: string): Promise<boolean> {
+	static async checkAvailability(pathToFile: string): Promise<boolean> {
 		try {
 			await fsPromises.access(
 				Path.resolvePath(pathToFile),
@@ -42,7 +42,7 @@ class FileSystem {
 		return true;
 	}
 
-	async deleteFile(pathToFile: string): Promise<boolean> {
+	static async deleteFile(pathToFile: string): Promise<boolean> {
 		try {
 			await fsPromises.unlink(Path.resolvePath(pathToFile));
 		} catch (error) {
@@ -52,7 +52,9 @@ class FileSystem {
 		return true;
 	}
 
-	async removeFolderRecursively(pathToFolder: string): Promise<boolean> {
+	static async removeFolderRecursively(
+		pathToFolder: string,
+	): Promise<boolean> {
 		try {
 			fsPromises.rmdir(pathToFolder, { recursive: true });
 		} catch (error) {
@@ -62,11 +64,14 @@ class FileSystem {
 		return true;
 	}
 
-	createReadStream(pathToFile: string): fs.ReadStream {
+	static createReadStream(pathToFile: string): fs.ReadStream {
 		return fs.createReadStream(pathToFile);
 	}
 
-	async appendToFile(pathToFile: string, data: string): Promise<boolean> {
+	static async appendToFile(
+		pathToFile: string,
+		data: string,
+	): Promise<boolean> {
 		try {
 			fsPromises.appendFile(pathToFile, data);
 		} catch (error) {
@@ -76,11 +81,11 @@ class FileSystem {
 		return true;
 	}
 
-	async createFolder(pathToFolder: string): Promise<void> {
+	static async createFolder(pathToFolder: string): Promise<void> {
 		await fsPromises.mkdir(pathToFolder);
 	}
 
-	async createFile(pathToFile: string): Promise<void> {
+	static async createFile(pathToFile: string): Promise<void> {
 		await fsPromises.open(pathToFile, 'r');
 	}
 }

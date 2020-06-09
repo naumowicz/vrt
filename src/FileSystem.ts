@@ -64,7 +64,7 @@ class FileSystem {
 		pathToFolder: string,
 	): Promise<boolean> {
 		try {
-			fsPromises.rmdir(pathToFolder, { recursive: true });
+			await fsPromises.rmdir(pathToFolder, { recursive: true });
 		} catch (error) {
 			console.log(error);
 			return false;
@@ -81,7 +81,7 @@ class FileSystem {
 		data: string,
 	): Promise<boolean> {
 		try {
-			fsPromises.appendFile(pathToFile, data);
+			await fsPromises.appendFile(pathToFile, data);
 		} catch (error) {
 			console.log(error);
 			return false;

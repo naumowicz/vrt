@@ -77,6 +77,14 @@ class FileSystem {
 		}
 		return true;
 	}
+
+	async createFolder(pathToFolder: string): Promise<void> {
+		await fsPromises.mkdir(pathToFolder);
+	}
+
+	async createFile(pathToFile: string): Promise<void> {
+		await fsPromises.open(pathToFile, 'r');
+	}
 }
 
 export default FileSystem;

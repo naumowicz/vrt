@@ -1,17 +1,10 @@
 import * as fs from 'fs';
 import { promises as fsPromises } from 'fs';
-import * as path from 'path';
-
-class Path {
-	static resolvePath(pathToFile: string): string {
-		return path.posix.resolve(pathToFile);
-	}
-}
 
 class FileSystem {
 	static async writeFile(pathToFile: string, data: Buffer): Promise<boolean> {
 		try {
-			await fsPromises.writeFile(Path.resolvePath(pathToFile), data);
+			await fsPromises.writeFile(pathToFile, data);
 		} catch (error) {
 			console.log(error);
 			return false;
@@ -27,9 +20,7 @@ class FileSystem {
 	}> {
 		let fileContent: Buffer;
 		try {
-			fileContent = await fsPromises.readFile(
-				Path.resolvePath(pathToFile),
-			);
+			fileContent = await fsPromises.readFile(pathToFile);
 		} catch (error) {
 			console.log(error);
 			return { status: false, fileContent: new Buffer('') };
@@ -40,7 +31,7 @@ class FileSystem {
 	static async checkAvailability(pathToFile: string): Promise<boolean> {
 		try {
 			await fsPromises.access(
-				Path.resolvePath(pathToFile),
+				pathToFile,
 				fs.constants.R_OK | fs.constants.W_OK,
 			);
 		} catch (error) {
@@ -52,7 +43,7 @@ class FileSystem {
 
 	static async deleteFile(pathToFile: string): Promise<boolean> {
 		try {
-			await fsPromises.unlink(Path.resolvePath(pathToFile));
+			await fsPromises.unlink(pathToFile);
 		} catch (error) {
 			console.log(error);
 			return false;

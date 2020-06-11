@@ -1,23 +1,18 @@
 import Scenario from '../Scenario';
-import FileSystem from '../FileSystem';
 
 describe('Checking scenario availability', () => {
 	test('Scenario exists', async () => {
-		const fileSystem = new FileSystem();
 		const scenario = new Scenario();
 		const result = await scenario.checkScenarioAvailability(
 			'./src/test/scenarioTest/scenario1.txt',
-			fileSystem,
 		);
 		expect(result).toEqual(true);
 	});
 
 	test('Scenario does not exist', async () => {
-		const fileSystem = new FileSystem();
 		const scenario = new Scenario();
 		const result = await scenario.checkScenarioAvailability(
 			'./src/test/scenarioTest/none.txt',
-			fileSystem,
 		);
 		expect(result).toEqual(false);
 	});
@@ -31,12 +26,8 @@ describe('Checking if scenario is properly configured', () => {
 		];
 		const steps = [['google.com'], ['google.com/images']];
 
-		const fileSystem = new FileSystem();
 		const scenario = new Scenario();
-		await scenario.loadScenario(
-			'./src/test/scenarioTest/scenario1.txt',
-			fileSystem,
-		);
+		await scenario.loadScenario('./src/test/scenarioTest/scenario1.txt');
 
 		const result = scenario.getScenarioSteps();
 		expect(result.isScenarioParsedSuccessfully).toEqual(true);
@@ -45,12 +36,8 @@ describe('Checking if scenario is properly configured', () => {
 	});
 
 	test('Scenario has two END keyowrds', async () => {
-		const fileSystem = new FileSystem();
 		const scenario = new Scenario();
-		await scenario.loadScenario(
-			'./src/test/scenarioTest/scenarioEND.txt',
-			fileSystem,
-		);
+		await scenario.loadScenario('./src/test/scenarioTest/scenarioEND.txt');
 
 		const result = scenario.getScenarioSteps();
 		expect(result.isScenarioParsedSuccessfully).toEqual(false);

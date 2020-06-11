@@ -1,5 +1,5 @@
-import FileSystem from './FileSystem';
 import * as ReadLine from 'readline';
+import FileSystem from './FileSystem';
 
 class Scenario {
 	steps: Array<Array<string>>;
@@ -12,27 +12,18 @@ class Scenario {
 		this.errorLogs = [];
 	}
 
-	async checkScenarioAvailability(
-		pathToScenario: string,
-		fileSystem: FileSystem,
-	): Promise<boolean> {
-		return fileSystem.checkAvailability(pathToScenario);
+	async checkScenarioAvailability(pathToScenario: string): Promise<boolean> {
+		return FileSystem.checkAvailability(pathToScenario);
 	}
 
-	async loadScenario(
-		pathToScenario: string,
-		fileSystem: FileSystem,
-	): Promise<void> {
-		const scenario = await this.splitScenario(pathToScenario, fileSystem);
+	async loadScenario(pathToScenario: string): Promise<void> {
+		const scenario = await this.splitScenario(pathToScenario);
 		this.parseScenario(scenario);
 	}
 
-	async splitScenario(
-		pathToScenario: string,
-		fileSystem: FileSystem,
-	): Promise<string[]> {
+	async splitScenario(pathToScenario: string): Promise<string[]> {
 		const scenario = [];
-		const fileStream = fileSystem.createReadStream(pathToScenario);
+		const fileStream = FileSystem.createReadStream(pathToScenario);
 		const rl = ReadLine.createInterface({
 			input: fileStream,
 			crlfDelay: Infinity,

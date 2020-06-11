@@ -22,7 +22,7 @@ class Path {
 	 * '/foo/bar/baz/asdf/quux.html' returns 'quux.html'
 	 * '/foo/bar/baz/asdf/quux.html', '.html' returns 'quux'
 	 * @param pathToFile - Path to file.
-	 * @param [extension] - Extension to be removed from returned filename  (optional).
+	 * @param extension - Extension to be removed from returned filename (optional).
 	 */
 	static returnFileName(pathToFile: string, extension?: string): string {
 		if (extension != undefined) {

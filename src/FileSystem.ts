@@ -100,6 +100,20 @@ class FileSystem {
 		}
 		return true;
 	}
+
+	static readJSONFile(
+		pathToFile: string,
+	): { status: boolean; fileContent: unknown } {
+		const rawFile = this.readFile(pathToFile);
+		if (rawFile.status) {
+			return {
+				status: true,
+				fileContent: JSON.parse(rawFile.fileContent.toString()),
+			};
+		} else {
+			return { status: false, fileContent: null };
+		}
+	}
 }
 
 export default FileSystem;

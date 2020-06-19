@@ -78,3 +78,23 @@ describe('Test for path.parse features', () => {
 		});
 	});
 });
+
+describe('Test for path.normalize features', () => {
+	test('Posix path with //', () => {
+		const dirname = Path.normalizePath('/foo/bar//baz/asdf/quux.txt');
+
+		expect(dirname).toEqual('/foo/bar/baz/asdf/quux.txt');
+	});
+
+	test('Absolute path with //', () => {
+		const dirname = Path.normalizePath('C:/foo/bar//baz/asdf/quux.txt');
+
+		expect(dirname).toEqual('C:/foo/bar/baz/asdf/quux.txt');
+	});
+
+	test('Absolute path', () => {
+		const dirname = Path.normalizePath('C:/foo/bar/baz/asdf/quux.txt');
+
+		expect(dirname).toEqual('C:/foo/bar/baz/asdf/quux.txt');
+	});
+});

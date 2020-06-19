@@ -90,6 +90,16 @@ class FileSystem {
 		}
 		return true;
 	}
+
+	static saveJSONToFile(pathToFile: string, data: unknown): boolean {
+		try {
+			fs.writeFileSync(pathToFile, JSON.stringify(data));
+		} catch (error) {
+			console.log(error);
+			return false;
+		}
+		return true;
+	}
 }
 
 export default FileSystem;

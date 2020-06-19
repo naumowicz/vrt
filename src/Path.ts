@@ -77,6 +77,14 @@ class Path {
 	): { root: string; dir: string; base: string; name: string; ext: string } {
 		return path.posix.parse(pathToFile);
 	}
+
+	/**
+	 * Method replacing Windows \\ into Unix /.
+	 * @param pathToFile - Path to file.
+	 */
+	static convertPathToPosix(pathToFile: string): string {
+		return pathToFile.replace(/\\/g, '/');
+	}
 }
 
 export default Path;

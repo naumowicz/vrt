@@ -1,5 +1,6 @@
 import ConsoleLogger from './ConsoleLogger';
 import LocalLog from './LocalLog';
+import globalVariables from './globalVariables';
 
 class Logger {
 	consoleLogger: ConsoleLogger;
@@ -10,10 +11,11 @@ class Logger {
 	infoName: string;
 	listOfLocalLogFiles: Array<string>;
 
-	constructor(consoleOutput: boolean) {
-		this.consoleOutput = consoleOutput;
-		if (consoleOutput) {
+	constructor() {
+		if (globalVariables.enableConsoleLogger) {
 			this.consoleLogger = new ConsoleLogger();
+		} else {
+			this.consoleOutput = false;
 		}
 	}
 
@@ -60,4 +62,4 @@ class Logger {
 	}
 }
 
-export default Logger;
+exports.module = new Logger();

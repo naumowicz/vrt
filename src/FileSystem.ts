@@ -1,10 +1,9 @@
 import * as fs from 'fs';
-import { promises as fsPromises } from 'fs';
 
 class FileSystem {
-	static async writeFile(pathToFile: string, data: Buffer): Promise<boolean> {
+	static writeFile(pathToFile: string, data: Buffer): boolean {
 		try {
-			await fsPromises.writeFile(pathToFile, data);
+			fs.writeFileSync(pathToFile, data);
 		} catch (error) {
 			console.log(error);
 			return false;
@@ -12,15 +11,15 @@ class FileSystem {
 		return true;
 	}
 
-	static async readFile(
+	static readFile(
 		pathToFile: string,
-	): Promise<{
+	): {
 		status: boolean;
 		fileContent: Buffer;
-	}> {
+	} {
 		let fileContent: Buffer;
 		try {
-			fileContent = await fsPromises.readFile(pathToFile);
+			fileContent = fs.readFileSync(pathToFile);
 		} catch (error) {
 			console.log(error);
 			return { status: false, fileContent: new Buffer('') };
@@ -28,12 +27,9 @@ class FileSystem {
 		return { status: true, fileContent: fileContent };
 	}
 
-	static async checkAvailability(pathToFile: string): Promise<boolean> {
+	static checkAvailability(pathToFile: string): boolean {
 		try {
-			await fsPromises.access(
-				pathToFile,
-				fs.constants.R_OK | fs.constants.W_OK,
-			);
+			fs.accessSync(pathToFile, fs.constants.R_OK | fs.constants.W_OK);
 		} catch (error) {
 			console.log(error);
 			return false;
@@ -41,9 +37,9 @@ class FileSystem {
 		return true;
 	}
 
-	static async deleteFile(pathToFile: string): Promise<boolean> {
+	static deleteFile(pathToFile: string): boolean {
 		try {
-			await fsPromises.unlink(pathToFile);
+			fs.unlinkSync(pathToFile);
 		} catch (error) {
 			console.log(error);
 			return false;
@@ -51,11 +47,9 @@ class FileSystem {
 		return true;
 	}
 
-	static async removeFolderRecursively(
-		pathToFolder: string,
-	): Promise<boolean> {
+	static removeFolderRecursively(pathToFolder: string): boolean {
 		try {
-			await fsPromises.rmdir(pathToFolder, { recursive: true });
+			fs.rmdirSync(pathToFolder, { recursive: true });
 		} catch (error) {
 			console.log(error);
 			return false;
@@ -67,12 +61,9 @@ class FileSystem {
 		return fs.createReadStream(pathToFile);
 	}
 
-	static async appendToFile(
-		pathToFile: string,
-		data: string,
-	): Promise<boolean> {
+	static appendToFile(pathToFile: string, data: string): boolean {
 		try {
-			await fsPromises.appendFile(pathToFile, data);
+			fs.appendFileSync(pathToFile, data);
 		} catch (error) {
 			console.log(error);
 			return false;
@@ -80,12 +71,24 @@ class FileSystem {
 		return true;
 	}
 
-	static async createFolder(pathToFolder: string): Promise<void> {
-		await fsPromises.mkdir(pathToFolder);
+	static createFolder(pathToFolder: string): boolean {
+		try {
+			fs.mkdirSync(pathToFolder);
+		} catch (error) {
+			console.log(error);
+			return false;
+		}
+		return true;
 	}
 
-	static async createFile(pathToFile: string): Promise<void> {
-		await fsPromises.open(pathToFile, 'r');
+	static createFile(pathToFile: string): boolean {
+		try {
+			fs.openSync(pathToFile, 'r');
+		} catch (error) {
+			console.log(error);
+			return false;
+		}
+		return true;
 	}
 }
 

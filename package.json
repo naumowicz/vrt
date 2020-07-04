@@ -5,7 +5,26 @@
   "main": "vrt.ts",
   "scripts": {
     "test": "jest ./src/test",
-    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
+	"lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
+	"start": "react-scripts start",
+    "build": "react-scripts build",
+    "test-react": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "repository": {
     "type": "git",
@@ -38,6 +57,12 @@
     "pending-xhr-puppeteer": "^2.1.0",
     "puppeteer": "^3.1.0",
 	"resemblejs": "^3.2.4",
-	"fast-glob": "^3.2.2"
+	"fast-glob": "^3.2.2",
+	"@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.1"
   }
 }

@@ -7,13 +7,10 @@ class GlobalLogMerger {
 		this.listOfLocalLogFiles = listOfLocalLogFiles;
 	}
 
-	async merge(pathToGlobalLog: string): Promise<void> {
+	merge(pathToGlobalLog: string): void {
 		for (const logFile of this.listOfLocalLogFiles) {
-			const fileContent = await FileSystem.readFile(logFile);
-			await FileSystem.appendToFile(
-				pathToGlobalLog,
-				fileContent.toString(),
-			);
+			const fileContent = FileSystem.readFile(logFile);
+			FileSystem.appendToFile(pathToGlobalLog, fileContent.toString());
 		}
 	}
 }

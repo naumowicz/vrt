@@ -1,4 +1,4 @@
-globalVariables = {
+const globalVariables = {
 	tasks: './tasks.json',
 	enableConsoleLogger: true,
 };

@@ -14,17 +14,17 @@ class GlobalLog {
 		this.addEleventyLayout();
 	}
 
-	async addEleventyLayout(): Promise<void> {
-		await FileSystem.appendToFile(this.pathToGlobalLog, '---\n');
-		await FileSystem.appendToFile(
+	addEleventyLayout(): void {
+		FileSystem.appendToFile(this.pathToGlobalLog, '---\n');
+		FileSystem.appendToFile(
 			this.pathToGlobalLog,
 			`layout: ${this.eleventyLayoutFromMarkdownToHTML}`,
 		);
-		await FileSystem.appendToFile(this.pathToGlobalLog, '---\n\n');
+		FileSystem.appendToFile(this.pathToGlobalLog, '---\n\n');
 	}
 
-	async addAdditionalInfoToLogs(info: string): Promise<void> {
-		await FileSystem.appendToFile(this.pathToGlobalLog, info);
+	addAdditionalInfoToLogs(info: string): void {
+		FileSystem.appendToFile(this.pathToGlobalLog, info);
 	}
 
 	addHeaderOfTableToLogs(): void {

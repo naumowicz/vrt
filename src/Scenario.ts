@@ -90,12 +90,8 @@ class Scenario {
 		return { steps, imagesToAnalyze };
 	}
 
-	getErrors(): { errorsPresent: boolean; errors: Array<string> } {
-		if (this.errorLogs.length < 0) {
-			return { errorsPresent: false, errors: [] };
-		} else {
-			return { errorsPresent: true, errors: this.errorLogs };
-		}
+	getErrors(): Array<string> {
+		return this.errorLogs;
 	}
 }
 

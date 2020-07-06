@@ -2,6 +2,7 @@ import * as ReadLine from 'readline';
 import FileSystem from './FileSystem';
 
 class Scenario {
+	scenario: Array<string>;
 	steps: Array<Array<string>>;
 	imagesToAnalyze: string[];
 	errorLogs: string[];
@@ -12,24 +13,23 @@ class Scenario {
 		this.errorLogs = [];
 	}
 
-	async checkScenarioAvailability(pathToScenario: string): Promise<boolean> {
+	checkScenarioAvailability(pathToScenario: string): boolean {
 		return FileSystem.checkAvailability(pathToScenario);
 	}
 
 	async loadScenario(pathToScenario: string): Promise<void> {
-		const scenario = await this.splitScenario(pathToScenario);
-		this.parseScenario(scenario);
+		await this.splitScenario(pathToScenario);
+		this.parseScenario(this.scenario);
 	}
 
-	async splitScenario(pathToScenario: string): Promise<string[]> {
-		const scenario = [];
+	async splitScenario(pathToScenario: string): Promise<void> {
 		const fileStream = FileSystem.createReadStream(pathToScenario);
 		const rl = ReadLine.createInterface({
 			input: fileStream,
 			crlfDelay: Infinity,
 		});
 		for await (const line of rl) {
-			scenario.push(line);
+			this.scenario.push(line);
 		}
 		return scenario;
 	}

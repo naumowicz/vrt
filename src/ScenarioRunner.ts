@@ -9,7 +9,7 @@ class ScenarioRunner {
 		this.pathToScenario = pathToScenario;
 	}
 
-	loadScenario(): boolean {
+	loadScenarios(): boolean {
 		if (
 			this.scenario.checkScenarioAvailability(this.pathToScenario) ===
 			false

@@ -31,7 +31,6 @@ class Scenario {
 		for await (const line of rl) {
 			this.scenario.push(line);
 		}
-		return scenario;
 	}
 
 	parseScenario(scenario: string[]): void {

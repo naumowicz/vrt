@@ -86,14 +86,12 @@ class Scenario {
 	}
 
 	getScenarioSteps(): {
-		isScenarioParsedSuccessfully: boolean;
 		steps: Array<Array<string>>;
 		imagesToAnalyze: string[];
 	} {
-		const isScenarioParsedSuccessfully = this.isScenarioParsedSuccessfully();
 		const steps = this.steps;
 		const imagesToAnalyze = this.imagesToAnalyze;
-		return { isScenarioParsedSuccessfully, steps, imagesToAnalyze };
+		return { steps, imagesToAnalyze };
 	}
 }
 

@@ -70,7 +70,7 @@ class Scenario {
 					break;
 				default:
 					this.errorLogs.push(
-						`Received ${line} - it is not valid scenario line`,
+						`Received ->${line}<- - it is not valid scenario line`,
 					);
 					break;
 			}

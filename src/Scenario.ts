@@ -78,11 +78,7 @@ class Scenario {
 	}
 
 	isScenarioParsedSuccessfully(): boolean {
-		if (this.errorLogs.length > 0) {
-			return false;
-		} else {
-			return true;
-		}
+		return this.errorLogs.length > 0;
 	}
 
 	getScenarioSteps(): {

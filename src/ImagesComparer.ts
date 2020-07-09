@@ -7,15 +7,15 @@ class ImagesComparer {
 	): Promise<{
 		rawMisMatchPercentage: number;
 		misMatchPercentage: string;
-		getBuffer: Function;
+		buffer: Buffer;
 	}> {
 		const resemble = new Resemble();
 		const result = await resemble.getDiff(originalImage, imageToCompare);
 		const rawMisMatchPercentage = result.rawMisMatchPercentage;
 		const misMatchPercentage = result.misMatchPercentage;
-		const getBuffer = result.getBuffer;
+		const buffer = result.getBuffer();
 
-		return { rawMisMatchPercentage, misMatchPercentage, getBuffer };
+		return { rawMisMatchPercentage, misMatchPercentage, buffer };
 	}
 }
 

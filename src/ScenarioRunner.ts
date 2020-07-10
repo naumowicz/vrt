@@ -96,18 +96,18 @@ class ScenarioRunner {
 
 		const imagesComparer = new ImagesComparer();
 
-		const result = imagesComparer.compareImages(
+		const result = await imagesComparer.compareImages(
 			originalImageBuffer.fileContent,
 			comparedImageBuffer.fileContent,
 		);
-		const rawMisMatchPercentage = (await result).rawMisMatchPercentage;
-		const misMatchPercentage = (await result).misMatchPercentage;
-		const resultBuffer = (await result).buffer;
+		const rawMisMatchPercentage = result.rawMisMatchPercentage;
+		const misMatchPercentage = result.misMatchPercentage;
+		const resultBuffer = result.buffer;
 
 		return {
 			rawMisMatchPercentage: rawMisMatchPercentage,
 			misMatchPercentage: misMatchPercentage,
-			resultBuffer: await resultBuffer,
+			resultBuffer: resultBuffer,
 		};
 	}
 }

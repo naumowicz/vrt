@@ -37,8 +37,7 @@ class ScenarioRunner {
 			return false;
 		}
 
-		//fixme: configuration
-		await this.puppeteer.start(configuration);
+		await this.puppeteer.start();
 
 		this.runner();
 

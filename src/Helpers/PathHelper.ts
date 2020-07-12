@@ -20,6 +20,13 @@ class PathHelper {
 			`${pathToBaselineImage}/../../${globalSettings.actualStatusFolderName}/${fileName}`,
 		);
 	}
+
+	static getOutputImage(pathToBaselineImage: string): string {
+		const fileName = Path.parsePath(pathToBaselineImage).base;
+		return Path.normalizePath(
+			`${pathToBaselineImage}/../../${globalSettings.outputFolderName}/${fileName}`,
+		);
+	}
 }
 
 export default PathHelper;

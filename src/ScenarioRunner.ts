@@ -87,6 +87,12 @@ class ScenarioRunner {
 					actualStatusPath,
 				);
 
+				//save output file
+				FileSystem.writeFile(
+					PathHelper.getOutputImage(this.scenario.imagesToAnalyze[i]),
+					result.resultBuffer,
+				);
+
 				//log results
 			} else {
 				//baseline not exists yet

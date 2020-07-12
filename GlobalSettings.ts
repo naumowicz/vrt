@@ -4,6 +4,7 @@ class GlobalSettings {
 	puppeteerConfigPath: string;
 	resembleConfigPath: string;
 	actualStatusFolderName: string;
+	outputFolderName: string;
 
 	constructor() {
 		this.tasks = './tasks.json';
@@ -11,6 +12,7 @@ class GlobalSettings {
 		this.puppeteerConfigPath = './PuppeteerConfig.json';
 		this.resembleConfigPath = './ResembleConfig.json';
 		this.actualStatusFolderName = 'actualStatus';
+		this.outputFolderName = 'output';
 	}
 }
 

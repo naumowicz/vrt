@@ -30,6 +30,8 @@ class ScenarioRunner {
 			//log error
 			return false;
 		}
+
+		return true;
 	}
 
 	async runScenarios(): Promise<boolean> {

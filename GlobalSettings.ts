@@ -1,5 +1,3 @@
-import { strict } from 'assert';
-
 class GlobalSettings {
 	tasks: string;
 	enableConsoleLogger: boolean;

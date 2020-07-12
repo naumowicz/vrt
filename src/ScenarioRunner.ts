@@ -44,6 +44,8 @@ class ScenarioRunner {
 		this.runner();
 
 		await this.puppeteer.closeBrowser();
+
+		return true;
 	}
 
 	createFolders(): boolean {

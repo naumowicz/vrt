@@ -3,6 +3,7 @@ import FolderController from './FolderController';
 import Puppeteer from './Puppeteer';
 import ImagesComparer from './ImagesComparer';
 import FileSystem from './FileSystem';
+import PathHelper from './Helpers/PathHelper';
 
 class ScenarioRunner {
 	scenario: Scenario;
@@ -64,7 +65,37 @@ class ScenarioRunner {
 		return true;
 	}
 
-	runner(): void {}
+	async runner(): Promise<void> {
+		for (let i = 0; i < this.scenario.steps.length; i++) {
+			// this.scenario.steps[i]; 1 step
+			for (const substep of this.scenario.steps[i]) {
+				await this.puppeteer.goto(substep);
+			}
+			// await this.puppeteer.screenshot(this.scenario.imagesToAnalyze[i]);
+
+			if (
+				//baseline exsists
+				FileSystem.checkAvailability(this.scenario.imagesToAnalyze[i])
+			) {
+				const actualStatusPath = PathHelper.getActualStatusImage(
+					this.scenario.imagesToAnalyze[i],
+				);
+				await this.puppeteer.screenshot(actualStatusPath);
+				const result = await this.compareImages(
+					this.scenario.imagesToAnalyze[i],
+					actualStatusPath,
+				);
+
+				//log results
+			} else {
+				//baseline not exists yet
+				await this.puppeteer.screenshot(
+					this.scenario.imagesToAnalyze[i],
+				);
+				//create baseline
+			}
+		}
+	}
 
 	async compareImages(
 		pathToOriginalImage: string,

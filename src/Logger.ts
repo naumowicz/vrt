@@ -1,7 +1,7 @@
 import ConsoleLogger from './ConsoleLogger';
 import LocalLog from './LocalLog';
-import globalVariables from './globalVariables';
 import { parentPort } from 'worker_threads';
+import globalSettings from '../GlobalSettings';
 
 class Logger {
 	consoleLogger: ConsoleLogger;
@@ -13,7 +13,7 @@ class Logger {
 	listOfLocalLogFiles: Array<string>;
 
 	constructor() {
-		if (globalVariables.enableConsoleLogger) {
+		if (globalSettings.enableConsoleLogger) {
 			this.consoleLogger = new ConsoleLogger();
 		} else {
 			this.consoleOutput = false;

@@ -1,5 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const compareImages = require('resemblejs/compareImages');
+import ResembleConfig from './ConfigLoaders/ResembleConfigLoader';
 
 class Resemble {
 	private options = {
@@ -20,6 +21,25 @@ class Resemble {
 		scaleToSameSize: true,
 		ignore: 'antialiasing',
 	};
+	resembleConfig: ResembleConfig;
+
+	constructor(pathToResembleGlobalSettingsFile: string) {
+		this.resembleConfig = new ResembleConfig(
+			pathToResembleGlobalSettingsFile,
+		);
+
+		const colors = this.resembleConfig.getColors();
+		this.setErrorOutputColor(colors.red, colors.green, colors.blue);
+
+		//fixme:
+		this.options.output.errorType = this.resembleConfig.getErrorType();
+		//fixme:
+		this.options.output.transparency = this.resembleConfig.getTransparency();
+		//fixme:
+		this.options.ignore = this.resembleConfig.getIgnore();
+
+		this.setTransparency(this.resembleConfig.getTransparency());
+	}
 
 	public setErrorOutputColor(red: number, green: number, blue: number): void {
 		if (

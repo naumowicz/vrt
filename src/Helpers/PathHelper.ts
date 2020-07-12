@@ -27,6 +27,12 @@ class PathHelper {
 			`${pathToBaselineImage}/../../${globalSettings.outputFolderName}/${fileName}`,
 		);
 	}
+
+	static getOutputFolder(pathToBaselineImage: string): string {
+		return Path.normalizePath(
+			`${pathToBaselineImage}/../../${globalSettings.outputFolderName}`,
+		);
+	}
 }
 
 export default PathHelper;

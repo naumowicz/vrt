@@ -48,16 +48,22 @@ class ScenarioRunner {
 
 	createFolders(): boolean {
 		const folderController = new FolderController();
-		//fixme:
-		if (folderController.createBaselineFolder('') == false) {
+		if (
+			folderController.createBaselineFolder(
+				PathHelper.getBaselineFolder(this.scenario.imagesToAnalyze[0]),
+			) == false
+		) {
 			//log error
 			return false;
 		}
 
-		//fixme:
 		if (
-			folderController.recreateOutputAndActualStatusFolders('', '') ==
-			false
+			folderController.recreateOutputAndActualStatusFolders(
+				PathHelper.getOutputFolder(this.scenario.imagesToAnalyze[0]),
+				PathHelper.getActualStatusFolder(
+					this.scenario.imagesToAnalyze[0],
+				),
+			) == false
 		) {
 			//log error
 			return false;

@@ -44,7 +44,10 @@ class Puppeteer {
 	}
 
 	async screenshot(destinationPath: string): Promise<void> {
-		await this.page.screenshot({ path: destinationPath, fullPage: true });
+		await this.page.screenshot({
+			path: destinationPath,
+			fullPage: this.puppeteerConfig.isFullPageScreenshotUsed(),
+		});
 	}
 
 	async closeBrowser(): Promise<void> {

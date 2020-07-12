@@ -10,6 +10,7 @@ interface PuppeteerConfig {
 		| 'domcontentloaded'
 		| 'networkidle0'
 		| 'networkidle2';
+	puppeteerFullPageScreenshot: boolean;
 }
 
 class PuppeteerConfigLoader {
@@ -51,6 +52,10 @@ class PuppeteerConfigLoader {
 		| 'networkidle0'
 		| 'networkidle2' {
 		return this.puppeteerConfig.puppeteerGoToWaitUntil;
+	}
+
+	isFullPageScreenshotUsed(): boolean {
+		return this.puppeteerConfig.puppeteerFullPageScreenshot;
 	}
 }
 

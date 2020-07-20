@@ -103,7 +103,7 @@ class FileSystem {
 
 	static readJSONFile(
 		pathToFile: string,
-	): { status: boolean; fileContent: unknown } {
+	): { status: boolean; fileContent: [] } {
 		const rawFile = this.readFile(pathToFile);
 		if (rawFile.status) {
 			return {
@@ -111,7 +111,7 @@ class FileSystem {
 				fileContent: JSON.parse(rawFile.fileContent.toString()),
 			};
 		} else {
-			return { status: false, fileContent: null };
+			return { status: false, fileContent: [] };
 		}
 	}
 }

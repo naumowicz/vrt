@@ -23,9 +23,11 @@ import globalSettings from '../GlobalSettings';
 	for (const scenario of passedParameters) {
 		if (txtFormatRegex.test(scenario)) {
 			//passed argument is scenario with .txt format
-			//todo:
-			//check if file exists
-			scenariosToRun.push(scenario);
+			if (FileSystem.checkAvailability(scenario)) {
+				scenariosToRun.push(scenario);
+			} else {
+				console.log(`${scenario} does not exists!`);
+			}
 		} else {
 			//passed argument is glob path (all fitting subdirectories)
 			scenariosToRun = scenariosToRun.concat(

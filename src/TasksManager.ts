@@ -2,6 +2,7 @@ import cluster from 'cluster';
 import { Worker } from 'worker_threads';
 import globalSettings from '../GlobalSettings';
 import ScenarioRunner from './ScenarioRunner';
+import FileSystem from './FileSystem';
 
 const clusterWorkers: Array<cluster.Worker> = [];
 
@@ -11,6 +12,19 @@ const setUpCluster = (): void => {
 	console.log('Master cluster setting up ' + numCores + ' workers');
 	const logger = new Worker('./Logger');
 
+	let tasksTakenCounter = 0;
+
+	//load tasks file
+	const tasks = FileSystem.readJSONFile(globalSettings.tasks);
+
+	if (tasks.status) {
+	} else {
+		//todo:
+		// return error
+	}
+
+	const numberOfTasks = tasks.fileContent.length;
+
 	// iterate on number of cores need to be utilized by an application
 	// current example will utilize all of them
 	for (let i = 0; i < numCores; i++) {
@@ -18,10 +32,17 @@ const setUpCluster = (): void => {
 		// these references can be used to receive messages from workers
 		clusterWorkers.push(cluster.fork());
 
+		if (tasksTakenCounter < numberOfTasks) {
+			clusterWorkers[i].send(tasks[tasksTakenCounter++]);
+		} else {
+			//todo:
+			//finish? kill?
+		}
+
 		// to receive messages from worker process
-		clusterWorkers[i].on('message', function (message) {
-			console.log(message);
-		});
+		// clusterWorkers[i].on('message', function (message) {
+		// console.log(message);
+		// });
 	}
 
 	// process is clustered on a core and process id is assigned

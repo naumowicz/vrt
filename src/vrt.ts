@@ -1,12 +1,13 @@
 import Path from './Path';
 import FGlob from './FGlob';
 import FileSystem from './FileSystem';
-import TasksManager from './TasksManager';
+// import TasksManager from './TasksManager';
+import globalSettings from '../GlobalSettings';
 
 (async (): Promise<void> => {
 	//array for scenarios to run
 	let scenariosToRun = [];
-	const tasksFileName = 'tasks.json';
+	const tasksFileName = globalSettings.tasks;
 	const fglob = new FGlob();
 
 	//receiving scenarios as path to scenarios
@@ -22,16 +23,18 @@ import TasksManager from './TasksManager';
 	for (const scenario of passedParameters) {
 		if (txtFormatRegex.test(scenario)) {
 			//passed argument is scenario with .txt format
+			//todo:
+			//check if file exists
 			scenariosToRun.push(scenario);
 		} else {
 			//passed argument is glob path (all fitting subdirectories)
 			scenariosToRun = scenariosToRun.concat(
-				fglob.getPathsToFiles(scenario),
+				await fglob.getPathsToFiles(scenario),
 			);
 		}
 	}
 
 	FileSystem.saveJSONToFile(tasksFileName, scenariosToRun);
 
-	const tasksManager = new TasksManager();
+	// const tasksManager = new TasksManager();
 })();

@@ -33,7 +33,7 @@ const setUpCluster = (): void => {
 		clusterWorkers.push(cluster.fork());
 
 		if (tasksTakenCounter < numberOfTasks) {
-			clusterWorkers[i].send(tasks[tasksTakenCounter++]);
+			clusterWorkers[i].send(tasks.fileContent[tasksTakenCounter++]);
 		} else {
 			//todo:
 			//finish? kill?
@@ -93,4 +93,4 @@ const run = async (): Promise<void> => {
 	}
 };
 
-run();
+await run();

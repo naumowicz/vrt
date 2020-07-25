@@ -6,7 +6,7 @@ import globalSettings from '../GlobalSettings';
 
 (async (): Promise<void> => {
 	//array for scenarios to run
-	let scenariosToRun = [];
+	let scenariosToRun: Array<string> = [];
 	const tasksFileName = globalSettings.tasks;
 	const fglob = new FGlob();
 

@@ -1,0 +1,13 @@
+{
+	"compilerOptions": {
+	  "module": "system",
+	  "target": "ES2020",
+	//   "noImplicitAny": true,
+	  "removeComments": true,
+	  "preserveConstEnums": true,
+	//   "outFile": "../../built/local/tsc.js",
+	//   "sourceMap": true
+	},
+	"include": ["src/**/*", "fast-glob.d.ts"],
+	"exclude": ["node_modules", "src/test", "**/*.spec.ts"]
+	}

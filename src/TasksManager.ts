@@ -74,8 +74,12 @@ const setUpCluster = (): void => {
 };
 
 const startVRT = async (): Promise<void> => {
-	//fixme:
-	const scenarioRunner = new ScenarioRunner('');
+	let receivedTask = '';
+	process.on('message', (message) => {
+		receivedTask = message;
+	});
+
+	const scenarioRunner = new ScenarioRunner(receivedTask);
 	if (scenarioRunner.loadScenarios()) {
 		await scenarioRunner.runScenarios();
 	} else {
@@ -89,7 +93,7 @@ const run = async (): Promise<void> => {
 		setUpCluster();
 	} else {
 		// to setup server configurations and share port address for incoming requests
-		startVRT();
+		await startVRT();
 	}
 };
 

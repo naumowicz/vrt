@@ -3,7 +3,7 @@ import { PendingXHR } from 'pending-xhr-puppeteer';
 import PuppeteerConfigLoader from './ConfigLoaders/PuppeteerConfigLoader';
 import puppeteerArgs from './PuppeteerArgs';
 
-class Puppeteer {
+class VRTPuppeteer {
 	browser: puppeteer.Browser;
 	page: puppeteer.Page;
 	pendingXHR: PendingXHR;
@@ -55,4 +55,4 @@ class Puppeteer {
 	}
 }
 
-export default Puppeteer;
+export default VRTPuppeteer;

@@ -1,6 +1,6 @@
 import Scenario from './Scenario';
 import FolderController from './FolderController';
-import Puppeteer from './Puppeteer';
+import Puppeteer from './VRTPuppeteer';
 import ImagesComparer from './ImagesComparer';
 import FileSystem from './FileSystem';
 import PathHelper from './Helpers/PathHelper';

@@ -1,7 +1,7 @@
 import Path from './Path';
 import FGlob from './FGlob';
 import FileSystem from './FileSystem';
-// import TasksManager from './TasksManager';
+import TasksManager from './TasksManager';
 import globalSettings from '../GlobalSettings';
 
 (async (): Promise<void> => {
@@ -38,5 +38,6 @@ import globalSettings from '../GlobalSettings';
 
 	FileSystem.saveJSONToFile(tasksFileName, scenariosToRun);
 
-	// const tasksManager = new TasksManager();
+	const tasksManager = new TasksManager();
+	await tasksManager.run();
 })();

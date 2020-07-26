@@ -4,102 +4,113 @@ import globalSettings from '../GlobalSettings';
 import ScenarioRunner from './ScenarioRunner';
 import FileSystem from './FileSystem';
 
-const clusterWorkers: Array<cluster.Worker> = [];
-
-const setUpCluster = (): void => {
-	// const numCores = require('os').cpus().length;
-	const numCores = globalSettings.numberOfThreads;
-	console.log('Master cluster setting up ' + numCores + ' workers');
-	const logger = new Worker('./Logger');
-
-	let tasksTakenCounter = 0;
-	let i = 0;
-
-	//load tasks file
-	const tasks = FileSystem.readJSONFile(globalSettings.tasks);
-
-	if (tasks.status) {
-	} else {
-		//todo:
-		// return error
+class TasksManager {
+	clusterWorkers: Array<cluster.Worker>;
+	constructor() {
+		this.clusterWorkers = [];
 	}
 
-	const numberOfTasks = tasks.fileContent.length;
+	setUpCluster(): void {
+		// const numCores = require('os').cpus().length;
+		const numCores = globalSettings.numberOfThreads;
+		console.log('Master cluster setting up ' + numCores + ' workers');
+		const logger = new Worker('./Logger');
 
-	// iterate on number of cores need to be utilized by an application
-	// current example will utilize all of them
-	for (i = 0; i < numCores; i++) {
-		// creating workers and pushing reference in an array
-		// these references can be used to receive messages from workers
+		let tasksTakenCounter = 0;
+		let i = 0;
 
-		if (tasksTakenCounter < numberOfTasks) {
-			clusterWorkers.push(cluster.fork());
-			clusterWorkers[i].send(tasks.fileContent[tasksTakenCounter++]);
+		//load tasks file
+		const tasks = FileSystem.readJSONFile(globalSettings.tasks);
+
+		if (tasks.status) {
 		} else {
 			//todo:
-			//finish? kill?
+			// return error
 		}
 
-		// to receive messages from worker process
-		// clusterWorkers[i].on('message', function (message) {
-		// console.log(message);
-		// });
-	}
+		const numberOfTasks = tasks.fileContent.length;
 
-	// process is clustered on a core and process id is assigned
-	cluster.on('online', function (clusterWorker) {
-		console.log('Worker ' + clusterWorker.process.pid + ' is listening');
-	});
+		// iterate on number of cores need to be utilized by an application
+		// current example will utilize all of them
+		for (i = 0; i < numCores; i++) {
+			// creating workers and pushing reference in an array
+			// these references can be used to receive messages from workers
 
-	// if any of the worker process dies then start a new one by simply forking another one
-	cluster.on('exit', function (worker, code, signal) {
-		console.log(
-			'Worker ' +
-				worker.process.pid +
-				' died with code: ' +
-				code +
-				', and signal: ' +
-				signal,
-		);
+			if (tasksTakenCounter < numberOfTasks) {
+				this.clusterWorkers.push(cluster.fork());
+				this.clusterWorkers[i].send(
+					tasks.fileContent[tasksTakenCounter++],
+				);
+			} else {
+				//todo:
+				//finish? kill?
+			}
 
-		if (tasksTakenCounter < numberOfTasks) {
-			console.log('Starting a new worker');
-			clusterWorkers.push(cluster.fork());
-			clusterWorkers[++i].send(tasks.fileContent[tasksTakenCounter++]);
+			// to receive messages from worker process
+			// clusterWorkers[i].on('message', function (message) {
+			// console.log(message);
+			// });
 		}
 
-		// to receive messages from worker process
-		// clusterWorkers[this.clusterWorkers.length - 1].on('message', function (
-		// 	message,
-		// ) {
-		// 	logger.postMessage(message);
-		// 	// console.log(message);
-		// });
-	});
-};
+		// process is clustered on a core and process id is assigned
+		cluster.on('online', (clusterWorker) => {
+			console.log(
+				'Worker ' + clusterWorker.process.pid + ' is listening',
+			);
+		});
 
-const startVRT = async (): Promise<void> => {
-	let receivedTask = '';
-	process.on('message', (message) => {
-		receivedTask = message;
-	});
+		// if any of the worker process dies then start a new one by simply forking another one
+		cluster.on('exit', (worker, code, signal) => {
+			console.log(
+				'Worker ' +
+					worker.process.pid +
+					' died with code: ' +
+					code +
+					', and signal: ' +
+					signal,
+			);
 
-	const scenarioRunner = new ScenarioRunner(receivedTask);
-	if (scenarioRunner.loadScenarios()) {
-		await scenarioRunner.runScenarios();
-	} else {
-		return;
+			if (tasksTakenCounter < numberOfTasks) {
+				console.log('Starting a new worker');
+				this.clusterWorkers.push(cluster.fork());
+				this.clusterWorkers[++i].send(
+					tasks.fileContent[tasksTakenCounter++],
+				);
+			}
+
+			// to receive messages from worker process
+			// clusterWorkers[this.clusterWorkers.length - 1].on('message', function (
+			// 	message,
+			// ) {
+			// 	logger.postMessage(message);
+			// 	// console.log(message);
+			// });
+		});
 	}
-};
 
-const run = async (): Promise<void> => {
-	// if it is a master process then call setting up worker process
-	if (cluster.isMaster) {
-		setUpCluster();
-	} else {
-		// to setup server configurations and share port address for incoming requests
-		await startVRT();
+	async startVRT(): Promise<void> {
+		let receivedTask = '';
+		process.on('message', (message) => {
+			receivedTask = message;
+		});
+
+		const scenarioRunner = new ScenarioRunner(receivedTask);
+		if (scenarioRunner.loadScenarios()) {
+			await scenarioRunner.runScenarios();
+		} else {
+			return;
+		}
 	}
-};
 
-await run();
+	async run(): Promise<void> {
+		// if it is a master process then call setting up worker process
+		if (cluster.isMaster) {
+			this.setUpCluster();
+		} else {
+			// to setup server configurations and share port address for incoming requests
+			await this.startVRT();
+		}
+	}
+}
+
+export default TasksManager;

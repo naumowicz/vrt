@@ -13,6 +13,7 @@ const setUpCluster = (): void => {
 	const logger = new Worker('./Logger');
 
 	let tasksTakenCounter = 0;
+	let i = 0;
 
 	//load tasks file
 	const tasks = FileSystem.readJSONFile(globalSettings.tasks);
@@ -27,12 +28,12 @@ const setUpCluster = (): void => {
 
 	// iterate on number of cores need to be utilized by an application
 	// current example will utilize all of them
-	for (let i = 0; i < numCores; i++) {
+	for (i = 0; i < numCores; i++) {
 		// creating workers and pushing reference in an array
 		// these references can be used to receive messages from workers
-		clusterWorkers.push(cluster.fork());
 
 		if (tasksTakenCounter < numberOfTasks) {
+			clusterWorkers.push(cluster.fork());
 			clusterWorkers[i].send(tasks.fileContent[tasksTakenCounter++]);
 		} else {
 			//todo:
@@ -60,16 +61,20 @@ const setUpCluster = (): void => {
 				', and signal: ' +
 				signal,
 		);
-		console.log('Starting a new worker');
-		cluster.fork();
-		clusterWorkers.push(cluster.fork());
+
+		if (tasksTakenCounter < numberOfTasks) {
+			console.log('Starting a new worker');
+			clusterWorkers.push(cluster.fork());
+			clusterWorkers[++i].send(tasks.fileContent[tasksTakenCounter++]);
+		}
+
 		// to receive messages from worker process
-		clusterWorkers[this.clusterWorkers.length - 1].on('message', function (
-			message,
-		) {
-			logger.postMessage(message);
-			// console.log(message);
-		});
+		// clusterWorkers[this.clusterWorkers.length - 1].on('message', function (
+		// 	message,
+		// ) {
+		// 	logger.postMessage(message);
+		// 	// console.log(message);
+		// });
 	});
 };
 

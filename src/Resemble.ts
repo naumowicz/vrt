@@ -2,25 +2,26 @@
 const compareImages = require('resemblejs/compareImages');
 import ResembleConfig from './ConfigLoaders/ResembleConfigLoader';
 
+interface Box {
+	left: number;
+	top: number;
+	right: number;
+	bottom: number;
+}
+
 class Resemble {
-	private options = {
-		output: {
-			errorColor: {
-				red: 255,
-				green: 0,
-				blue: 255,
-			},
-			errorType: 'movement',
-			transparency: 0.3,
-			largeImageThreshold: 0,
-			useCrossOrigin: false,
-			outputDiff: true,
-			ignoredBoxes: [],
-			boundingBoxes: [],
-		},
-		scaleToSameSize: true,
-		ignore: 'antialiasing',
-	};
+	errorColorRed: number;
+	errorColorGreen: number;
+	errorColorBlue: number;
+	errorType: string;
+	transparency: number;
+	useCrossOrigin: false;
+	largeImageThreshold: number;
+	outputDiff: true;
+	ignoredBoxes: Array<Box>;
+	boundingBoxes: Array<Box>;
+	scaleToSameSize: true;
+	ignore: string;
 	resembleConfig: ResembleConfig;
 
 	constructor(pathToResembleGlobalSettingsFile: string) {
@@ -31,12 +32,12 @@ class Resemble {
 		const colors = this.resembleConfig.getColors();
 		this.setErrorOutputColor(colors.red, colors.green, colors.blue);
 
-		//fixme:
-		this.options.output.errorType = this.resembleConfig.getErrorType();
-		//fixme:
-		this.options.output.transparency = this.resembleConfig.getTransparency();
-		//fixme:
-		this.options.ignore = this.resembleConfig.getIgnore();
+		//fixme: possible entries
+		this.errorType = this.resembleConfig.getErrorType();
+		//fixme: possible entries
+		this.transparency = this.resembleConfig.getTransparency();
+		//fixme: possible entries
+		this.ignore = this.resembleConfig.getIgnore();
 
 		this.setTransparency(this.resembleConfig.getTransparency());
 	}
@@ -50,26 +51,32 @@ class Resemble {
 			blue >= 0 &&
 			blue <= 255
 		) {
-			this.options.output.errorColor = {
-				red: red,
-				green: green,
-				blue: blue,
-			};
+			this.errorColorRed = red;
+			this.errorColorGreen = green;
+			this.errorColorBlue = blue;
+		} else {
+			this.errorColorRed = 255;
+			this.errorColorGreen = 0;
+			this.errorColorBlue = 255;
 		}
 	}
 
 	public getErrorColor(): { red: number; green: number; blue: number } {
-		return this.options.output.errorColor;
+		return {
+			red: this.errorColorRed,
+			green: this.errorColorGreen,
+			blue: this.errorColorBlue,
+		};
 	}
 
 	public setTransparency(transparencyLevel: number): void {
 		if (transparencyLevel >= 0 && transparencyLevel <= 1) {
-			this.options.output.transparency = transparencyLevel;
+			this.transparency = transparencyLevel;
 		}
 	}
 
 	public getTransparencyLevel(): number {
-		return this.options.output.transparency;
+		return this.transparency;
 	}
 
 	public async getDiff(
@@ -93,10 +100,48 @@ class Resemble {
 		const data = await compareImages(
 			pathToOriginalImage,
 			pathToComparedImage,
-			this.options,
+			this.getResembleOptions(),
 		);
 
 		return data;
+	}
+
+	getResembleOptions(): {
+		options: {
+			errorColor: {
+				red: number;
+				green: number;
+				blue: number;
+			};
+			errorType: string;
+			transparency: number;
+			largeImageThreshold: number;
+			useCrossOrigin: false;
+			outputDiff: true;
+			ignoredBoxes: Array<Box>;
+			boundingBoxes: Array<Box>;
+		};
+		scaleToSameSize: true;
+		ignore: string;
+	} {
+		return {
+			options: {
+				errorColor: {
+					red: this.errorColorRed,
+					green: this.errorColorGreen,
+					blue: this.errorColorBlue,
+				},
+				errorType: this.errorType,
+				transparency: this.transparency,
+				largeImageThreshold: this.largeImageThreshold,
+				useCrossOrigin: this.useCrossOrigin,
+				outputDiff: this.outputDiff,
+				ignoredBoxes: this.ignoredBoxes,
+				boundingBoxes: this.boundingBoxes,
+			},
+			scaleToSameSize: this.scaleToSameSize,
+			ignore: this.ignore,
+		};
 	}
 }
 

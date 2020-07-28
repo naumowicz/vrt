@@ -89,17 +89,21 @@ class TasksManager {
 	}
 
 	async startVRT(): Promise<void> {
-		let receivedTask = '';
-		process.on('message', (message) => {
-			receivedTask = message;
+		process.on('message', async (receivedTask) => {
+			const scenarioRunner = new ScenarioRunner(receivedTask);
+			if (scenarioRunner.loadScenarios()) {
+				await scenarioRunner.runScenarios();
+			} else {
+				return;
+			}
 		});
 
-		const scenarioRunner = new ScenarioRunner(receivedTask);
-		if (scenarioRunner.loadScenarios()) {
-			await scenarioRunner.runScenarios();
-		} else {
-			return;
-		}
+		// const scenarioRunner = new ScenarioRunner(receivedTask);
+		// if (scenarioRunner.loadScenarios()) {
+		// 	await scenarioRunner.runScenarios();
+		// } else {
+		// 	return;
+		// }
 	}
 
 	async run(): Promise<void> {

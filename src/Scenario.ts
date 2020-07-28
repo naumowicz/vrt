@@ -8,6 +8,7 @@ class Scenario {
 	errorLogs: string[];
 
 	constructor() {
+		this.scenario = [];
 		this.steps = [];
 		this.imagesToAnalyze = [];
 		this.errorLogs = [];
@@ -78,7 +79,7 @@ class Scenario {
 	}
 
 	isScenarioParsedSuccessfully(): boolean {
-		return this.errorLogs.length > 0;
+		return this.errorLogs.length === 0;
 	}
 
 	getScenarioSteps(): {

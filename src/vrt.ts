@@ -13,6 +13,11 @@ import globalSettings from '../GlobalSettings';
 	//receiving scenarios as path to scenarios
 	const passedParameters = process.argv.slice(2);
 
+	if (passedParameters.length === 0) {
+		console.log('No scenarios to run');
+		return;
+	}
+
 	//converting Windows path to Unix style
 	for (let i = 0; i < passedParameters.length; i++) {
 		passedParameters[i] = Path.convertPathToPosix(passedParameters[i]);

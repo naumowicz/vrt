@@ -14,6 +14,7 @@ class TasksManager {
 		// const numCores = require('os').cpus().length;
 		const numCores = globalSettings.numberOfThreads;
 		console.log('Master cluster setting up ' + numCores + ' workers');
+		//todo: fix me
 		// const logger = new Worker('./Logger.js');
 
 		let tasksTakenCounter = 0;

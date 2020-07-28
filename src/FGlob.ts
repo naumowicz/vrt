@@ -1,4 +1,5 @@
-import * as fglob from 'fast-glob';
+// import * as fglob from 'fast-glob';
+import fglob = require('fast-glob');
 
 class FGlob {
 	pattern = '**/*.txt';

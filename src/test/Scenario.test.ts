@@ -42,3 +42,28 @@ describe('Checking if scenario is properly configured', () => {
 		expect(scenario.isScenarioParsedSuccessfully()).toEqual(false);
 	});
 });
+
+describe('Getting errors after failed scenario parsing', () => {
+	test('Scenario has two END keyowrds', async () => {
+		const errors = ['Received additonal unnecessery END keyword'];
+
+		const scenario = new Scenario();
+		await scenario.loadScenario('./src/test/scenarioTest/scenarioEND.txt');
+
+		expect(scenario.getErrors()).toEqual(errors);
+	});
+
+	test('Scenario has issues', async () => {
+		const errors = [
+			'Received ->./scenarios/test/test1/baseline/1<- - it is not valid scenario line',
+			'Received ->googlecom/images<- - it is not valid scenario line',
+		];
+
+		const scenario = new Scenario();
+		await scenario.loadScenario(
+			'./src/test/scenarioTest/scenarioWithIssues.txt',
+		);
+
+		expect(scenario.getErrors()).toEqual(errors);
+	});
+});

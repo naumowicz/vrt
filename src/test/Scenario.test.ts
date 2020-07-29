@@ -3,7 +3,7 @@ import Scenario from '../Scenario';
 describe('Checking scenario availability', () => {
 	test('Scenario exists', async () => {
 		const scenario = new Scenario();
-		const result = await scenario.checkScenarioAvailability(
+		const result = scenario.checkScenarioAvailability(
 			'./src/test/scenarioTest/scenario1.txt',
 		);
 		expect(result).toEqual(true);
@@ -11,7 +11,7 @@ describe('Checking scenario availability', () => {
 
 	test('Scenario does not exist', async () => {
 		const scenario = new Scenario();
-		const result = await scenario.checkScenarioAvailability(
+		const result = scenario.checkScenarioAvailability(
 			'./src/test/scenarioTest/none.txt',
 		);
 		expect(result).toEqual(false);

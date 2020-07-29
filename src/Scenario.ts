@@ -36,10 +36,14 @@ class Scenario {
 
 	parseScenario(scenario: string[]): void {
 		const urlRegex = /(http:\/\/|https:\/\/)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
+		const pngRegex = /.*\.png$/;
 
 		let tmpArray: string[] = [];
 		let endKeywordCount = 0;
 
+		if (pngRegex.test(scenario[0]) === false) {
+			this.addErrorToArray(scenario[0], 0);
+		}
 		this.imagesToAnalyze.push(scenario[0]);
 
 		for (let line = 1; line < scenario.length; line++) {
@@ -51,12 +55,15 @@ class Scenario {
 					this.steps.push(tmpArray);
 					tmpArray = [];
 					line++;
+					if (pngRegex.test(scenario[line]) === false) {
+						this.imagesToAnalyze.push(scenario[line]);
+					}
 					this.imagesToAnalyze.push(scenario[line]);
 					break;
 				case scenario[line] === 'END':
 					if (endKeywordCount >= 1) {
-						this.errorLogs.push(
-							`Received additonal unnecessery END keyword`,
+						this.addCustomErrorToArray(
+							'Received additional unnecessery END keyword',
 						);
 					}
 					endKeywordCount++;
@@ -70,12 +77,22 @@ class Scenario {
 					tmpArray.push(scenario[line]);
 					break;
 				default:
-					this.errorLogs.push(
-						`Received ->${line}<- - it is not valid scenario line`,
-					);
+					this.addErrorToArray(scenario[line], line);
 					break;
 			}
 		}
+	}
+
+	addErrorToArray(line: string, numberOfLine: number): void {
+		this.errorLogs.push(
+			`Received ->${line}<- - it is not valid scenario line. Check line ${
+				numberOfLine + 1
+			}`,
+		);
+	}
+
+	addCustomErrorToArray(line: string): void {
+		this.errorLogs.push(line);
 	}
 
 	isScenarioParsedSuccessfully(): boolean {

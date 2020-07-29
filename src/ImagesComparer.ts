@@ -1,5 +1,6 @@
 import Resemble from './Resemble';
 import globalSettings from '../GlobalSettings';
+import Path from './Path';
 
 class ImagesComparer {
 	async compareImages(
@@ -10,7 +11,9 @@ class ImagesComparer {
 		misMatchPercentage: string;
 		buffer: Buffer;
 	}> {
-		const resemble = new Resemble(globalSettings.resembleConfigPath);
+		const resemble = new Resemble(
+			Path.resolvePath(globalSettings.resembleConfigPath),
+		);
 		const result = await resemble.getDiff(originalImage, imageToCompare);
 		const rawMisMatchPercentage = result.rawMisMatchPercentage;
 		const misMatchPercentage = result.misMatchPercentage;

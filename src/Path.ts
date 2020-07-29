@@ -85,6 +85,14 @@ class Path {
 	static convertPathToPosix(pathToFile: string): string {
 		return pathToFile.replace(/\\/g, '/');
 	}
+
+	/**
+	 * Method for resolving path, from './file' into 'C:\\file'
+	 * @param pathToFile - Path to file.
+	 */
+	static resolvePath(pathToFile: string): string {
+		return this.convertPathToPosix(path.posix.resolve(pathToFile));
+	}
 }
 
 export default Path;

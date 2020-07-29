@@ -1,4 +1,5 @@
 import Path from '../Path';
+import globalSettings from '../../GlobalSettings';
 
 describe('Test for path.dirname features', () => {
 	test('Properly given path', () => {
@@ -96,5 +97,15 @@ describe('Test for path.normalize features', () => {
 		const dirname = Path.normalizePath('C:/foo/bar/baz/asdf/quux.txt');
 
 		expect(dirname).toEqual('C:/foo/bar/baz/asdf/quux.txt');
+	});
+});
+
+describe('Test for path.relativePath features', () => {
+	test('Path to file in root directory', () => {
+		const dirname = Path.resolvePath(globalSettings.resembleConfigPath);
+
+		expect(dirname).toEqual(
+			'C:/Users/Mateusz/Desktop/vrt/ResembleConfig.json',
+		);
 	});
 });

@@ -30,7 +30,7 @@ describe('Checking if scenario is properly configured', () => {
 		await scenario.loadScenario('./src/test/scenarioTest/scenario1.txt');
 
 		const result = scenario.getScenarioSteps();
-		expect(result.isScenarioParsedSuccessfully).toEqual(true);
+		expect(scenario.isScenarioParsedSuccessfully()).toEqual(true);
 		expect(result.steps).toEqual(steps);
 		expect(result.imagesToAnalyze).toEqual(imagesToAnalyze);
 	});
@@ -39,7 +39,6 @@ describe('Checking if scenario is properly configured', () => {
 		const scenario = new Scenario();
 		await scenario.loadScenario('./src/test/scenarioTest/scenarioEND.txt');
 
-		const result = scenario.getScenarioSteps();
-		expect(result.isScenarioParsedSuccessfully).toEqual(false);
+		expect(scenario.isScenarioParsedSuccessfully()).toEqual(false);
 	});
 });

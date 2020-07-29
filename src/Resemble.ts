@@ -72,6 +72,8 @@ class Resemble {
 	public setTransparency(transparencyLevel: number): void {
 		if (transparencyLevel >= 0 && transparencyLevel <= 1) {
 			this.transparency = transparencyLevel;
+		} else {
+			this.transparency = 0.3;
 		}
 	}
 

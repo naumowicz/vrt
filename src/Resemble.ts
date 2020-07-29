@@ -109,7 +109,7 @@ class Resemble {
 	}
 
 	getResembleOptions(): {
-		options: {
+		output: {
 			errorColor: {
 				red: number;
 				green: number;
@@ -127,7 +127,7 @@ class Resemble {
 		ignore: string;
 	} {
 		return {
-			options: {
+			output: {
 				errorColor: {
 					red: this.errorColorRed,
 					green: this.errorColorGreen,

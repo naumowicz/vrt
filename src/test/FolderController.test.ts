@@ -70,4 +70,31 @@ describe('Testing FolderController', () => {
 			FileSystem.removeFolderRecursively(pathToActualStatusFolder),
 		).toEqual(true);
 	});
+
+	test('Removing folders that do not exitst', () => {
+		const folderController = new FolderControlller();
+
+		const outputFolderName = './src/test/wrongTestOutputFolder';
+		const actualStatusFolderName = './src/test/wrongTestActualStatusFolder';
+
+		const pathToOutputFolder = Path.resolvePath(outputFolderName);
+		const pathToActualStatusFolder = Path.resolvePath(
+			actualStatusFolderName,
+		);
+
+		expect(
+			folderController.recreateOutputAndActualStatusFolders(
+				pathToOutputFolder,
+				pathToActualStatusFolder,
+			),
+		).toEqual(true);
+
+		//cleanup
+		expect(FileSystem.removeFolderRecursively(pathToOutputFolder)).toEqual(
+			true,
+		);
+		expect(
+			FileSystem.removeFolderRecursively(pathToActualStatusFolder),
+		).toEqual(true);
+	});
 });

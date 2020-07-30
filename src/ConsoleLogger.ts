@@ -24,15 +24,15 @@ class ConsoleLogger {
 	}
 
 	error(data: string): void {
-		console.log(`${this.errorColor}${colors.Reset}`, data);
+		console.log(`${this.errorColor}${data}${colors.Reset}`);
 	}
 
 	warning(data: string): void {
-		console.log(`${this.warningColor}${colors.Reset}`, data);
+		console.log(`${this.warningColor}${data}${colors.Reset}`);
 	}
 
 	info(data: string): void {
-		console.log(`${this.infoColor}${colors.Reset}`, data);
+		console.log(`${this.infoColor}${data}${colors.Reset}`);
 	}
 }
 

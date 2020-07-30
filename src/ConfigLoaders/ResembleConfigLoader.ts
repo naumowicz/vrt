@@ -18,12 +18,14 @@ class ResembleConfigLoader {
 		if (rawFile.status) {
 			this.resembleConfig = JSON.parse(rawFile.fileContent.toString());
 		} else {
-			this.resembleConfig.red = 255;
-			this.resembleConfig.green = 0;
-			this.resembleConfig.blue = 255;
-			this.resembleConfig.errorType = 'movement';
-			this.resembleConfig.transparency = 0.3;
-			this.resembleConfig.ignore = 'antialiasing';
+			this.resembleConfig = {
+				red: 255,
+				green: 0,
+				blue: 255,
+				errorType: 'movement',
+				transparency: 0.3,
+				ignore: 'antialiasing',
+			};
 		}
 	}
 

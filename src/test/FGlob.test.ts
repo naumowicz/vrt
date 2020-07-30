@@ -1,4 +1,5 @@
 import FGlob from '../FGlob';
+import { constants } from 'buffer';
 
 describe('Test for glob features', () => {
 	test('Receive only test1.txt', async () => {
@@ -33,6 +34,18 @@ describe('Test for glob features', () => {
 			'./src/test/fglobTest',
 			'**/*.txt',
 		);
+
+		expect(paths).toEqual([
+			'./src/test/fglobTest/test1.txt',
+			'./src/test/fglobTest/innerFolder/test1.txt',
+			'./src/test/fglobTest/innerFolder/test2.txt',
+		]);
+	});
+
+	test('Passed pattern is wrong', async () => {
+		const fglob = new FGlob();
+
+		const paths = await fglob.getPathsToFiles('./src/test/fglobTest', '');
 
 		expect(paths).toEqual([
 			'./src/test/fglobTest/test1.txt',

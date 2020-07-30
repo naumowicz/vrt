@@ -1,5 +1,4 @@
 import FGlob from '../FGlob';
-import { constants } from 'buffer';
 
 describe('Test for glob features', () => {
 	test('Receive only test1.txt', async () => {

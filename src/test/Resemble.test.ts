@@ -2,6 +2,7 @@ import Resemble from '../Resemble';
 import * as fs from 'fs';
 import globalSettings from '../../GlobalSettings';
 import Path from '../Path';
+import FileSystem from '../FileSystem';
 const pathToResembleGlobalSettingsFile = globalSettings.resembleConfigPath;
 
 describe('Test for Resemble error area color output', () => {
@@ -71,15 +72,39 @@ describe('Testing Resemblejs comparation with default settings', () => {
 			Path.resolvePath(pathToResembleGlobalSettingsFile),
 		);
 
-		const image1 = fs.readFileSync('./src/test/testimage1.png');
-		const image2 = fs.readFileSync('./src/test/testimage1.png');
+		const image1 = FileSystem.readFile('./src/test/testimage1.png');
+		const image2 = FileSystem.readFile('./src/test/testimage1.png');
 
-		const data = await resemble.getDiff(image1, image2);
-
-		const resultBuffer = fs.readFileSync(
-			'./src/test/buffer_test_images_equal.png',
+		const data = await resemble.getDiff(
+			image1.fileContent,
+			image2.fileContent,
 		);
 
-		expect(data.getBuffer().equals(resultBuffer)).toEqual(true);
+		const expectedImage = FileSystem.readFile(
+			'./src/test/buffer_test_images_equal.png',
+		).fileContent;
+
+		expect(data.getBuffer().equals(expectedImage)).toEqual(true);
+	});
+	test('Images are different', async () => {
+		const resemble = new Resemble(
+			Path.resolvePath(pathToResembleGlobalSettingsFile),
+		);
+
+		const image1 = FileSystem.readFile('./src/test/testimage1.png');
+		const image2 = FileSystem.readFile('./src/test/testimage2.png');
+
+		const data = await resemble.getDiff(
+			image1.fileContent,
+			image2.fileContent,
+		);
+
+		const expectedImage = FileSystem.readFile(
+			'./src/test/test_images_not_equal.png',
+		);
+
+		expect(data.getBuffer().equals(expectedImage.fileContent)).toEqual(
+			true,
+		);
 	});
 });

@@ -55,7 +55,7 @@ describe('Testing FileSystem', () => {
 		});
 	});
 
-	describe('Test for removeFolderRecursively', () => {
+	describe('Test for deleteFolderRecursively', () => {
 		test('Folder does not exists', () => {
 			const result = FileSystem.deleteFolderRecursively(
 				'./src/test/fileSystemTest/doesNotExists',

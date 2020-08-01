@@ -22,7 +22,7 @@ class FileSystem {
 			fileContent = fs.readFileSync(pathToFile);
 		} catch (error) {
 			console.log(error);
-			return { status: false, fileContent: new Buffer('') };
+			return { status: false, fileContent: Buffer.from('') };
 		}
 		return { status: true, fileContent: fileContent };
 	}

@@ -10,8 +10,8 @@ class FolderController {
 		pathToActualStatusFolder: string,
 	): boolean {
 		if (
-			FileSystem.removeFolderRecursively(pathToOutputFolder) &&
-			FileSystem.removeFolderRecursively(pathToActualStatusFolder)
+			FileSystem.deleteFolderRecursively(pathToOutputFolder) &&
+			FileSystem.deleteFolderRecursively(pathToActualStatusFolder)
 		) {
 		} else {
 			return false;

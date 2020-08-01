@@ -46,7 +46,7 @@ class FileSystem {
 		return true;
 	}
 
-	static removeFolderRecursively(pathToFolder: string): boolean {
+	static deleteFolderRecursively(pathToFolder: string): boolean {
 		try {
 			fs.rmdirSync(pathToFolder, { recursive: true });
 		} catch (error) {

@@ -16,7 +16,7 @@ describe('Testing FileSystem', () => {
 			expect(FileSystem.checkAvailability(file)).toEqual(true);
 
 			//cleanup
-			FileSystem.removeFolderRecursively(file);
+			FileSystem.deleteFolderRecursively(file);
 			expect(FileSystem.checkAvailability(file)).toEqual(false);
 		});
 	});
@@ -52,6 +52,29 @@ describe('Testing FileSystem', () => {
 
 			//cleanup
 			expect(FileSystem.writeFile(file, Buffer.from(''))).toEqual(true);
+		});
+	});
+
+	describe('Test for removeFolderRecursively', () => {
+		test('Folder does not exists', () => {
+			const result = FileSystem.deleteFolderRecursively(
+				'./src/test/fileSystemTest/doesNotExists',
+			);
+			expect(result).toEqual(false);
+		});
+		test('Folder exists', () => {
+			const folder = './src/test/fileSystemTest/folderToBeDeleted';
+			const result = FileSystem.deleteFolderRecursively(folder);
+			expect(result).toEqual(true);
+
+			//cleanup
+			expect(FileSystem.createFolder(folder)).toEqual(true);
+		});
+		test('File passed as argument', () => {
+			const folder =
+				'./src/test/fileSystemTest/fileThatShouldBeFolder.txt';
+			const result = FileSystem.deleteFolderRecursively(folder);
+			expect(result).toEqual(false);
 		});
 	});
 });

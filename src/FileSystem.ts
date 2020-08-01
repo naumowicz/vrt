@@ -80,16 +80,6 @@ class FileSystem {
 		return true;
 	}
 
-	static createFile(pathToFile: string): boolean {
-		try {
-			fs.openSync(pathToFile, 'r');
-		} catch (error) {
-			console.log(error);
-			return false;
-		}
-		return true;
-	}
-
 	static saveJSONToFile(pathToFile: string, data: unknown): boolean {
 		try {
 			fs.writeFileSync(pathToFile, JSON.stringify(data));

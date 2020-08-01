@@ -14,7 +14,7 @@ describe('Testing FolderController', () => {
 		expect(FileSystem.checkAvailability(pathToFolder)).toEqual(true);
 
 		//cleanup
-		FileSystem.removeFolderRecursively(pathToFolder);
+		FileSystem.deleteFolderRecursively(pathToFolder);
 	});
 
 	test('Test for recreating output and actualStatus folders', () => {
@@ -63,15 +63,15 @@ describe('Testing FolderController', () => {
 		);
 
 		//cleanup
-		expect(FileSystem.removeFolderRecursively(pathToOutputFolder)).toEqual(
+		expect(FileSystem.deleteFolderRecursively(pathToOutputFolder)).toEqual(
 			true,
 		);
 		expect(
-			FileSystem.removeFolderRecursively(pathToActualStatusFolder),
+			FileSystem.deleteFolderRecursively(pathToActualStatusFolder),
 		).toEqual(true);
 	});
 
-	test('Removing folders that do not exitst', () => {
+	test('Recreate folders that do not exitst', () => {
 		const folderController = new FolderControlller();
 
 		const outputFolderName = './src/test/wrongTestOutputFolder';
@@ -90,11 +90,11 @@ describe('Testing FolderController', () => {
 		).toEqual(true);
 
 		//cleanup
-		expect(FileSystem.removeFolderRecursively(pathToOutputFolder)).toEqual(
+		expect(FileSystem.deleteFolderRecursively(pathToOutputFolder)).toEqual(
 			true,
 		);
 		expect(
-			FileSystem.removeFolderRecursively(pathToActualStatusFolder),
+			FileSystem.deleteFolderRecursively(pathToActualStatusFolder),
 		).toEqual(true);
 	});
 });

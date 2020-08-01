@@ -10,18 +10,23 @@ class FolderController {
 		pathToActualStatusFolder: string,
 	): boolean {
 		if (
-			FileSystem.deleteFolderRecursively(pathToOutputFolder) &&
-			FileSystem.deleteFolderRecursively(pathToActualStatusFolder)
+			FileSystem.checkAvailability(pathToOutputFolder) &&
+			FileSystem.checkAvailability(pathToActualStatusFolder)
 		) {
-		} else {
-			return false;
+			if (
+				FileSystem.deleteFolderRecursively(pathToOutputFolder) ===
+					false ||
+				FileSystem.deleteFolderRecursively(pathToActualStatusFolder) ===
+					false
+			) {
+				return false;
+			}
 		}
 
 		if (
-			FileSystem.createFolder(pathToOutputFolder) &&
-			FileSystem.createFolder(pathToActualStatusFolder)
+			FileSystem.createFolder(pathToOutputFolder) === false ||
+			FileSystem.createFolder(pathToActualStatusFolder) === false
 		) {
-		} else {
 			return false;
 		}
 

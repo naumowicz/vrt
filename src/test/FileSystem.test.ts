@@ -16,7 +16,7 @@ describe('Testing FileSystem', () => {
 			expect(FileSystem.checkAvailability(file)).toEqual(true);
 
 			//cleanup
-			FileSystem.deleteFolderRecursively(file);
+			FileSystem.deleteFile(file);
 			expect(FileSystem.checkAvailability(file)).toEqual(false);
 		});
 	});

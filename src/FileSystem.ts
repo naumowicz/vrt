@@ -48,6 +48,13 @@ class FileSystem {
 
 	static deleteFolderRecursively(pathToFolder: string): boolean {
 		try {
+			//https://github.com/nodejs/node/issues/31231
+			//fix for not throwing error for file
+			if (this.checkIfIsFileOrFolder(pathToFolder) === 'file') {
+				throw new Error(
+					`Given path -> ${pathToFolder} <- leads to a file`,
+				);
+			}
 			if (this.checkAvailability(pathToFolder) === false) {
 				throw new Error('Folder does not exists');
 			}
@@ -107,6 +114,15 @@ class FileSystem {
 			};
 		} else {
 			return { status: false, fileContent: [] };
+		}
+	}
+
+	static checkIfIsFileOrFolder(path: string): string {
+		const stats = fs.statSync(path);
+		if (stats.isDirectory()) {
+			return 'directory';
+		} else {
+			return 'file';
 		}
 	}
 }

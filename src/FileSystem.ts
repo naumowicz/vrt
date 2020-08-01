@@ -48,7 +48,13 @@ class FileSystem {
 
 	static deleteFolderRecursively(pathToFolder: string): boolean {
 		try {
+			if (this.checkAvailability(pathToFolder) === false) {
+				throw new Error('Folder does not exists');
+			}
 			fs.rmdirSync(pathToFolder, { recursive: true });
+			if (this.checkAvailability(pathToFolder) === true) {
+				throw new Error('Folder could not be removed');
+			}
 		} catch (error) {
 			console.log(error);
 			return false;

@@ -37,4 +37,21 @@ describe('Testing FileSystem', () => {
 			expect(result.fileContent).toEqual(Buffer.from('content of file'));
 		});
 	});
+
+	describe('Test for deleteFile', () => {
+		test('File does not exists', () => {
+			const result = FileSystem.deleteFile(
+				'./src/test/fileSystemTest/doesNotExists.txt',
+			);
+			expect(result).toEqual(false);
+		});
+		test('File exists', () => {
+			const file = './src/test/fileSystemTest/deleteMe.txt';
+			const result = FileSystem.deleteFile(file);
+			expect(result).toEqual(true);
+
+			//cleanup
+			expect(FileSystem.writeFile(file, Buffer.from(''))).toEqual(true);
+		});
+	});
 });

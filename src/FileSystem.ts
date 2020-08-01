@@ -31,7 +31,6 @@ class FileSystem {
 		try {
 			fs.accessSync(pathToFile, fs.constants.R_OK | fs.constants.W_OK);
 		} catch (error) {
-			console.log(error);
 			return false;
 		}
 		return true;

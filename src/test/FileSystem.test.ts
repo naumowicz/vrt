@@ -118,4 +118,22 @@ describe('Testing FileSystem', () => {
 			);
 		});
 	});
+	describe('Tests for createFolder', () => {
+		test('Creating folder properly', () => {
+			const folder = './src/test/fileSystemTest/testForCreatingFolders';
+			expect(FileSystem.createFolder(folder)).toEqual(true);
+			expect(FileSystem.checkAvailability(folder)).toEqual(true);
+
+			//cleanup
+			expect(FileSystem.deleteFolderRecursively(folder)).toEqual(true);
+		});
+		test('Given path to folder is empty string', () => {
+			const folder = '';
+			expect(FileSystem.createFolder(folder)).toEqual(false);
+		});
+		test('Given path to folder that alredy exists', () => {
+			const folder = './src/test/fileSystemTest/folderAlreadyExists';
+			expect(FileSystem.createFolder(folder)).toEqual(false);
+		});
+	});
 });

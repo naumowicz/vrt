@@ -136,4 +136,21 @@ describe('Testing FileSystem', () => {
 			expect(FileSystem.createFolder(folder)).toEqual(false);
 		});
 	});
+	describe('Tests for checkIfIsFileOrFolder', () => {
+		test('Given path to folder', () => {
+			const folder = './src/test/fileSystemTest/folderAlreadyExists';
+			expect(FileSystem.checkIfIsFileOrFolder(folder)).toEqual(
+				'directory',
+			);
+		});
+		test('Given path to file', () => {
+			const file =
+				'./src/test/fileSystemTest/folderAlreadyExists/empty.txt';
+			expect(FileSystem.checkIfIsFileOrFolder(file)).toEqual('file');
+		});
+		test('Passed empty path', () => {
+			const folder = '';
+			expect(FileSystem.checkIfIsFileOrFolder(folder)).toEqual(undefined);
+		});
+	});
 });

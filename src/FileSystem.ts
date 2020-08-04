@@ -118,6 +118,9 @@ class FileSystem {
 	}
 
 	static checkIfIsFileOrFolder(path: string): string {
+		if (path.length === 0) {
+			return undefined;
+		}
 		const stats = fs.statSync(path);
 		if (stats.isDirectory()) {
 			return 'directory';

@@ -153,4 +153,40 @@ describe('Testing FileSystem', () => {
 			expect(FileSystem.checkIfIsFileOrFolder(folder)).toEqual(undefined);
 		});
 	});
+	describe('Tests for saveJSONToFile', () => {
+		test('Proper JSON object', () => {
+			const object = {
+				name: 'Me',
+				surname: 'Mine',
+				age: 'enough',
+			};
+			const file = './src/test/fileSystemTest/properJSONObject.json';
+			expect(FileSystem.saveJSONToFile(file, object)).toEqual(true);
+		});
+		test('Empty JSON object', () => {
+			const object = {};
+			const file = './src/test/fileSystemTest/emptyJSONObject.json';
+			expect(FileSystem.saveJSONToFile(file, object)).toEqual(true);
+		});
+		test('Passed empty string to save', () => {
+			const emptyString = '';
+			const file = './src/test/fileSystemTest/emptyString.json';
+			expect(FileSystem.saveJSONToFile(file, emptyString)).toEqual(true);
+		});
+		test('Passed undefined to save', () => {
+			const undefObject = undefined;
+			const file = './src/test/fileSystemTest/undefinedObject.json';
+			expect(FileSystem.saveJSONToFile(file, undefObject)).toEqual(false);
+		});
+		test('Passed empty path to file', () => {
+			const object = {};
+			const file = '';
+			expect(FileSystem.saveJSONToFile(file, object)).toEqual(false);
+		});
+		test('Passed path to folder', () => {
+			const object = {};
+			const folder = './src/test/fileSystemTest/folderAlreadyExists';
+			expect(FileSystem.saveJSONToFile(folder, object)).toEqual(false);
+		});
+	});
 });

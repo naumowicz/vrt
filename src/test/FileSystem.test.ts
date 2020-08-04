@@ -162,16 +162,34 @@ describe('Testing FileSystem', () => {
 			};
 			const file = './src/test/fileSystemTest/properJSONObject.json';
 			expect(FileSystem.saveJSONToFile(file, object)).toEqual(true);
+			expect(FileSystem.readFile(file).fileContent.toString()).toEqual(
+				'{"name":"Me","surname":"Mine","age":"enough"}',
+			);
+
+			//cleanup
+			expect(FileSystem.deleteFile(file)).toEqual(true);
 		});
 		test('Empty JSON object', () => {
 			const object = {};
 			const file = './src/test/fileSystemTest/emptyJSONObject.json';
 			expect(FileSystem.saveJSONToFile(file, object)).toEqual(true);
+			expect(FileSystem.readFile(file).fileContent.toString()).toEqual(
+				'{}',
+			);
+
+			//cleanup
+			expect(FileSystem.deleteFile(file)).toEqual(true);
 		});
 		test('Passed empty string to save', () => {
 			const emptyString = '';
 			const file = './src/test/fileSystemTest/emptyString.json';
 			expect(FileSystem.saveJSONToFile(file, emptyString)).toEqual(true);
+			expect(FileSystem.readFile(file).fileContent.toString()).toEqual(
+				'""',
+			);
+
+			//cleanup
+			expect(FileSystem.deleteFile(file)).toEqual(true);
 		});
 		test('Passed empty path to file', () => {
 			const object = {};

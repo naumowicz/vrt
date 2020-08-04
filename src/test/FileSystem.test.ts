@@ -173,11 +173,6 @@ describe('Testing FileSystem', () => {
 			const file = './src/test/fileSystemTest/emptyString.json';
 			expect(FileSystem.saveJSONToFile(file, emptyString)).toEqual(true);
 		});
-		test('Passed undefined to save', () => {
-			const undefObject = undefined;
-			const file = './src/test/fileSystemTest/undefinedObject.json';
-			expect(FileSystem.saveJSONToFile(file, undefObject)).toEqual(false);
-		});
 		test('Passed empty path to file', () => {
 			const object = {};
 			const file = '';

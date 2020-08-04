@@ -77,4 +77,41 @@ describe('Testing FileSystem', () => {
 			expect(result).toEqual(false);
 		});
 	});
+
+	describe('Test for appendToFile', () => {
+		test('File does not exists', () => {
+			const result = FileSystem.appendToFile(
+				'./src/test/fileSystemTest/fileDoesNotExists.txt',
+				'a',
+			);
+			expect(result).toEqual(false);
+		});
+		test('Given path is folder', () => {
+			const result = FileSystem.appendToFile(
+				'./src/test/fileSystemTest',
+				'a',
+			);
+			expect(result).toEqual(false);
+		});
+		test('Given path is empty string', () => {
+			const result = FileSystem.appendToFile('', 'a');
+			expect(result).toEqual(false);
+		});
+		test('Everything is saved properly', () => {
+			const file = './src/test/fileSystemTest/appendingToFile.txt';
+			const result = FileSystem.appendToFile(file, 'a');
+			expect(result).toEqual(true);
+
+			//cleanup
+			expect(FileSystem.writeFile(file, Buffer.from('a'))).toEqual(true);
+			expect(FileSystem.readFile(file).fileContent).toEqual('a');
+		});
+		test('Given content to append is empty string', () => {
+			const result = FileSystem.appendToFile(
+				'./src/test/fileSystemTest/appendingToFile.txt',
+				'',
+			);
+			expect(result).toEqual(false);
+		});
+	});
 });

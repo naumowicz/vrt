@@ -80,11 +80,12 @@ describe('Testing FileSystem', () => {
 
 	describe('Test for appendToFile', () => {
 		test('File does not exists', () => {
-			const result = FileSystem.appendToFile(
-				'./src/test/fileSystemTest/fileDoesNotExists.txt',
-				'a',
-			);
-			expect(result).toEqual(false);
+			const file = './src/test/fileSystemTest/fileDoesNotExists.txt';
+			const result = FileSystem.appendToFile(file, 'a');
+			expect(result).toEqual(true);
+
+			//cleanup
+			expect(FileSystem.deleteFile(file)).toEqual(true);
 		});
 		test('Given path is folder', () => {
 			const result = FileSystem.appendToFile(
@@ -104,14 +105,17 @@ describe('Testing FileSystem', () => {
 
 			//cleanup
 			expect(FileSystem.writeFile(file, Buffer.from('a'))).toEqual(true);
-			expect(FileSystem.readFile(file).fileContent).toEqual('a');
+			expect(FileSystem.readFile(file).fileContent.toString()).toEqual(
+				'a',
+			);
 		});
 		test('Given content to append is empty string', () => {
-			const result = FileSystem.appendToFile(
-				'./src/test/fileSystemTest/appendingToFile.txt',
-				'',
+			const file = './src/test/fileSystemTest/appendingToFile.txt';
+			const result = FileSystem.appendToFile(file, '');
+			expect(result).toEqual(true);
+			expect(FileSystem.readFile(file).fileContent.toString()).toEqual(
+				'a',
 			);
-			expect(result).toEqual(false);
 		});
 	});
 });

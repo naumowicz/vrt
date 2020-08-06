@@ -23,7 +23,7 @@ class LocalLog {
 		//add time stamp
 		this.pathToLocalLogFile = `${pathToLocalLogFolfer}/${nameOfLocalLogFile}`;
 		FileSystem.createFolder(pathToLocalLogFolfer);
-		FileSystem.createFile(pathToLocalLogFolfer);
+		FileSystem.writeFile(pathToLocalLogFolfer, Buffer.from(''));
 	}
 
 	error(error: string): void {

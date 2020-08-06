@@ -10,27 +10,27 @@ class PathHelper {
 
 	static getActualStatusFolder(pathToBaselineImage: string): string {
 		return Path.normalizePath(
-			`${pathToBaselineImage}/../../${globalSettings.actualStatusFolderName}`,
+			`${pathToBaselineImage}/../${globalSettings.actualStatusFolderName}`,
 		);
 	}
 
 	static getActualStatusImage(pathToBaselineImage: string): string {
 		const fileName = Path.parsePath(pathToBaselineImage).base;
 		return Path.normalizePath(
-			`${pathToBaselineImage}/../../${globalSettings.actualStatusFolderName}/${fileName}`,
+			`${pathToBaselineImage}/../${globalSettings.actualStatusFolderName}/${fileName}`,
 		);
 	}
 
 	static getOutputImage(pathToBaselineImage: string): string {
 		const fileName = Path.parsePath(pathToBaselineImage).base;
 		return Path.normalizePath(
-			`${pathToBaselineImage}/../../${globalSettings.outputFolderName}/${fileName}`,
+			`${pathToBaselineImage}/../${globalSettings.outputFolderName}/${fileName}`,
 		);
 	}
 
 	static getOutputFolder(pathToBaselineImage: string): string {
 		return Path.normalizePath(
-			`${pathToBaselineImage}/../../${globalSettings.outputFolderName}`,
+			`${pathToBaselineImage}/../${globalSettings.outputFolderName}`,
 		);
 	}
 }

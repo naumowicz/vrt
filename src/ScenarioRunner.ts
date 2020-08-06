@@ -49,6 +49,11 @@ class ScenarioRunner {
 	}
 
 	createFolders(): boolean {
+		if (this.scenario.imagesToAnalyze[0].length === 0) {
+			//fix me: report error
+			return false;
+		}
+
 		const folderController = new FolderController();
 		if (
 			folderController.createBaselineFolder(

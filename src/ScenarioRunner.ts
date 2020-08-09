@@ -15,7 +15,7 @@ class ScenarioRunner {
 		this.pathToScenario = pathToScenario;
 	}
 
-	loadScenarios(): boolean {
+	async loadScenarios(): Promise<boolean> {
 		if (
 			this.scenario.checkScenarioAvailability(this.pathToScenario) ===
 			false
@@ -24,7 +24,7 @@ class ScenarioRunner {
 			return false;
 		}
 
-		this.scenario.loadScenario(this.pathToScenario);
+		await this.scenario.loadScenario(this.pathToScenario);
 
 		if (this.scenario.isScenarioParsedSuccessfully() === false) {
 			//log error
@@ -49,7 +49,7 @@ class ScenarioRunner {
 	}
 
 	createFolders(): boolean {
-		if (this.scenario.imagesToAnalyze[0].length === 0) {
+		if (this.scenario.imagesToAnalyze.length === 0) {
 			//fix me: report error
 			return false;
 		}

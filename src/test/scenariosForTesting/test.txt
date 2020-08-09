@@ -1,0 +1,4 @@
+./src/test/scenariosForTesting/test1/1.png
+https://en.wikipedia.org/wiki/Dog
+https://en.wikipedia.org/wiki/Wolf
+END

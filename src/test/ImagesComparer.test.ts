@@ -24,7 +24,7 @@ describe('Testing ImagesComparer', () => {
 			Path.resolvePath(expectedImagePath),
 		);
 
-		expect(result.buffer).toEqual(expectedImage.fileContent);
+		expect(result.resultBuffer).toEqual(expectedImage.fileContent);
 	});
 	test('Comparing two different images', async () => {
 		const imagesComparer = new ImagesComparer();
@@ -48,6 +48,8 @@ describe('Testing ImagesComparer', () => {
 			Path.resolvePath(expectedImagePath),
 		);
 
-		expect(result.buffer.equals(expectedImage.fileContent)).toEqual(true);
+		expect(result.resultBuffer.equals(expectedImage.fileContent)).toEqual(
+			true,
+		);
 	});
 });

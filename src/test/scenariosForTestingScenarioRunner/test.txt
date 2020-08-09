@@ -1,4 +1,4 @@
-./src/test/scenariosForTesting/test1/1.png
+./src/test/scenariosForTestingScenarioRunner/test1/1.png
 https://en.wikipedia.org/wiki/Dog
 https://en.wikipedia.org/wiki/Wolf
 END

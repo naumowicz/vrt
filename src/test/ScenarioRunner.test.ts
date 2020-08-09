@@ -9,14 +9,14 @@ describe('Tests for ScenarioRunner', () => {
 	describe('Testing loadScenarios', () => {
 		test('Proper scenario', async () => {
 			const scenarioRunner = new ScenarioRunner(
-				'./src/test/scenariosForTesting/test.txt',
+				'./src/test/scenariosForTestingScenarioRunner/test.txt',
 			);
 
 			expect(await scenarioRunner.loadScenarios()).toEqual(true);
 		});
 		test('Scenario does not exsts', async () => {
 			const scenarioRunner = new ScenarioRunner(
-				'./src/test/scenariosForTesting/doesNotExists.txt',
+				'./src/test/scenariosForTestingScenarioRunner/doesNotExists.txt',
 			);
 
 			expect(await scenarioRunner.loadScenarios()).toEqual(false);
@@ -26,11 +26,18 @@ describe('Tests for ScenarioRunner', () => {
 
 			expect(await scenarioRunner.loadScenarios()).toEqual(false);
 		});
+		test('Passed path to scenario with issues', async () => {
+			const scenarioRunner = new ScenarioRunner(
+				'./src/test/scenarioTest/scenarioWithIssues.txt',
+			);
+
+			expect(await scenarioRunner.loadScenarios()).toEqual(false);
+		});
 	});
 	describe('Testing createFolders', () => {
 		test('Proper scenario', async () => {
 			const scenarioRunner = new ScenarioRunner(
-				'./src/test/scenariosForTesting/test.txt',
+				'./src/test/scenariosForTestingScenarioRunner/test.txt',
 			);
 
 			await scenarioRunner.loadScenarios();
@@ -40,13 +47,13 @@ describe('Tests for ScenarioRunner', () => {
 			//cleanup
 			expect(
 				FileSystem.deleteFolderRecursively(
-					'./src/test/scenariosForTesting/test1',
+					'./src/test/scenariosForTestingScenarioRunner/test1',
 				),
 			).toEqual(true);
 		});
 		test('Scenario does not exsts', async () => {
 			const scenarioRunner = new ScenarioRunner(
-				'./src/test/scenariosForTesting/doesNotExists.txt',
+				'./src/test/scenariosForTestingScenarioRunner/doesNotExists.txt',
 			);
 
 			await scenarioRunner.loadScenarios();
@@ -57,6 +64,18 @@ describe('Tests for ScenarioRunner', () => {
 			const scenarioRunner = new ScenarioRunner('');
 
 			await scenarioRunner.loadScenarios();
+
+			expect(scenarioRunner.createFolders()).toEqual(false);
+		});
+		test('List imagesToAnalyze is empty', async () => {
+			const scenarioRunner = new ScenarioRunner('');
+
+			await scenarioRunner.loadScenarios();
+
+			scenarioRunner.scenario.imagesToAnalyze = [
+				'.',
+				'./src/test/nothing',
+			];
 
 			expect(scenarioRunner.createFolders()).toEqual(false);
 		});

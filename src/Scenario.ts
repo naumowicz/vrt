@@ -4,8 +4,8 @@ import FileSystem from './FileSystem';
 class Scenario {
 	scenario: Array<string>;
 	steps: Array<Array<string>>;
-	imagesToAnalyze: string[];
-	errorLogs: string[];
+	imagesToAnalyze: Array<string>;
+	errorLogs: Array<string>;
 
 	constructor() {
 		this.scenario = [];

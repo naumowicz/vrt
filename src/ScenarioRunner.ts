@@ -134,7 +134,7 @@ class ScenarioRunner {
 		} else {
 			return {
 				rawMisMatchPercentage: 0,
-				misMatchPercentage: '0',
+				misMatchPercentage: '0.00',
 				resultBuffer: Buffer.from(''),
 			};
 		}

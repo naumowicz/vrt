@@ -146,11 +146,7 @@ class ScenarioRunner {
 			loadedImages.comparedImageBuffer,
 		);
 
-		return {
-			rawMisMatchPercentage: result.rawMisMatchPercentage,
-			misMatchPercentage: result.misMatchPercentage,
-			resultBuffer: result.buffer,
-		};
+		return result;
 	}
 
 	loadImagesForComparisment(

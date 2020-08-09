@@ -9,17 +9,18 @@ class ImagesComparer {
 	): Promise<{
 		rawMisMatchPercentage: number;
 		misMatchPercentage: string;
-		buffer: Buffer;
+		resultBuffer: Buffer;
 	}> {
 		const resemble = new Resemble(
 			Path.resolvePath(globalSettings.resembleConfigPath),
 		);
 		const result = await resemble.getDiff(originalImage, imageToCompare);
-		const rawMisMatchPercentage = result.rawMisMatchPercentage;
-		const misMatchPercentage = result.misMatchPercentage;
-		const buffer = result.getBuffer();
 
-		return { rawMisMatchPercentage, misMatchPercentage, buffer };
+		return {
+			rawMisMatchPercentage: result.rawMisMatchPercentage,
+			misMatchPercentage: result.misMatchPercentage,
+			resultBuffer: result.getBuffer(),
+		};
 	}
 }
 

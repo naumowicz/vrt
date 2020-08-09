@@ -125,40 +125,74 @@ class ScenarioRunner {
 		misMatchPercentage: string;
 		resultBuffer: Buffer;
 	}> {
-		const originalImageBuffer = FileSystem.readFile(pathToOriginalImage);
-		if (originalImageBuffer.status == false) {
-			//log error
-			return {
-				rawMisMatchPercentage: 0,
-				misMatchPercentage: '0',
-				resultBuffer: new Buffer(''),
-			};
-		}
+		const loadedImages = this.loadImagesForComparisment(
+			pathToOriginalImage,
+			pathToComaredImage,
+		);
 
-		const comparedImageBuffer = FileSystem.readFile(pathToComaredImage);
-		if (comparedImageBuffer.status == false) {
-			//log error
+		if (loadedImages.status === 'ok') {
+		} else {
 			return {
 				rawMisMatchPercentage: 0,
 				misMatchPercentage: '0',
-				resultBuffer: new Buffer(''),
+				resultBuffer: Buffer.from(''),
 			};
 		}
 
 		const imagesComparer = new ImagesComparer();
 
 		const result = await imagesComparer.compareImages(
-			originalImageBuffer.fileContent,
-			comparedImageBuffer.fileContent,
+			loadedImages.originalImageBuffer,
+			loadedImages.comparedImageBuffer,
 		);
-		const rawMisMatchPercentage = result.rawMisMatchPercentage;
-		const misMatchPercentage = result.misMatchPercentage;
-		const resultBuffer = result.buffer;
 
 		return {
-			rawMisMatchPercentage: rawMisMatchPercentage,
-			misMatchPercentage: misMatchPercentage,
-			resultBuffer: resultBuffer,
+			rawMisMatchPercentage: result.rawMisMatchPercentage,
+			misMatchPercentage: result.misMatchPercentage,
+			resultBuffer: result.buffer,
+		};
+	}
+
+	loadImagesForComparisment(
+		pathToOriginalImage: string,
+		pathToComaredImage: string,
+	): {
+		status: string;
+		originalImageBuffer: Buffer;
+		comparedImageBuffer: Buffer;
+	} {
+		const originalImage = FileSystem.readFile(pathToOriginalImage);
+		if (originalImage.status == false) {
+			return this.returnEmptyComparisment(
+				`Issue with ${pathToOriginalImage}`, //fix me: use this message
+			);
+		}
+
+		const comparedImage = FileSystem.readFile(pathToComaredImage);
+		if (comparedImage.status == false) {
+			return this.returnEmptyComparisment(
+				`Issue with ${pathToComaredImage}`, //fix me: use this message
+			);
+		}
+
+		return {
+			status: 'ok',
+			originalImageBuffer: originalImage.fileContent,
+			comparedImageBuffer: comparedImage.fileContent,
+		};
+	}
+
+	returnEmptyComparisment(
+		info: string,
+	): {
+		status: string;
+		originalImageBuffer: Buffer;
+		comparedImageBuffer: Buffer;
+	} {
+		return {
+			status: info,
+			originalImageBuffer: Buffer.from(''),
+			comparedImageBuffer: Buffer.from(''),
 		};
 	}
 }

@@ -160,14 +160,14 @@ class ScenarioRunner {
 		const originalImage = FileSystem.readFile(pathToOriginalImage);
 		if (originalImage.status == false) {
 			return this.returnEmptyComparisment(
-				`Issue with ${pathToOriginalImage}`, //fix me: use this message
+				`Issue with file ->${pathToOriginalImage}<-`, //fix me: use this message
 			);
 		}
 
 		const comparedImage = FileSystem.readFile(pathToComaredImage);
 		if (comparedImage.status == false) {
 			return this.returnEmptyComparisment(
-				`Issue with ${pathToComaredImage}`, //fix me: use this message
+				`Issue with file ->${pathToComaredImage}<-`, //fix me: use this message
 			);
 		}
 

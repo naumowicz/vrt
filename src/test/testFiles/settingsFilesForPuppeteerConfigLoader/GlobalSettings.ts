@@ -11,9 +11,9 @@ class GlobalSettings {
 		this.tasks = './tasks.json';
 		this.enableConsoleLogger = true;
 		this.puppeteerConfigPath =
-			'./src/test/testFiles/settingsFiles/PuppeteerConfig.json';
+			'./src/test/testFiles/settingsFilesForPuppeteerConfigLoader/PuppeteerConfig.json';
 		this.resembleConfigPath =
-			'./src/test/testFiles/settingsFiles/ResembleConfig.json';
+			'./src/test/testFiles/settingsFilesForPuppeteerConfigLoader/ResembleConfig.json';
 		this.actualStatusFolderName = 'actualStatus';
 		this.outputFolderName = 'output';
 		this.numberOfThreads = 1;

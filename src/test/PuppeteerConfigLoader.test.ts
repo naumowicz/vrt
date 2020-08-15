@@ -1,5 +1,5 @@
 import PuppeteerConfigLoader from '../ConfigLoaders/PuppeteerConfigLoader';
-import TestGlobalSettings from './testFiles/settingsFiles/GlobalSettings';
+import TestGlobalSettings from './testFiles/settingsFilesForPuppeteerConfigLoader/GlobalSettings';
 
 describe('Tests for PuppeteerConfigLoader', () => {
 	describe('Empty string to files', () => {

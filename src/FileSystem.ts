@@ -129,11 +129,11 @@ class FileSystem {
 		}
 	}
 
-	static getFileSize(path: string): string {
+	static getFileSize(path: string): { status: boolean; size: number } {
 		if (this.checkAvailability(path)) {
-			return fs.statSync(path)['size'].toString();
+			return { status: true, size: fs.statSync(path)['size'] };
 		} else {
-			return 'file not available';
+			return { status: false, size: 0 };
 		}
 	}
 }

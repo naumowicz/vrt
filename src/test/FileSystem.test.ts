@@ -202,4 +202,20 @@ describe('Testing FileSystem', () => {
 			expect(FileSystem.saveJSONToFile(folder, object)).toEqual(false);
 		});
 	});
+	describe('Testing getFileSize', () => {
+		test('File does not exists', () => {
+			expect(FileSystem.getFileSize('./src/test/doesNotExists')).toEqual({
+				status: false,
+				size: 0,
+			});
+		});
+		test('File exists', () => {
+			expect(FileSystem.getFileSize('./src/test/testimage1.png')).toEqual(
+				{
+					status: true,
+					size: 16581,
+				},
+			);
+		});
+	});
 });

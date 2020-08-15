@@ -151,7 +151,7 @@ describe('Testing VRTPuppeteer', () => {
 			vrtPuppeteer = null;
 
 			expect(
-				parseInt(FileSystem.getFileSize(pathToScreenshot)) > 1000,
+				FileSystem.getFileSize(pathToScreenshot).size > 1000,
 			).toEqual(true);
 
 			//cleanup

@@ -1,0 +1,8 @@
+{
+	"puppeteerStartsMaximized": false,
+	"puppeteerIsHeadless": true,
+	"puppeteerXViewport": 800,
+	"puppeteerYViewport": 600,
+	"puppeteerGoToWaitUntil": "domcontentloaded",
+	"puppeteerFullPageScreenshot": false
+}

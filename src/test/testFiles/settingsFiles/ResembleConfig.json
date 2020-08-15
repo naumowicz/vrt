@@ -1,0 +1,8 @@
+{
+	"red": 255,
+	"green": 0,
+	"blue": 255,
+	"errorType": "movement",
+	"transparency": 0.3,
+	"ignore": "nothing"
+}

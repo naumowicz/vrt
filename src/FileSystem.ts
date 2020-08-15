@@ -128,6 +128,14 @@ class FileSystem {
 			return 'file';
 		}
 	}
+
+	static getFileSize(path: string): string {
+		if (this.checkAvailability(path)) {
+			return fs.statSync(path)['size'].toString();
+		} else {
+			return 'file not available';
+		}
+	}
 }
 
 export default FileSystem;

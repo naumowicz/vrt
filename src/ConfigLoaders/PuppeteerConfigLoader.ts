@@ -22,11 +22,14 @@ class PuppeteerConfigLoader {
 		if (rawFile.status) {
 			this.puppeteerConfig = JSON.parse(rawFile.fileContent.toString());
 		} else {
-			this.puppeteerConfig.puppeteerStartsMaximized = true;
-			this.puppeteerConfig.puppeteerIsHeadless = false;
-			this.puppeteerConfig.puppeteerXViewport = 1920;
-			this.puppeteerConfig.puppeteerYViewport = 1080;
-			this.puppeteerConfig.puppeteerGoToWaitUntil = 'networkidle0';
+			this.puppeteerConfig = {
+				puppeteerStartsMaximized: true,
+				puppeteerIsHeadless: false,
+				puppeteerXViewport: 1920,
+				puppeteerYViewport: 1080,
+				puppeteerGoToWaitUntil: 'networkidle0',
+				puppeteerFullPageScreenshot: true,
+			};
 		}
 	}
 

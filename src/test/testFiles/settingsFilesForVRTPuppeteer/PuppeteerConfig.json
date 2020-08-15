@@ -1,0 +1,8 @@
+{
+	"puppeteerStartsMaximized": true,
+	"puppeteerIsHeadless": false,
+	"puppeteerXViewport": 1920,
+	"puppeteerYViewport": 1080,
+	"puppeteerGoToWaitUntil": "networkidle0",
+	"puppeteerFullPageScreenshot": true
+}

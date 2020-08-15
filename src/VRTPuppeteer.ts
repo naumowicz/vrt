@@ -15,7 +15,7 @@ class VRTPuppeteer {
 		);
 	}
 
-	async start(): Promise<void> {
+	async start(): Promise<boolean> {
 		const receivedArgs = [];
 		if (this.puppeteerConfig.isWindowsMaximized) {
 			receivedArgs.push(puppeteerArgs.startMaximized);
@@ -34,24 +34,42 @@ class VRTPuppeteer {
 		});
 
 		this.pendingXHR = new PendingXHR(this.page);
+
+		return true;
 	}
 
-	async goto(url: string): Promise<void> {
+	async goto(url: string): Promise<boolean> {
 		await this.page.goto(url, {
 			waitUntil: this.puppeteerConfig.getGoToWaitUntil(),
 		});
 		await this.pendingXHR.waitForAllXhrFinished();
+
+		return true;
 	}
 
-	async screenshot(destinationPath: string): Promise<void> {
+	async screenshot(destinationPath: string): Promise<boolean> {
 		await this.page.screenshot({
 			path: destinationPath,
 			fullPage: this.puppeteerConfig.isFullPageScreenshotUsed(),
 		});
+
+		return true;
 	}
 
-	async closeBrowser(): Promise<void> {
+	async closeBrowser(): Promise<boolean> {
 		await this.browser.close();
+		return true;
+	}
+
+	getViewportDetails(): {
+		width: number;
+		height: number;
+		deviceScaleFactor?: number;
+		isMobile?: boolean;
+		hasTouch?: boolean;
+		isLandscape?: boolean;
+	} {
+		return this.page.viewport();
 	}
 }
 

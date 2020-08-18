@@ -61,7 +61,7 @@ class ScenarioRunner {
 		if (
 			folderController.createBaselineFolder(
 				PathHelper.getBaselineFolder(this.scenario.imagesToAnalyze[0]),
-			) == false
+			) === false
 		) {
 			//log error
 			return false;
@@ -73,7 +73,7 @@ class ScenarioRunner {
 				PathHelper.getActualStatusFolder(
 					this.scenario.imagesToAnalyze[0],
 				),
-			) == false
+			) === false
 		) {
 			//log error
 			return false;

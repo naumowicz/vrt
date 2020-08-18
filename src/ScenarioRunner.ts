@@ -4,6 +4,8 @@ import Puppeteer from './VRTPuppeteer';
 import ImagesComparer from './ImagesComparer';
 import FileSystem from './FileSystem';
 import PathHelper from './Helpers/PathHelper';
+import VRTPuppeteer from './VRTPuppeteer';
+import globalSettings from '../GlobalSettings';
 
 class ScenarioRunner {
 	scenario: Scenario;
@@ -13,6 +15,7 @@ class ScenarioRunner {
 	constructor(pathToScenario: string) {
 		this.scenario = new Scenario();
 		this.pathToScenario = pathToScenario;
+		this.puppeteer = new VRTPuppeteer(globalSettings.puppeteerConfigPath);
 	}
 
 	async loadScenarios(): Promise<boolean> {

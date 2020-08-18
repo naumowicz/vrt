@@ -92,7 +92,7 @@ class TasksManager {
 	async startVRT(): Promise<void> {
 		process.on('message', async (receivedTask) => {
 			const scenarioRunner = new ScenarioRunner(receivedTask);
-			if (scenarioRunner.loadScenarios()) {
+			if (await scenarioRunner.loadScenarios()) {
 				await scenarioRunner.runScenarios();
 			} else {
 				return;

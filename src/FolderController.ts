@@ -2,7 +2,11 @@ import FileSystem from './FileSystem';
 
 class FolderController {
 	createBaselineFolder(pathToBaselineFolder: string): boolean {
-		return FileSystem.createFolder(pathToBaselineFolder);
+		if (FileSystem.checkAvailability(pathToBaselineFolder)) {
+			return true;
+		} else {
+			return FileSystem.createFolder(pathToBaselineFolder);
+		}
 	}
 
 	recreateOutputAndActualStatusFolders(

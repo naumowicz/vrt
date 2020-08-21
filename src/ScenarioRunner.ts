@@ -38,7 +38,7 @@ class ScenarioRunner {
 	}
 
 	async runScenarios(): Promise<boolean> {
-		if (this.createFolders() == false) {
+		if (this.createFolders() === false) {
 			return false;
 		}
 

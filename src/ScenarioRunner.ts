@@ -44,7 +44,7 @@ class ScenarioRunner {
 
 		await this.puppeteer.start();
 
-		this.runner();
+		await this.runner();
 
 		await this.puppeteer.closeBrowser();
 

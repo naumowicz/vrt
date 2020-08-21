@@ -17,7 +17,7 @@ class VRTPuppeteer {
 
 	async start(): Promise<boolean> {
 		const receivedArgs = [];
-		if (this.puppeteerConfig.isWindowsMaximized) {
+		if (this.puppeteerConfig.isWindowsMaximized()) {
 			receivedArgs.push(puppeteerArgs.startMaximized);
 		}
 

@@ -102,13 +102,6 @@ class TasksManager {
 			}
 			process.exit(1);
 		});
-
-		// const scenarioRunner = new ScenarioRunner(receivedTask);
-		// if (scenarioRunner.loadScenarios()) {
-		// 	await scenarioRunner.runScenarios();
-		// } else {
-		// 	return;
-		// }
 	}
 
 	async run(): Promise<void> {

@@ -91,12 +91,16 @@ class TasksManager {
 
 	async startVRT(): Promise<void> {
 		process.on('message', async (receivedTask) => {
+			console.log(
+				`Worker ${worker.process.pid} received task ${receivedTask}`,
+			);
 			const scenarioRunner = new ScenarioRunner(receivedTask);
 			if (await scenarioRunner.loadScenarios()) {
 				await scenarioRunner.runScenarios();
 			} else {
-				return;
+				process.exit(-1);
 			}
+			process.exit(1);
 		});
 
 		// const scenarioRunner = new ScenarioRunner(receivedTask);

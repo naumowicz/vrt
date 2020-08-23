@@ -45,9 +45,6 @@ class TasksManager {
 				console.log(
 					`Master sent task: ${tasks.fileContent[tasksTakenCounter]}`,
 				);
-			} else {
-				//todo:
-				//finish? kill?
 			}
 
 			// to receive messages from worker process

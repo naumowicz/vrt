@@ -79,7 +79,7 @@ class TasksManager {
 			console.log('Starting a new worker');
 			this.clusterWorkers.push(cluster.fork());
 			this.clusterWorkers[i].send(
-				this.tasks.fileContent[this.tasksTakenCounter++],
+				this.tasks.fileContent[this.tasksTakenCounter],
 			);
 			//fixme: debug loger
 			console.log(
@@ -87,6 +87,7 @@ class TasksManager {
 					this.tasks.fileContent[this.tasksTakenCounter]
 				}`,
 			);
+			this.tasksTakenCounter++;
 		}
 	}
 

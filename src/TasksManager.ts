@@ -78,14 +78,6 @@ class TasksManager {
 					tasks.fileContent[tasksTakenCounter++],
 				);
 			}
-
-			// to receive messages from worker process
-			// clusterWorkers[this.clusterWorkers.length - 1].on('message', function (
-			// 	message,
-			// ) {
-			// 	logger.postMessage(message);
-			// 	// console.log(message);
-			// });
 		});
 	}
 

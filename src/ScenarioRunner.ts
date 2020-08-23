@@ -88,7 +88,6 @@ class ScenarioRunner {
 			for (const substep of this.scenario.steps[i]) {
 				await this.puppeteer.goto(substep);
 			}
-			// await this.puppeteer.screenshot(this.scenario.imagesToAnalyze[i]);
 
 			if (
 				//baseline exsists

@@ -28,6 +28,7 @@ class TasksManager {
 	setUpCluster(): void {
 		// const numCores = require('os').cpus().length;
 		const numCores = globalSettings.numberOfThreads;
+		//fixme: debug loger
 		console.log('Master cluster setting up ' + numCores + ' workers');
 		//todo: fix me
 		// const logger = new Worker('./Logger.js');
@@ -50,6 +51,7 @@ class TasksManager {
 
 		// process is clustered on a core and process id is assigned
 		cluster.on('online', (clusterWorker) => {
+			//fixme: debug loger
 			console.log(
 				'Worker ' + clusterWorker.process.pid + ' is listening',
 			);
@@ -57,6 +59,7 @@ class TasksManager {
 
 		// if any of the worker process dies then start a new one by simply forking another one
 		cluster.on('exit', (worker, code, signal) => {
+			//fixme: debug loger
 			console.log(
 				'Worker ' +
 					worker.process.pid +
@@ -72,11 +75,13 @@ class TasksManager {
 
 	startNewClusterWorker(i: number): void {
 		if (this.tasksTakenCounter < this.numberOfTasks) {
+			//fixme: debug loger
 			console.log('Starting a new worker');
 			this.clusterWorkers.push(cluster.fork());
 			this.clusterWorkers[i].send(
 				this.tasks.fileContent[this.tasksTakenCounter++],
 			);
+			//fixme: debug loger
 			console.log(
 				`Master sent task: ${
 					this.tasks.fileContent[this.tasksTakenCounter]
@@ -87,6 +92,7 @@ class TasksManager {
 
 	async startVRT(): Promise<void> {
 		process.on('message', async (receivedTask) => {
+			//fixme: debug loger
 			console.log(
 				`Worker ${workerFromCluster.process.pid} received task ${receivedTask}`,
 			);

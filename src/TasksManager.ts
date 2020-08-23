@@ -39,6 +39,9 @@ class TasksManager {
 
 			if (tasksTakenCounter < numberOfTasks) {
 				this.clusterWorkers.push(cluster.fork());
+				console.log(
+					`Master sent task: ${tasks.fileContent[tasksTakenCounter]}`,
+				);
 				this.clusterWorkers[i].send(
 					tasks.fileContent[tasksTakenCounter++],
 				);

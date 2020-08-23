@@ -1,4 +1,4 @@
-import cluster from 'cluster';
+import cluster, { worker as workerFromCluster } from 'cluster';
 import { Worker } from 'worker_threads';
 import globalSettings from '../GlobalSettings';
 import ScenarioRunner from './ScenarioRunner';
@@ -87,7 +87,7 @@ class TasksManager {
 	async startVRT(): Promise<void> {
 		process.on('message', async (receivedTask) => {
 			console.log(
-				`Worker ${worker.process.pid} received task ${receivedTask}`,
+				`Worker ${workerFromCluster.process.pid} received task ${receivedTask}`,
 			);
 			const scenarioRunner = new ScenarioRunner(receivedTask);
 			if (await scenarioRunner.loadScenarios()) {

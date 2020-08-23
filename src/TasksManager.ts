@@ -6,8 +6,23 @@ import FileSystem from './FileSystem';
 
 class TasksManager {
 	clusterWorkers: Array<cluster.Worker>;
+	tasks: { status: boolean; fileContent: Array<string> };
+	numberOfTasks: number;
+	tasksTakenCounter: number;
 	constructor() {
 		this.clusterWorkers = [];
+
+		//load tasks file
+		this.tasks = FileSystem.readJSONFile(globalSettings.tasks);
+
+		//tasks loaded properly
+		if (this.tasks.status) {
+			this.numberOfTasks = this.tasks.fileContent.length;
+			this.tasksTakenCounter = 0;
+		} else {
+			//todo:
+			// return error
+		}
 	}
 
 	setUpCluster(): void {
@@ -17,19 +32,7 @@ class TasksManager {
 		//todo: fix me
 		// const logger = new Worker('./Logger.js');
 
-		let tasksTakenCounter = 0;
 		let i = 0;
-
-		//load tasks file
-		const tasks = FileSystem.readJSONFile(globalSettings.tasks);
-
-		if (tasks.status) {
-		} else {
-			//todo:
-			// return error
-		}
-
-		const numberOfTasks = tasks.fileContent.length;
 
 		// iterate on number of cores need to be utilized by an application
 		// current example will utilize all of them
@@ -37,15 +40,7 @@ class TasksManager {
 			// creating workers and pushing reference in an array
 			// these references can be used to receive messages from workers
 
-			if (tasksTakenCounter < numberOfTasks) {
-				this.clusterWorkers.push(cluster.fork());
-				this.clusterWorkers[i].send(
-					tasks.fileContent[tasksTakenCounter++],
-				);
-				console.log(
-					`Master sent task: ${tasks.fileContent[tasksTakenCounter]}`,
-				);
-			}
+			this.startNewClusterWorker(i);
 
 			// to receive messages from worker process
 			// clusterWorkers[i].on('message', function (message) {
@@ -71,14 +66,23 @@ class TasksManager {
 					signal,
 			);
 
-			if (tasksTakenCounter < numberOfTasks) {
-				console.log('Starting a new worker');
-				this.clusterWorkers.push(cluster.fork());
-				this.clusterWorkers[++i].send(
-					tasks.fileContent[tasksTakenCounter++],
-				);
-			}
+			this.startNewClusterWorker(i);
 		});
+	}
+
+	startNewClusterWorker(i: number): void {
+		if (this.tasksTakenCounter < this.numberOfTasks) {
+			console.log('Starting a new worker');
+			this.clusterWorkers.push(cluster.fork());
+			this.clusterWorkers[i].send(
+				this.tasks.fileContent[this.tasksTakenCounter++],
+			);
+			console.log(
+				`Master sent task: ${
+					this.tasks.fileContent[this.tasksTakenCounter]
+				}`,
+			);
+		}
 	}
 
 	async startVRT(): Promise<void> {

@@ -85,7 +85,7 @@ class TasksManager {
 			console.log(
 				`Master sent task: ${
 					this.tasks.fileContent[this.tasksTakenCounter]
-				}`,
+				} to ${this.clusterWorkers[i].process.pid}`,
 			);
 			this.tasksTakenCounter++;
 		}

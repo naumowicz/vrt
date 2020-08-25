@@ -1,6 +1,6 @@
-./src/test/scenariosForTestingScenarioRunner/testRunner/2nd.png
+./src/test/scenariosForTestingScenarioRunner/testRunner/twoSteps/test1/2nd.png
 https://www.youtube.com/
 NEXT
-./src/test/scenariosForTestingScenarioRunner/testRunner/another2nd.png
+./src/test/scenariosForTestingScenarioRunner/testRunner/twoSteps/test2/another2nd.png
 https://www.facebook.com/
 END

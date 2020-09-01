@@ -1,5 +1,6 @@
 import ScenarioRunner from '../ScenarioRunner';
 import FileSystem from '../FileSystem';
+import testConfig from './TestConfig';
 
 const invalidPathToFile = './src/test/imageDoesNotExists.png';
 const testimage1 = './src/test/testimage1.png';
@@ -226,4 +227,48 @@ describe('Tests for ScenarioRunner', () => {
 			});
 		});
 	});
+	describe('Tests for runScenarios', () => {
+		test(
+			'One step scenario',
+			async () => {
+				const scenarioRunner = new ScenarioRunner(
+					'./src/test/scenariosForTestingScenarioRunner/onestep.txt',
+				);
+
+				await scenarioRunner.loadScenarios();
+
+				expect(await scenarioRunner.runScenarios()).toEqual(true);
+			},
+			testConfig.scenarioRunner,
+		);
+		test(
+			'Two step scenario',
+			async () => {
+				const scenarioRunner = new ScenarioRunner(
+					'./src/test/scenariosForTestingScenarioRunner/twosteps.txt',
+				);
+
+				await scenarioRunner.loadScenarios();
+
+				expect(await scenarioRunner.runScenarios()).toEqual(true);
+			},
+			testConfig.scenarioRunner,
+		);
+	});
+	// describe('Tests for runner', () => {
+	// 	test('One step scenario', async () => {
+	// 		const scenarioRunner = new ScenarioRunner(
+	// 			'./src/test/scenariosForTestingScenarioRunner/onestep.txt',
+	// 		);
+
+	// 		await scenarioRunner.loadScenarios();
+	// 	});
+	// 	test('Two step scenario', async () => {
+	// 		const scenarioRunner = new ScenarioRunner(
+	// 			'./src/test/scenariosForTestingScenarioRunner/twosteps.txt',
+	// 		);
+
+	// 		await scenarioRunner.loadScenarios();
+	// 	});
+	// });
 });

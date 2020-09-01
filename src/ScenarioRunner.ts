@@ -83,6 +83,7 @@ class ScenarioRunner {
 	}
 
 	async runner(): Promise<void> {
+		let imagesToAnalyzeCounter = 0;
 		for (let i = 0; i < this.scenario.steps.length; i++) {
 			// this.scenario.steps[i]; 1 step
 			for (const substep of this.scenario.steps[i]) {
@@ -94,17 +95,19 @@ class ScenarioRunner {
 				FileSystem.checkAvailability(this.scenario.imagesToAnalyze[i])
 			) {
 				const actualStatusPath = PathHelper.getActualStatusImage(
-					this.scenario.imagesToAnalyze[i],
+					this.scenario.imagesToAnalyze[imagesToAnalyzeCounter],
 				);
 				await this.puppeteer.screenshot(actualStatusPath);
 				const result = await this.compareImages(
-					this.scenario.imagesToAnalyze[i],
+					this.scenario.imagesToAnalyze[imagesToAnalyzeCounter],
 					actualStatusPath,
 				);
 
 				//save output file
 				FileSystem.writeFile(
-					PathHelper.getOutputImage(this.scenario.imagesToAnalyze[i]),
+					PathHelper.getOutputImage(
+						this.scenario.imagesToAnalyze[imagesToAnalyzeCounter],
+					),
 					result.resultBuffer,
 				);
 
@@ -112,10 +115,11 @@ class ScenarioRunner {
 			} else {
 				//baseline not exists yet
 				await this.puppeteer.screenshot(
-					this.scenario.imagesToAnalyze[i],
+					this.scenario.imagesToAnalyze[imagesToAnalyzeCounter],
 				);
 				//create baseline
 			}
+			imagesToAnalyzeCounter++;
 		}
 	}
 

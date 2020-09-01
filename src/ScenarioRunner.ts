@@ -92,7 +92,9 @@ class ScenarioRunner {
 
 			if (
 				//baseline exsists
-				FileSystem.checkAvailability(this.scenario.imagesToAnalyze[i])
+				FileSystem.checkAvailability(
+					this.scenario.imagesToAnalyze[imagesToAnalyzeCounter],
+				)
 			) {
 				const actualStatusPath = PathHelper.getActualStatusImage(
 					this.scenario.imagesToAnalyze[imagesToAnalyzeCounter],

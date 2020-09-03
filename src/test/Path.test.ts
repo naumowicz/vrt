@@ -104,8 +104,6 @@ describe('Test for path.relativePath features', () => {
 	test('Path to file in root directory', () => {
 		const dirname = Path.resolvePath(globalSettings.resembleConfigPath);
 
-		expect(dirname).toEqual(
-			'C:/Users/Mateusz/Desktop/vrt/ResembleConfig.json',
-		);
+		expect(dirname).toContain('/ResembleConfig.json');
 	});
 });

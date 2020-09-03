@@ -1,15 +1,13 @@
-import FolderControlller from '../FolderController';
+import FolderController from '../FolderController';
 import FileSystem from '../FileSystem';
 import Path from '../Path';
 
 describe('Testing FolderController', () => {
 	test('Test for creating baseline folder', () => {
-		const folderController = new FolderControlller();
-
 		const folderName = './src/test/testBaselineFolder';
 		const pathToFolder = Path.resolvePath(folderName);
 
-		folderController.createBaselineFolder(pathToFolder);
+		FolderController.createBaselineFolder(pathToFolder);
 
 		expect(FileSystem.checkAvailability(pathToFolder)).toEqual(true);
 
@@ -18,8 +16,6 @@ describe('Testing FolderController', () => {
 	});
 
 	test('Test for recreating output and actualStatus folders', () => {
-		const folderController = new FolderControlller();
-
 		const outputFolderName = './src/test/testOutputFolder';
 		//fixme: path.join:
 		const fileInOutputFolder = '/output.txt';
@@ -50,7 +46,7 @@ describe('Testing FolderController', () => {
 
 		//recreating folders by tested module
 		expect(
-			folderController.recreateOutputAndActualStatusFolders(
+			FolderController.recreateOutputAndActualStatusFolders(
 				pathToOutputFolder,
 				pathToActualStatusFolder,
 			),
@@ -72,8 +68,6 @@ describe('Testing FolderController', () => {
 	});
 
 	test('Recreate folders that do not exitst', () => {
-		const folderController = new FolderControlller();
-
 		const outputFolderName = './src/test/wrongTestOutputFolder';
 		const actualStatusFolderName = './src/test/wrongTestActualStatusFolder';
 
@@ -83,7 +77,7 @@ describe('Testing FolderController', () => {
 		);
 
 		expect(
-			folderController.recreateOutputAndActualStatusFolders(
+			FolderController.recreateOutputAndActualStatusFolders(
 				pathToOutputFolder,
 				pathToActualStatusFolder,
 			),

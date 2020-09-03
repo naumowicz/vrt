@@ -73,10 +73,7 @@ describe('Tests for ScenarioRunner', () => {
 
 			await scenarioRunner.loadScenarios();
 
-			scenarioRunner.scenario.imagesToAnalyze = [
-				'.',
-				'./src/test/nothing',
-			];
+			scenarioRunner.scenario.imagesToAnalyze = [];
 
 			expect(scenarioRunner.createFolders()).toEqual(false);
 		});

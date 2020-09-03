@@ -93,6 +93,16 @@ class FileSystem {
 		return true;
 	}
 
+	static createFolderRecursively(pathToFolder: string): boolean {
+		try {
+			fs.mkdirSync(pathToFolder, { recursive: true });
+		} catch (error) {
+			console.log(error);
+			return false;
+		}
+		return true;
+	}
+
 	static saveJSONToFile(pathToFile: string, data: unknown): boolean {
 		try {
 			fs.writeFileSync(pathToFile, JSON.stringify(data));

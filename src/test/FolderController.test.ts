@@ -27,8 +27,8 @@ describe('Testing FolderController', () => {
 		);
 
 		//creating test folders
-		expect(FileSystem.createFolder(outputFolderName)).toEqual(true);
-		expect(FileSystem.createFolder(actualStatusFolderName)).toEqual(true);
+		expect(FileSystem.createFolder(pathToOutputFolder)).toEqual(true);
+		expect(FileSystem.createFolder(pathToActualStatusFolder)).toEqual(true);
 
 		//creating files in generated folders
 		expect(

@@ -69,6 +69,9 @@ describe('Testing FileSystem', () => {
 
 			//cleanup
 			expect(FileSystem.createFolder(folder)).toEqual(true);
+			expect(
+				FileSystem.writeFile(`${folder}/.gitkeep`, Buffer.from('')),
+			).toEqual(true);
 		});
 		test('File passed as argument', () => {
 			const folder =

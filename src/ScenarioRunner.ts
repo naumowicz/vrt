@@ -57,27 +57,26 @@ class ScenarioRunner {
 			return false;
 		}
 
-		const folderController = new FolderController();
-		if (
-			folderController.createBaselineFolder(
-				PathHelper.getBaselineFolder(this.scenario.imagesToAnalyze[0]),
-			) === false
-		) {
-			//log error
-			return false;
-		}
+		this.scenario.imagesToAnalyze.forEach((imageToAnalyze) => {
+			if (
+				FolderController.createBaselineFolder(
+					PathHelper.getBaselineFolder(imageToAnalyze),
+				) === false
+			) {
+				//log error
+				return false;
+			}
 
-		if (
-			folderController.recreateOutputAndActualStatusFolders(
-				PathHelper.getOutputFolder(this.scenario.imagesToAnalyze[0]),
-				PathHelper.getActualStatusFolder(
-					this.scenario.imagesToAnalyze[0],
-				),
-			) === false
-		) {
-			//log error
-			return false;
-		}
+			if (
+				FolderController.recreateOutputAndActualStatusFolders(
+					PathHelper.getOutputFolder(imageToAnalyze),
+					PathHelper.getActualStatusFolder(imageToAnalyze),
+				) === false
+			) {
+				//log error
+				return false;
+			}
+		});
 
 		return true;
 	}

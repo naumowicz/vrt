@@ -5,7 +5,7 @@ class FolderController {
 		if (FileSystem.checkAvailability(pathToBaselineFolder)) {
 			return true;
 		} else {
-			return FileSystem.createFolder(pathToBaselineFolder);
+			return FileSystem.createFolderRecursively(pathToBaselineFolder);
 		}
 	}
 
@@ -28,8 +28,9 @@ class FolderController {
 		}
 
 		if (
-			FileSystem.createFolder(pathToOutputFolder) === false ||
-			FileSystem.createFolder(pathToActualStatusFolder) === false
+			FileSystem.createFolderRecursively(pathToOutputFolder) === false ||
+			FileSystem.createFolderRecursively(pathToActualStatusFolder) ===
+				false
 		) {
 			return false;
 		}

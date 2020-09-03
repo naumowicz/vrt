@@ -1,7 +1,7 @@
 import FileSystem from './FileSystem';
 
 class FolderController {
-	createBaselineFolder(pathToBaselineFolder: string): boolean {
+	static createBaselineFolder(pathToBaselineFolder: string): boolean {
 		if (FileSystem.checkAvailability(pathToBaselineFolder)) {
 			return true;
 		} else {
@@ -9,7 +9,7 @@ class FolderController {
 		}
 	}
 
-	recreateOutputAndActualStatusFolders(
+	static recreateOutputAndActualStatusFolders(
 		pathToOutputFolder: string,
 		pathToActualStatusFolder: string,
 	): boolean {

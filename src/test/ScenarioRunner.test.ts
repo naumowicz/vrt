@@ -235,6 +235,11 @@ describe('Tests for ScenarioRunner', () => {
 				await scenarioRunner.loadScenarios();
 
 				expect(await scenarioRunner.runScenarios()).toEqual(true);
+
+				//cleanup
+				FileSystem.deleteFolderRecursively(
+					'./src/test/scenariosForTestingScenarioRunner/testRunner/oneStep',
+				);
 			},
 			testConfig.scenarioRunner,
 		);
@@ -248,6 +253,11 @@ describe('Tests for ScenarioRunner', () => {
 				await scenarioRunner.loadScenarios();
 
 				expect(await scenarioRunner.runScenarios()).toEqual(true);
+
+				//cleanup
+				FileSystem.deleteFolderRecursively(
+					'./src/test/scenariosForTestingScenarioRunner/testRunner/twoSteps',
+				);
 			},
 			testConfig.scenarioRunner,
 		);

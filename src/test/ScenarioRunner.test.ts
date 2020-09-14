@@ -262,20 +262,4 @@ describe('Tests for ScenarioRunner', () => {
 			testConfig.scenarioRunner,
 		);
 	});
-	// describe('Tests for runner', () => {
-	// 	test('One step scenario', async () => {
-	// 		const scenarioRunner = new ScenarioRunner(
-	// 			'./src/test/scenariosForTestingScenarioRunner/onestep.txt',
-	// 		);
-
-	// 		await scenarioRunner.loadScenarios();
-	// 	});
-	// 	test('Two step scenario', async () => {
-	// 		const scenarioRunner = new ScenarioRunner(
-	// 			'./src/test/scenariosForTestingScenarioRunner/twosteps.txt',
-	// 		);
-
-	// 		await scenarioRunner.loadScenarios();
-	// 	});
-	// });
 });

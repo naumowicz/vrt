@@ -9,89 +9,85 @@ class TasksManager {
 	tasks: { status: boolean; fileContent: Array<string> };
 	numberOfTasks: number;
 	tasksTakenCounter: number;
+
 	constructor() {
 		this.clusterWorkers = [];
 
 		//load tasks file
 		this.tasks = FileSystem.readJSONFile(globalSettings.tasks);
 
-		//tasks loaded properly
 		if (this.tasks.status) {
+			//tasks loaded properly
 			this.numberOfTasks = this.tasks.fileContent.length;
 			this.tasksTakenCounter = 0;
 		} else {
-			//todo:
-			// return error
+			// todo:
+			// report error
 		}
 	}
 
 	setUpCluster(): void {
-		// const numCores = require('os').cpus().length;
-		const numCores = globalSettings.numberOfThreads;
-		//fixme: debug loger
-		console.log('Master cluster setting up ' + numCores + ' workers');
-		//todo: fix me
-		// const logger = new Worker('./Logger.js');
+		const numberOfThreads = globalSettings.numberOfThreads;
 
-		let i = 0;
+		console.log(`Master cluster setting up ${numberOfThreads} workers`);
 
-		// iterate on number of cores need to be utilized by an application
-		// current example will utilize all of them
-		for (i = 0; i < numCores; i++) {
-			// creating workers and pushing reference in an array
-			// these references can be used to receive messages from workers
+		let nthWorker = 0;
 
-			this.startNewClusterWorker(i);
-
-			// to receive messages from worker process
-			// clusterWorkers[i].on('message', function (message) {
-			// console.log(message);
-			// });
+		for (nthWorker; nthWorker < numberOfThreads; nthWorker++) {
+			this.startNewClusterWorker();
 		}
 
-		// process is clustered on a core and process id is assigned
-		cluster.on('online', (clusterWorker) => {
-			//fixme: debug loger
+		cluster.on('fork', (clusterWorker) => {
 			console.log(
-				'Worker ' + clusterWorker.process.pid + ' is listening',
+				`Worker ${clusterWorker.process.pid} started it's life!`,
 			);
 		});
 
-		// if any of the worker process dies then start a new one by simply forking another one
-		cluster.on('exit', (worker, code, signal) => {
-			//fixme: debug loger
-			console.log(
-				'Worker ' +
-					worker.process.pid +
-					' died with code: ' +
-					code +
-					', and signal: ' +
-					signal,
-			);
+		cluster.on('message', (clusterWorker, message) => {
+			if (message !== 'ready') {
+				return;
+			}
 
-			this.startNewClusterWorker(i);
+			const nthWorker = this.getNthWorkerByPid(clusterWorker.process.pid);
+
+			if (nthWorker === -1) {
+				console.log('Error when receiving worker index');
+			}
+
+			this.sendNextTaskToNthWorker(nthWorker);
 		});
 	}
 
-	startNewClusterWorker(i: number): void {
+	startNewClusterWorker(): void {
+		//creating new workers as long as tasks are available
 		if (this.tasksTakenCounter < this.numberOfTasks) {
-			//fixme: debug loger
-			console.log('Starting a new worker');
+			console.log('Starting new worker');
 			this.clusterWorkers.push(cluster.fork());
-			this.clusterWorkers[i].send(
-				this.tasks.fileContent[this.tasksTakenCounter],
-			);
-			//fixme: debug loger
-			console.log(
-				`Master sent task: ${
-					this.tasks.fileContent[this.tasksTakenCounter]
-				} to ${this.clusterWorkers[i].process.pid}`,
-			);
-			this.tasksTakenCounter++;
 		}
+	}
+
+	sendNextTaskToNthWorker(nthWorker: number): void {
+		this.clusterWorkers[nthWorker].send(
+			this.tasks.fileContent[this.tasksTakenCounter],
+		);
+
+		console.log(
+			`Master sent task: ${
+				this.tasks.fileContent[this.tasksTakenCounter]
+			} to ${this.clusterWorkers[nthWorker].process.pid}`,
+		);
+		this.tasksTakenCounter++;
+	}
+
+	getNthWorkerByPid(pid: number): number {
+		const checkIfWorkerHasPid = (worker: cluster.Worker): boolean => {
+			return worker.process.pid === pid;
+		};
+		return this.clusterWorkers.findIndex(checkIfWorkerHasPid);
 	}
 
 	async startVRT(): Promise<void> {
+		process.send('ready');
 		process.on('message', async (receivedTask) => {
 			//fixme: debug loger
 			console.log(
@@ -101,8 +97,10 @@ class TasksManager {
 			if (await scenarioRunner.loadScenarios()) {
 				await scenarioRunner.runScenarios();
 			} else {
+				//here something gone wrong
 				process.exit(-1);
 			}
+			//task finished successfully
 			process.exit(1);
 		});
 	}

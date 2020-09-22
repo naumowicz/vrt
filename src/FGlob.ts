@@ -8,7 +8,7 @@ class FGlob {
 		pathToFolder: string,
 		pattern?: string,
 	): Promise<string[]> {
-		if (pattern.length >= 2) {
+		if (pattern !== undefined && pattern.length >= 2) {
 			this.pattern = pattern;
 		}
 		return await fglob(`${pathToFolder}/${this.pattern}`);

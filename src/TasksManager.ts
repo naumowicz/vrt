@@ -54,7 +54,12 @@ class TasksManager {
 				console.log('Error when receiving worker index');
 			}
 
-			this.sendNextTaskToNthWorker(nthWorker);
+			// change 5 to decide about maximum available delay
+			const delay = (nthWorker % 5) * 1000;
+
+			setTimeout(() => {
+				this.sendNextTaskToNthWorker(nthWorker);
+			}, delay);
 		});
 
 		cluster.on('exit', (worker, code, signal) => {

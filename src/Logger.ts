@@ -1,6 +1,5 @@
 import ConsoleLogger from './ConsoleLogger';
 import LocalLog from './LocalLog';
-import { parentPort } from 'worker_threads';
 import globalSettings from '../GlobalSettings';
 
 class Logger {
@@ -62,23 +61,5 @@ class Logger {
 		this.localLog.info(data);
 	}
 }
-
-const logger = new Logger();
-
-parentPort.on('message', (log: { type: string; message: string }) => {
-	switch (log.type) {
-		case 'error':
-			logger.error(log.message);
-			break;
-		case 'warning':
-			logger.warning(log.message);
-			break;
-		case 'info':
-			logger.info(log.message);
-			break;
-		default:
-			break;
-	}
-});
 
 exports.module = Logger;

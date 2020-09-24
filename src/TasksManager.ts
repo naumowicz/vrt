@@ -29,7 +29,8 @@ class TasksManager {
 	setUpCluster(): void {
 		const numberOfThreads = globalSettings.numberOfThreads;
 
-		console.log(`Master cluster setting up ${numberOfThreads} workers`);
+		console.log(`Master cluster setting up to ${numberOfThreads} workers`);
+		console.log(`${this.numberOfTasks} tasks to process`);
 
 		let nthWorker = 0;
 

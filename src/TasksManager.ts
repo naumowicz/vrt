@@ -82,20 +82,22 @@ class TasksManager {
 		if (this.tasksTakenCounter < this.numberOfTasks) {
 			console.log('Starting new worker');
 			this.clusterWorkers.push(cluster.fork());
+			// incrementing tasksTakenCounter to fix issue, where last task was not assigned yet but last + 1 worker was created
+			this.tasksTakenCounter++;
 		}
 	}
 
 	sendNextTaskToNthWorker(nthWorker: number): void {
+		// using tasksTakenCounter - 1 because it's incremented when creating worker
 		this.clusterWorkers[nthWorker].send(
-			this.tasks.fileContent[this.tasksTakenCounter],
+			this.tasks.fileContent[this.tasksTakenCounter - 1],
 		);
 
 		console.log(
 			`Master sent task: ${
-				this.tasks.fileContent[this.tasksTakenCounter]
+				this.tasks.fileContent[this.tasksTakenCounter - 1]
 			} to ${this.clusterWorkers[nthWorker].process.pid}`,
 		);
-		this.tasksTakenCounter++;
 	}
 
 	getNthWorkerByPid(pid: number): number {

@@ -93,15 +93,10 @@ class TasksManager {
 	}
 
 	sendNextTaskToNthWorker(nthWorker: number): void {
-		// using tasksTakenCounter - 1 because it's incremented when creating worker
-		this.clusterWorkers[nthWorker].send(
-			this.tasks.fileContent[this.tasksTakenCounter - 1],
-		);
+		this.clusterWorkers[nthWorker].send(this.tasks.fileContent[nthWorker]);
 
 		console.log(
-			`Master sent task: ${
-				this.tasks.fileContent[this.tasksTakenCounter - 1]
-			} to ${this.clusterWorkers[nthWorker].process.pid}`,
+			`Master sent task: ${this.tasks.fileContent[nthWorker]} to ${this.clusterWorkers[nthWorker].process.pid}`,
 		);
 	}
 

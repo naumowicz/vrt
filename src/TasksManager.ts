@@ -56,6 +56,25 @@ class TasksManager {
 
 			this.sendNextTaskToNthWorker(nthWorker);
 		});
+
+		cluster.on('exit', (worker, code, signal) => {
+			if (signal) {
+				console.log(
+					`worker ${worker.process.pid} was killed by signal: ${signal}`,
+				);
+			} else if (code !== 0) {
+				console.log(
+					`worker ${worker.process.pid} exited with error code: ${code}`,
+				);
+			} else {
+				console.log(
+					`Worker ${worker.process.pid} finished task successfully!`,
+				);
+			}
+			if (this.tasksTakenCounter < this.numberOfTasks) {
+				this.startNewClusterWorker();
+			}
+		});
 	}
 
 	startNewClusterWorker(): void {
@@ -101,7 +120,7 @@ class TasksManager {
 				process.exit(-1);
 			}
 			//task finished successfully
-			process.exit(1);
+			process.exit(0);
 		});
 	}
 

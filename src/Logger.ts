@@ -6,9 +6,9 @@ class Logger {
 	consoleLogger: ConsoleLogger;
 	consoleOutput: boolean;
 	localLog: LocalLog;
-	errorName: string;
-	warningName: string;
-	infoName: string;
+	// errorName: string;
+	// warningName: string;
+	// infoName: string;
 	listOfLocalLogFiles: Array<string>;
 
 	constructor() {
@@ -17,6 +17,12 @@ class Logger {
 		} else {
 			this.consoleOutput = false;
 		}
+
+		this.localLog = new LocalLog(
+			globalSettings.errorPrefix,
+			globalSettings.warningPrefix,
+			globalSettings.infoPrefix,
+		);
 	}
 
 	setColorsForConsoleLogger(
@@ -27,15 +33,15 @@ class Logger {
 		this.consoleLogger.setColors(errorColor, warningColor, infoColor);
 	}
 
-	setLogsTypeName(
-		errorName: string,
-		warningName: string,
-		infoName: string,
-	): void {
-		this.errorName = errorName;
-		this.warningName = warningName;
-		this.infoName = infoName;
-	}
+	// setLogsTypeName(
+	// 	errorName: string,
+	// 	warningName: string,
+	// 	infoName: string,
+	// ): void {
+	// 	this.errorName = errorName;
+	// 	this.warningName = warningName;
+	// 	this.infoName = infoName;
+	// }
 
 	error(data: string): void {
 		if (this.consoleOutput) {
@@ -62,4 +68,4 @@ class Logger {
 	}
 }
 
-exports.module = Logger;
+export default Logger;

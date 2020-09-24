@@ -6,6 +6,9 @@ class GlobalSettings {
 	actualStatusFolderName: string;
 	outputFolderName: string;
 	numberOfThreads: number;
+	errorPrefix: string;
+	warningPrefix: string;
+	infoPrefix: string;
 
 	constructor() {
 		this.tasks = './tasks.json';
@@ -15,6 +18,9 @@ class GlobalSettings {
 		this.actualStatusFolderName = 'actualStatus';
 		this.outputFolderName = 'output';
 		this.numberOfThreads = 1;
+		this.errorPrefix = 'Error: ';
+		this.warningPrefix = 'Warning: ';
+		this.infoPrefix = 'Info: ';
 	}
 }
 

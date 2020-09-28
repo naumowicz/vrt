@@ -27,8 +27,16 @@ class Logger {
 		errorColor: string,
 		warningColor: string,
 		infoColor: string,
+		debugColor: string,
 	): void {
-		this.consoleLogger.setColors(errorColor, warningColor, infoColor);
+		if (globalSettings.enableConsoleLogger) {
+			this.consoleLogger.setColors(
+				errorColor,
+				warningColor,
+				infoColor,
+				debugColor,
+			);
+		}
 	}
 
 	// setLogsTypeName(

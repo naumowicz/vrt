@@ -23,6 +23,7 @@ class Logger {
 			globalSettings.errorPrefix,
 			globalSettings.warningPrefix,
 			globalSettings.infoPrefix,
+			globalSettings.debugPrefix,
 		);
 	}
 

@@ -9,6 +9,7 @@ class GlobalSettings {
 	errorPrefix: string;
 	warningPrefix: string;
 	infoPrefix: string;
+	debugPrefix: string;
 
 	constructor() {
 		this.tasks = './tasks.json';
@@ -21,6 +22,7 @@ class GlobalSettings {
 		this.errorPrefix = 'Error: ';
 		this.warningPrefix = 'Warning: ';
 		this.infoPrefix = 'Info: ';
+		this.debugPrefix = 'Debug: ';
 	}
 }
 

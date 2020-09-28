@@ -12,10 +12,12 @@ class GlobalSettings {
 	warningPrefix: string;
 	infoPrefix: string;
 	debugPrefix: string;
-	errorColor: string;
-	warningColor: string;
-	infoColor: string;
-	debugColor: string;
+	consoleLoggerColors: {
+		errorColor: string;
+		warningColor: string;
+		infoColor: string;
+		debugColor: string;
+	};
 
 	constructor() {
 		this.tasks = './tasks.json';
@@ -29,10 +31,12 @@ class GlobalSettings {
 		this.warningPrefix = 'Warning: ';
 		this.infoPrefix = 'Info: ';
 		this.debugPrefix = 'Debug: ';
-		this.errorColor = colors.FgRed;
-		this.warningColor = colors.FgYellow;
-		this.infoColor = colors.FgWhite;
-		this.debugColor = colors.FgGreen;
+		this.consoleLoggerColors = {
+			errorColor: colors.FgRed,
+			warningColor: colors.FgYellow,
+			infoColor: colors.FgWhite,
+			debugColor: colors.FgGreen,
+		};
 	}
 }
 

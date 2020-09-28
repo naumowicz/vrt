@@ -14,6 +14,7 @@ class Logger {
 	constructor() {
 		if (globalSettings.enableConsoleLogger) {
 			this.consoleLogger = new ConsoleLogger();
+			this.consoleOutput = true;
 		} else {
 			this.consoleOutput = false;
 		}

@@ -5,15 +5,18 @@ class LocalLog {
 	errorPrefix: string;
 	warningPrefix: string;
 	infoPrefix: string;
+	debugPrefix: string;
 
 	constructor(
 		errorPrefix: string,
 		warningPrefix: string,
 		infoPrefix: string,
+		debugPrefix: string,
 	) {
 		this.errorPrefix = errorPrefix;
 		this.warningPrefix = warningPrefix;
 		this.infoPrefix = infoPrefix;
+		this.debugPrefix = debugPrefix;
 	}
 
 	async createLocalLogFile(
@@ -39,6 +42,11 @@ class LocalLog {
 	info(info: string): void {
 		FileSystem.appendToFile(this.pathToLocalLogFile, this.infoPrefix);
 		FileSystem.appendToFile(this.pathToLocalLogFile, `${info}\n`);
+	}
+
+	debug(debug: string): void {
+		FileSystem.appendToFile(this.pathToLocalLogFile, this.debugPrefix);
+		FileSystem.appendToFile(this.pathToLocalLogFile, `${debug}\n`);
 	}
 }
 

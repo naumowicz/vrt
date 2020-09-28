@@ -13,6 +13,7 @@ class Logger {
 	constructor() {
 		if (globalSettings.enableConsoleLogger) {
 			this.consoleLogger = new ConsoleLogger();
+			// this.setColorsForConsoleLogger();
 		}
 
 		this.localLog = new LocalLog(
@@ -23,21 +24,21 @@ class Logger {
 		);
 	}
 
-	setColorsForConsoleLogger(
-		errorColor: string,
-		warningColor: string,
-		infoColor: string,
-		debugColor: string,
-	): void {
-		if (globalSettings.enableConsoleLogger) {
-			this.consoleLogger.setColors(
-				errorColor,
-				warningColor,
-				infoColor,
-				debugColor,
-			);
-		}
-	}
+	// setColorsForConsoleLogger(
+	// 	errorColor: string,
+	// 	warningColor: string,
+	// 	infoColor: string,
+	// 	debugColor: string,
+	// ): void {
+	// 	if (globalSettings.enableConsoleLogger) {
+	// 		this.consoleLogger.setColors(
+	// 			errorColor,
+	// 			warningColor,
+	// 			infoColor,
+	// 			debugColor,
+	// 		);
+	// 	}
+	// }
 
 	// setLogsTypeName(
 	// 	errorName: string,

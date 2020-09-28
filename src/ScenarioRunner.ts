@@ -84,7 +84,7 @@ class ScenarioRunner {
 	async runner(): Promise<void> {
 		let imagesToAnalyzeCounter = 0;
 		for (let i = 0; i < this.scenario.steps.length; i++) {
-			// this.scenario.steps[i]; 1 step
+			// this.scenario.steps[i]; one step
 			for (const substep of this.scenario.steps[i]) {
 				await this.puppeteer.goto(substep);
 			}

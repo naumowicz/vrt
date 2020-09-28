@@ -4,7 +4,6 @@ import globalSettings from '../GlobalSettings';
 
 class Logger {
 	consoleLogger: ConsoleLogger;
-	consoleOutput: boolean;
 	localLog: LocalLog;
 	// errorName: string;
 	// warningName: string;
@@ -14,9 +13,6 @@ class Logger {
 	constructor() {
 		if (globalSettings.enableConsoleLogger) {
 			this.consoleLogger = new ConsoleLogger();
-			this.consoleOutput = true;
-		} else {
-			this.consoleOutput = false;
 		}
 
 		this.localLog = new LocalLog(
@@ -46,7 +42,7 @@ class Logger {
 	// }
 
 	error(data: string): void {
-		if (this.consoleOutput) {
+		if (globalSettings.enableConsoleLogger) {
 			this.consoleLogger.error(data);
 		}
 
@@ -54,7 +50,7 @@ class Logger {
 	}
 
 	warning(data: string): void {
-		if (this.consoleOutput) {
+		if (globalSettings.enableConsoleLogger) {
 			this.consoleLogger.warning(data);
 		}
 
@@ -62,7 +58,7 @@ class Logger {
 	}
 
 	info(data: string): void {
-		if (this.consoleOutput) {
+		if (globalSettings.enableConsoleLogger) {
 			this.consoleLogger.info(data);
 		}
 

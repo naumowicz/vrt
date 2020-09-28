@@ -6,12 +6,12 @@ class ConsoleLogger {
 	infoColor: string;
 	debugColor: string;
 
-	constructor(
+	constructor({
 		errorColor = colors.FgRed,
 		warningColor = colors.FgYellow,
 		infoColor = colors.FgWhite,
 		debugColor = colors.FgGreen,
-	) {
+	}) {
 		this.errorColor = errorColor;
 		this.warningColor = warningColor;
 		this.infoColor = infoColor;

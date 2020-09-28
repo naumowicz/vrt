@@ -1,3 +1,5 @@
+import colors from './src/settings/ConsoleOutputColors';
+
 class GlobalSettings {
 	tasks: string;
 	enableConsoleLogger: boolean;

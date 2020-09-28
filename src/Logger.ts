@@ -12,7 +12,12 @@ class Logger {
 
 	constructor() {
 		if (globalSettings.enableConsoleLogger) {
-			this.consoleLogger = new ConsoleLogger();
+			this.consoleLogger = new ConsoleLogger(
+				globalSettings.errorColor,
+				globalSettings.warningColor,
+				globalSettings.infoColor,
+				globalSettings.debugColor,
+			);
 			// this.setColorsForConsoleLogger();
 		}
 

@@ -1,5 +1,12 @@
 import FileSystem from './FileSystem';
 
+interface Prefixes {
+	errorPrefix: string;
+	warningPrefix: string;
+	infoPrefix: string;
+	debugPrefix: string;
+}
+
 class LocalLog {
 	pathToLocalLogFile: string;
 	errorPrefix: string;
@@ -7,16 +14,11 @@ class LocalLog {
 	infoPrefix: string;
 	debugPrefix: string;
 
-	constructor(
-		errorPrefix: string,
-		warningPrefix: string,
-		infoPrefix: string,
-		debugPrefix: string,
-	) {
-		this.errorPrefix = errorPrefix;
-		this.warningPrefix = warningPrefix;
-		this.infoPrefix = infoPrefix;
-		this.debugPrefix = debugPrefix;
+	constructor(prefixes: Prefixes) {
+		this.errorPrefix = prefixes.errorPrefix;
+		this.warningPrefix = prefixes.warningPrefix;
+		this.infoPrefix = prefixes.infoPrefix;
+		this.debugPrefix = prefixes.debugPrefix;
 	}
 
 	async createLocalLogFile(

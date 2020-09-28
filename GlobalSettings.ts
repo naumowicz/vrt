@@ -8,10 +8,12 @@ class GlobalSettings {
 	actualStatusFolderName: string;
 	outputFolderName: string;
 	numberOfThreads: number;
-	errorPrefix: string;
-	warningPrefix: string;
-	infoPrefix: string;
-	debugPrefix: string;
+	loggingPrefixes: {
+		errorPrefix: string;
+		warningPrefix: string;
+		infoPrefix: string;
+		debugPrefix: string;
+	};
 	consoleLoggerColors: {
 		errorColor: string;
 		warningColor: string;
@@ -27,10 +29,12 @@ class GlobalSettings {
 		this.actualStatusFolderName = 'actualStatus';
 		this.outputFolderName = 'output';
 		this.numberOfThreads = 1;
-		this.errorPrefix = 'Error: ';
-		this.warningPrefix = 'Warning: ';
-		this.infoPrefix = 'Info: ';
-		this.debugPrefix = 'Debug: ';
+		this.loggingPrefixes = {
+			errorPrefix: 'Error: ',
+			warningPrefix: 'Warning: ',
+			infoPrefix: 'Info: ',
+			debugPrefix: 'Debug: ',
+		};
 		this.consoleLoggerColors = {
 			errorColor: colors.FgRed,
 			warningColor: colors.FgYellow,

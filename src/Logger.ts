@@ -18,12 +18,7 @@ class Logger {
 			// this.setColorsForConsoleLogger();
 		}
 
-		this.localLog = new LocalLog(
-			globalSettings.errorPrefix,
-			globalSettings.warningPrefix,
-			globalSettings.infoPrefix,
-			globalSettings.debugPrefix,
-		);
+		this.localLog = new LocalLog(globalSettings.loggingPrefixes);
 	}
 
 	// setColorsForConsoleLogger(

@@ -134,10 +134,22 @@ class ScenarioRunner {
 	async runner(): Promise<void> {
 		let imagesToAnalyzeCounter = 0;
 		for (let i = 0; i < this.scenario.steps.length; i++) {
+			this.logger.debug(
+				`${scenarioRunnerLocalization.analyzingStep} ${this.scenario.steps[i]}`,
+			);
+
 			// this.scenario.steps[i]; one step
 			for (const substep of this.scenario.steps[i]) {
+				this.logger.debug(
+					`${scenarioRunnerLocalization.puppeteerVisitsPage} ${substep}`,
+				);
+
 				await this.puppeteer.goto(substep);
 			}
+
+			this.logger.debug(
+				`${scenarioRunnerLocalization.checkingIfBaselineExists} ${this.scenario.imagesToAnalyze[imagesToAnalyzeCounter]}`,
+			);
 
 			if (
 				//baseline exsists
@@ -145,31 +157,71 @@ class ScenarioRunner {
 					this.scenario.imagesToAnalyze[imagesToAnalyzeCounter],
 				)
 			) {
+				this.logger.info(
+					`${scenarioRunnerLocalization.baselineExists}`,
+				);
+
+				this.logger.debug(
+					scenarioRunnerLocalization.gettingPathToActualStatusImage,
+				);
+
 				const actualStatusPath = PathHelper.getActualStatusImage(
 					this.scenario.imagesToAnalyze[imagesToAnalyzeCounter],
 				);
+
+				this.logger.debug(
+					scenarioRunnerLocalization.takingScreenshotForActualStatusImage,
+				);
+
 				await this.puppeteer.screenshot(actualStatusPath);
+
+				this.logger.debug(
+					scenarioRunnerLocalization.comparingActualStatusImageWithBaseline,
+				);
+
 				const result = await this.compareImages(
 					this.scenario.imagesToAnalyze[imagesToAnalyzeCounter],
 					actualStatusPath,
 				);
 
-				//save output file
-				FileSystem.writeFile(
-					PathHelper.getOutputImage(
-						this.scenario.imagesToAnalyze[imagesToAnalyzeCounter],
-					),
-					result.resultBuffer,
+				const pathToOutputImage = PathHelper.getOutputImage(
+					this.scenario.imagesToAnalyze[imagesToAnalyzeCounter],
 				);
 
-				//log results
+				this.logger.debug(
+					`${scenarioRunnerLocalization.savingOutputImage} ${pathToOutputImage}`,
+				);
+
+				//save output file
+				FileSystem.writeFile(pathToOutputImage, result.resultBuffer);
+
+				if (globalSettings.usingMismatchPrecentage) {
+					this.logger.info(
+						`${scenarioRunnerLocalization.mismatchPercentageWas} ${result.misMatchPercentage}`,
+					);
+				} else {
+					this.logger.info(
+						`${scenarioRunnerLocalization.rawMismatchPercentageWas} ${result.rawMisMatchPercentage}`,
+					);
+				}
 			} else {
 				//baseline not exists yet
+				this.logger.info(
+					scenarioRunnerLocalization.baselineDoesNotExists,
+				);
+
+				this.logger.info(
+					`${scenarioRunnerLocalization.takingScreenshotForBaseline} ${this.scenario.imagesToAnalyze[imagesToAnalyzeCounter]}`,
+				);
+
+				//create baseline
 				await this.puppeteer.screenshot(
 					this.scenario.imagesToAnalyze[imagesToAnalyzeCounter],
 				);
-				//create baseline
 			}
+			this.logger.debug(
+				scenarioRunnerLocalization.gettingNextImageToAnalyze,
+			);
 			imagesToAnalyzeCounter++;
 		}
 	}
@@ -182,13 +234,23 @@ class ScenarioRunner {
 		misMatchPercentage: string;
 		resultBuffer: Buffer;
 	}> {
+		this.logger.debug(
+			scenarioRunnerLocalization.loadingImagesForComparisment,
+		);
+
 		const loadedImages = this.loadImagesForComparisment(
 			pathToOriginalImage,
 			pathToComaredImage,
 		);
 
 		if (loadedImages.status === 'ok') {
+			this.logger.debug(
+				scenarioRunnerLocalization.imagesForComparismentLoadedSuccessfully,
+			);
 		} else {
+			this.logger.debug(
+				scenarioRunnerLocalization.loadingImagesForComparismentFailed,
+			);
 			return {
 				rawMisMatchPercentage: 0,
 				misMatchPercentage: '0.00',
@@ -198,9 +260,15 @@ class ScenarioRunner {
 
 		const imagesComparer = new ImagesComparer();
 
+		this.logger.debug(scenarioRunnerLocalization.comparingImages);
+
 		const result = await imagesComparer.compareImages(
 			loadedImages.originalImageBuffer,
 			loadedImages.comparedImageBuffer,
+		);
+
+		this.logger.debug(
+			scenarioRunnerLocalization.returningResultAfterComparisment,
 		);
 
 		return result;
@@ -214,18 +282,38 @@ class ScenarioRunner {
 		originalImageBuffer: Buffer;
 		comparedImageBuffer: Buffer;
 	} {
+		this.logger.debug(
+			scenarioRunnerLocalization.startingLoadingImagesForComparisment,
+		);
+
+		this.logger.debug(scenarioRunnerLocalization.loadingOriginalImage);
 		const originalImage = FileSystem.readFile(pathToOriginalImage);
+
 		if (originalImage.status == false) {
-			return this.returnEmptyComparisment(
-				pathToOriginalImage, //fix me: use this message
+			this.logger.debug(
+				scenarioRunnerLocalization.loadingOriginalImageFailed,
 			);
+
+			this.logger.error(
+				`${scenarioRunnerLocalization.issueWithOriginalImage} ${pathToComaredImage}`,
+			);
+
+			return this.returnEmptyComparisment();
 		}
+
+		this.logger.debug(scenarioRunnerLocalization.loadingComparedImage);
 
 		const comparedImage = FileSystem.readFile(pathToComaredImage);
 		if (comparedImage.status == false) {
-			return this.returnEmptyComparisment(
-				pathToComaredImage, //fix me: use this message
+			this.logger.debug(
+				scenarioRunnerLocalization.loadingComparedImageFailed,
 			);
+
+			this.logger.error(
+				`${scenarioRunnerLocalization.issueWithOriginalImage} ${pathToComaredImage}`,
+			);
+
+			return this.returnEmptyComparisment();
 		}
 
 		return {
@@ -235,15 +323,13 @@ class ScenarioRunner {
 		};
 	}
 
-	returnEmptyComparisment(
-		info: string,
-	): {
+	returnEmptyComparisment(): {
 		status: string;
 		originalImageBuffer: Buffer;
 		comparedImageBuffer: Buffer;
 	} {
 		return {
-			status: `Issue with file ->${info}<-`,
+			status: `error`,
 			originalImageBuffer: Buffer.from(''),
 			comparedImageBuffer: Buffer.from(''),
 		};

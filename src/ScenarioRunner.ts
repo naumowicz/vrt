@@ -83,27 +83,45 @@ class ScenarioRunner {
 
 	createFolders(): boolean {
 		if (this.scenario.imagesToAnalyze.length === 0) {
-			//fix me: report error
+			this.logger.warning(
+				scenarioRunnerLocalization.createFoldersNoImagesToAnalyze,
+			);
 			return false;
 		}
 
 		this.scenario.imagesToAnalyze.forEach((imageToAnalyze) => {
-			if (
-				FolderController.createBaselineFolder(
-					PathHelper.getBaselineFolder(imageToAnalyze),
-				) === false
-			) {
-				//log error
+			const pathToBaselineFolder = PathHelper.getBaselineFolder(
+				imageToAnalyze,
+			);
+
+			const statusOfCreatingBaselineFolder = FolderController.createBaselineFolder(
+				pathToBaselineFolder,
+			);
+
+			if (statusOfCreatingBaselineFolder === false) {
+				this.logger.error(
+					`${scenarioRunnerLocalization.creatingBaselineFolderNotPossible} ${pathToBaselineFolder}`,
+				);
 				return false;
 			}
 
-			if (
-				FolderController.recreateOutputAndActualStatusFolders(
-					PathHelper.getOutputFolder(imageToAnalyze),
-					PathHelper.getActualStatusFolder(imageToAnalyze),
-				) === false
-			) {
-				//log error
+			const pathToOutputFolder = PathHelper.getOutputFolder(
+				imageToAnalyze,
+			);
+
+			const pathToActualStatusFolder = PathHelper.getActualStatusFolder(
+				imageToAnalyze,
+			);
+
+			const statusOfCreatingOutputAndActualStatusFolders = FolderController.recreateOutputAndActualStatusFolders(
+				pathToOutputFolder,
+				pathToActualStatusFolder,
+			);
+
+			if (statusOfCreatingOutputAndActualStatusFolders === false) {
+				this.logger.error(
+					`${scenarioRunnerLocalization.recreatingOutputAndActualStatusFolderNotPossible} ${pathToOutputFolder} ${pathToActualStatusFolder}`,
+				);
 				return false;
 			}
 		});

@@ -6,47 +6,77 @@ import FileSystem from './FileSystem';
 import PathHelper from './Helpers/PathHelper';
 import VRTPuppeteer from './VRTPuppeteer';
 import globalSettings from '../GlobalSettings';
+import Logger from './Logger';
+import scenarioRunnerLocalization from './localization/ScenarioRunnerLocalization';
 
 class ScenarioRunner {
 	scenario: Scenario;
 	pathToScenario: string;
 	puppeteer: Puppeteer;
+	logger: Logger;
 
 	constructor(pathToScenario: string) {
+		this.logger = new Logger();
+		this.logger.info(
+			`${scenarioRunnerLocalization.startingScenarioRunner} ${pathToScenario}`,
+		);
 		this.scenario = new Scenario();
 		this.pathToScenario = pathToScenario;
 		this.puppeteer = new VRTPuppeteer(globalSettings.puppeteerConfigPath);
 	}
 
 	async loadScenarios(): Promise<boolean> {
+		this.logger.debug(
+			`${scenarioRunnerLocalization.loadingScenario} ${this.pathToScenario}`,
+		);
 		if (
 			this.scenario.checkScenarioAvailability(this.pathToScenario) ===
 			false
 		) {
-			//log error
+			this.logger.error(
+				`${scenarioRunnerLocalization.scenarioNotAvailable} ${this.pathToScenario}`,
+			);
 			return false;
 		}
 
 		await this.scenario.loadScenario(this.pathToScenario);
 
 		if (this.scenario.isScenarioParsedSuccessfully() === false) {
-			//log error
+			this.logger.error(
+				`${scenarioRunnerLocalization.failedLoadingScenario} ${this.pathToScenario}`,
+			);
 			return false;
 		}
 
+		this.logger.debug(scenarioRunnerLocalization.loadingSuccessful);
 		return true;
 	}
 
 	async runScenarios(): Promise<boolean> {
+		this.logger.info(
+			`${scenarioRunnerLocalization.runningScenario} ${this.pathToScenario}`,
+		);
+
 		if (this.createFolders() === false) {
+			this.logger.error(
+				`${scenarioRunnerLocalization.creatingFoldersFail}`,
+			);
 			return false;
 		}
 
+		this.logger.debug(scenarioRunnerLocalization.openingPuppeteer);
+
 		await this.puppeteer.start();
+
+		this.logger.debug(scenarioRunnerLocalization.runningStepsInPuppeteer);
 
 		await this.runner();
 
+		this.logger.debug(scenarioRunnerLocalization.closingPuppeteer);
+
 		await this.puppeteer.closeBrowser();
+
+		this.logger.debug(scenarioRunnerLocalization.scenarioFinished);
 
 		return true;
 	}

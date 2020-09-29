@@ -20,6 +20,7 @@ const globalSettings = {
 		infoColor: colors.FgWhite,
 		debugColor: colors.FgGreen,
 	},
+	usingMismatchPrecentage: true,
 };
 
 export default globalSettings;

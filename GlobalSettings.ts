@@ -1,47 +1,25 @@
 import colors from './src/settings/ConsoleOutputColors';
 
-class GlobalSettings {
-	tasks: string;
-	enableConsoleLogger: boolean;
-	puppeteerConfigPath: string;
-	resembleConfigPath: string;
-	actualStatusFolderName: string;
-	outputFolderName: string;
-	numberOfThreads: number;
+const globalSettings = {
+	tasks: './tasks.json',
+	enableConsoleLogger: true,
+	puppeteerConfigPath: './PuppeteerConfig.json',
+	resembleConfigPath: './ResembleConfig.json',
+	actualStatusFolderName: 'actualStatus',
+	outputFolderName: 'output',
+	numberOfThreads: 1,
 	loggingPrefixes: {
-		errorPrefix: string;
-		warningPrefix: string;
-		infoPrefix: string;
-		debugPrefix: string;
-	};
+		errorPrefix: 'Error: ',
+		warningPrefix: 'Warning: ',
+		infoPrefix: 'Info: ',
+		debugPrefix: 'Debug: ',
+	},
 	consoleLoggerColors: {
-		errorColor: string;
-		warningColor: string;
-		infoColor: string;
-		debugColor: string;
-	};
+		errorColor: colors.FgRed,
+		warningColor: colors.FgYellow,
+		infoColor: colors.FgWhite,
+		debugColor: colors.FgGreen,
+	},
+};
 
-	constructor() {
-		this.tasks = './tasks.json';
-		this.enableConsoleLogger = true;
-		this.puppeteerConfigPath = './PuppeteerConfig.json';
-		this.resembleConfigPath = './ResembleConfig.json';
-		this.actualStatusFolderName = 'actualStatus';
-		this.outputFolderName = 'output';
-		this.numberOfThreads = 1;
-		this.loggingPrefixes = {
-			errorPrefix: 'Error: ',
-			warningPrefix: 'Warning: ',
-			infoPrefix: 'Info: ',
-			debugPrefix: 'Debug: ',
-		};
-		this.consoleLoggerColors = {
-			errorColor: colors.FgRed,
-			warningColor: colors.FgYellow,
-			infoColor: colors.FgWhite,
-			debugColor: colors.FgGreen,
-		};
-	}
-}
-
-export default new GlobalSettings();
+export default globalSettings;

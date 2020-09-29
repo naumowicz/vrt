@@ -126,6 +126,8 @@ class ScenarioRunner {
 			}
 		});
 
+		this.logger.debug(scenarioRunnerLocalization.creatingFoldersSuccessful);
+
 		return true;
 	}
 

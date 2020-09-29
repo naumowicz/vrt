@@ -7,6 +7,8 @@ const scenarioRunnerLocalization = {
 		'Unable to create baseline folder for path: ',
 	recreatingOutputAndActualStatusFolderNotPossible:
 		'Unable to create actualStatus or output folder for path: ',
+	issueWithOriginalImage: 'Encountered issue when loading original image: ',
+	issueWithComparedImage: 'Encountered issue when loading compared image: ',
 
 	//warning
 	createFoldersNoImagesToAnalyze: 'Received 0 images to analyze',
@@ -14,6 +16,16 @@ const scenarioRunnerLocalization = {
 	//info
 	startingScenarioRunner: 'Starting scenario: ',
 	runningScenario: 'Running scenario: ',
+	baselineExists: 'Baseline exists',
+	// comparedImagesWereSameDimensions: 'Images had same dimensions: ',
+	// dimensionsBetweenImagesWereDifferentBy:
+	// ' Dimensions between images were different by :',
+	rawMismatchPercentageWas: 'Raw mismatch percentage equals: ',
+	mismatchPercentageWas: 'Mismatch percentage equals: ',
+	// differenceBoundsWere: 'Difference bounds equal: ',
+	baselineDoesNotExists: 'Baseline does not exists',
+	takingScreenshotForBaseline: 'Creating baseline image: ',
+
 	//debug
 	loadingScenario: 'Loading scenario: ',
 	loadingSuccessful: 'Loading scenario was successful',
@@ -22,27 +34,15 @@ const scenarioRunnerLocalization = {
 	closingPuppeteer: 'Closing puppeteer',
 	scenarioFinished: 'Scenario finished successfully',
 	creatingFoldersSuccessful: 'Creating folders was successful',
-
-	errorsFromParsingScenario: 'Received errors from parsing scenario',
-
-	analyzingStep: 'Analyzing step:',
+	analyzingStep: 'Analyzing step: ',
 	puppeteerVisitsPage: 'Puppeteer visits page: ',
 	checkingIfBaselineExists: 'Checking if baseline is available: ',
-	baselineExists: 'Baseline exists',
 	gettingPathToActualStatusImage: 'Getting path to actualStatus image',
 	takingScreenshotForActualStatusImage:
 		'Taking screenshot for actualStatus image',
 	comparingActualStatusImageWithBaseline:
 		'Comparing actualStatus image with baseline',
 	savingOutputImage: 'Saving output image to: ',
-	comparedImagesWereSameDimensions: 'Images had same dimensions: ',
-	dimensionsBetweenImagesWereDifferentBy:
-		' Dimensions between images were different by :',
-	rawMismatchPercentageWas: 'Raw mismatch percentage equals: ',
-	mismatchPercentageWas: 'Mismatch percentage equals: ',
-	differenceBoundsWere: 'Difference bounds equal: ',
-	baselineDoesNotExists: 'Baseline does not exists',
-	takingScreenshotForBaseline: 'Creating baseline image: ',
 	gettingNextImageToAnalyze: 'Going to next image to analyze',
 	loadingImagesForComparisment: 'Loading images for comparisment',
 	imagesForComparismentLoadedSuccessfully:
@@ -54,11 +54,13 @@ const scenarioRunnerLocalization = {
 	startingLoadingImagesForComparisment:
 		'Starting loading images for comparisment',
 	loadingOriginalImage: 'Loading original image',
-	loadingOriginalImageFailed: 'Loading original image failed',
 	loadingComparedImage: 'Loading compared image',
-	loadingComparedImageFailed: 'Loading compared image failed',
 	loadingComparedAndOriginalImageSuccessful:
 		'Loading compared and original image was successful',
+	loadingOriginalImageFailed: 'Loading original image failed',
+	loadingComparedImageFailed: 'Loading compared image failed',
+
+	errorsFromParsingScenario: 'Received errors from parsing scenario',
 };
 
 export default scenarioRunnerLocalization;

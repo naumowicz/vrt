@@ -72,8 +72,10 @@ class Logger {
 	}
 
 	debug(data: string): void {
-		if (globalSettings.enableConsoleLogger) {
-			this.consoleLogger.info(data);
+		if (globalSettings.debugging) {
+			if (globalSettings.enableConsoleLogger) {
+				this.consoleLogger.info(data);
+			}
 		}
 	}
 }

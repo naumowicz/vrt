@@ -21,6 +21,16 @@ class Logger {
 		this.localLog = new LocalLog(globalSettings.loggingPrefixes);
 	}
 
+	createLocalLogFile(
+		pathToLocalLogFile: string,
+		nameOfLocalLogFile: string,
+	): boolean {
+		return this.localLog.createLocalLogFile(
+			pathToLocalLogFile,
+			nameOfLocalLogFile,
+		);
+	}
+
 	// setColorsForConsoleLogger(
 	// 	errorColor: string,
 	// 	warningColor: string,

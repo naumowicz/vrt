@@ -1,4 +1,5 @@
 import FileSystem from './FileSystem';
+import timeStamp from './TimeStamp';
 
 interface Prefixes {
 	errorPrefix: string;
@@ -21,14 +22,25 @@ class LocalLog {
 		this.debugPrefix = prefixes.debugPrefix;
 	}
 
-	async createLocalLogFile(
+	createLocalLogFile(
 		pathToLocalLogFolfer: string,
 		nameOfLocalLogFile: string,
-	): Promise<void> {
+	): boolean {
 		//add time stamp
 		this.pathToLocalLogFile = `${pathToLocalLogFolfer}/${nameOfLocalLogFile}`;
-		FileSystem.createFolder(pathToLocalLogFolfer);
-		FileSystem.writeFile(pathToLocalLogFolfer, Buffer.from(''));
+		if (FileSystem.createFolder(pathToLocalLogFolfer) === false) {
+			//fix me add details about error
+			return false;
+		}
+		if (
+			FileSystem.writeFile(pathToLocalLogFolfer, Buffer.from('')) ===
+			false
+		) {
+			//fix me add details about error
+			return false;
+		}
+
+		return true;
 	}
 
 	error(error: string): void {

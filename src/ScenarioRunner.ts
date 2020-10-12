@@ -64,6 +64,9 @@ class ScenarioRunner {
 			return false;
 		}
 
+		//creating local logs
+		this.logger.createLocalLogFile();
+
 		this.logger.debug(scenarioRunnerLocalization.openingPuppeteer);
 
 		await this.puppeteer.start();

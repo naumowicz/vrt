@@ -33,6 +33,10 @@ class PathHelper {
 			`${pathToBaselineImage}/../${globalSettings.outputFolderName}`,
 		);
 	}
+
+	static getLocalLogFile(pathToBaselineImage: string): string {
+		return Path.normalizePath(`${pathToBaselineImage}/../`);
+	}
 }
 
 export default PathHelper;

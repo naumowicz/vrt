@@ -1,5 +1,4 @@
 import FileSystem from './FileSystem';
-import timeStamp from './TimeStamp';
 
 interface Prefixes {
 	errorPrefix: string;
@@ -27,7 +26,8 @@ class LocalLog {
 		nameOfLocalLogFile: string,
 	): boolean {
 		//add time stamp
-		this.pathToLocalLogFile = `${pathToLocalLogFolfer}/${nameOfLocalLogFile}`;
+		//generatedPath/ + filename
+		this.pathToLocalLogFile = `${pathToLocalLogFolfer}${nameOfLocalLogFile}`;
 		if (FileSystem.createFolder(pathToLocalLogFolfer) === false) {
 			//fix me add details about error
 			return false;

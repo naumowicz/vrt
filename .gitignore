@@ -10,7 +10,7 @@
 /build
 
 # project
-.yarn/*
+.yarn/
 !.yarn/releases
 !.yarn/plugins
 !.yarn/sdks

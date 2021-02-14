@@ -1,0 +1,17 @@
+{
+	"compilerOptions": {
+	  "module": "CommonJS",
+	  "target": "ES2015",
+	  "noImplicitAny": true,
+	  "moduleResolution": "Node",
+	  "esModuleInterop": true,
+	  "removeComments": true,
+	  "preserveConstEnums": true,
+	  "outDir": "build",
+	//   "outFile": "./built/local/tsc.js",
+	  "sourceMap": true,
+	  "incremental": true
+	},
+	"include": ["src/**/*"],
+	"exclude": ["node_modules", "src/test"]
+	}

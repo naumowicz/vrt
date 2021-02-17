@@ -1,0 +1,1 @@
+This folder is for testing file operations and other stuff that will be cleaned after test.

@@ -1,12 +1,12 @@
 import FileSystem from '../../helpers/fileSystem';
 
-const writeFileProperly = './src/test/sandbox/fileSystem/writingFileProperly.txt';
+const writeFileProperly = `${__dirname}/src/test/sandbox/fileSystem/writingFileProperly.txt`;
 
-const deleteFileProperly = './src/test/sandbox/fileSystem/deleteFileProperly.txt';
+const deleteFileProperly = `${__dirname}/src/test/sandbox/fileSystem/deleteFileProperly.txt`;
 
 describe('Testing writeFile', () => {
 	test('writing file properly', async () => {
-		await FileSystem.writeFile(writeFileProperly, Buffer.from('OK'));
+		expect(await FileSystem.writeFile(writeFileProperly, Buffer.from('OK'))).toEqual(true);
 
 		expect(await FileSystem.checkAccessToPath(writeFileProperly)).toEqual(true);
 		const contentOfFile = FileSystem.readFile(writeFileProperly);
@@ -24,6 +24,6 @@ describe('Testing deleteFile', () => {
 
 		expect(await FileSystem.checkAccessToPath(deleteFileProperly)).toEqual(false);
 
-		expect(await FileSystem.writeFile(deleteFileProperly, Buffer.from(''))).toEqual(true);
+		expect(await FileSystem.writeFile(deleteFileProperly, '')).toEqual(true);
 	});
 });

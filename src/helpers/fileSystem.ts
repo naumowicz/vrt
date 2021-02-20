@@ -9,13 +9,13 @@ class FileSystem {
 	 * @param path - Path to file.
 	 * @param data - Buffer to be saved.
 	 */
-	static async writeFile(path: string, data: Buffer): Promise<boolean> {
+	static async writeFile(path: string, data: Buffer | string): Promise<boolean> {
 		if ((await this.checkAccessToPath(path)) === false) {
 			return false;
 		}
 
 		try {
-			fs.promises.writeFile(path, data);
+			await fs.promises.writeFile(path, data);
 		} catch (error) {
 			console.log(error);
 			return false;
@@ -129,7 +129,7 @@ class FileSystem {
 	 */
 	static async checkAccessToPath(path: string): Promise<boolean> {
 		try {
-			fs.promises.access(path, fs.constants.R_OK | fs.constants.W_OK);
+			await fs.promises.access(path, fs.constants.R_OK | fs.constants.W_OK);
 		} catch (error) {
 			console.log(error);
 			return false;

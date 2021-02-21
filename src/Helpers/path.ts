@@ -25,7 +25,7 @@ class Path {
 	 */
 	static getFile(path: string): { success: boolean; data: string } {
 		// if last element has extensions, it's a file
-		if (this.hasExtension(path)) {
+		if (path !== '' && this.hasExtension(path)) {
 			return { success: true, data: nodePath.posix.basename(path) };
 		} else {
 			return { success: false, data: '' };

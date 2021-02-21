@@ -56,13 +56,14 @@ class Path {
 	 * @param path - Path.
 	 */
 	static convertToPosix(path: string): string {
-		return path.replaceAll('\\', '/');
+		//change replace to replaceAll when supported by node
+		return path.replace(/\\/g, '/');
 	}
 
 	/**
 	 * NodeJS prasing path. Allowing to access root, dir, base, extenstion, file name.
 	 * C:/path/dir/file.txt returns:
-	 * { root: 'C:/',
+	 * { root: '',
 	 *   dir: 'C:/path/dir',
 	 *   base: 'file.txt',
 	 *   ext: '.txt',

@@ -1,8 +1,8 @@
 import FileSystem from '../../helpers/fileSystem';
 
-const writeFileProperly = `${__dirname}/src/test/sandbox/fileSystem/writingFileProperly.txt`;
+const writeFileProperly = `./src/test/sandbox/fileSystem/writingFileProperly.txt`;
 
-const deleteFileProperly = `${__dirname}/src/test/sandbox/fileSystem/deleteFileProperly.txt`;
+const deleteFileProperly = `./src/test/sandbox/fileSystem/deleteFileProperly.txt`;
 
 describe('Testing writeFile', () => {
 	test('writing file properly', async () => {

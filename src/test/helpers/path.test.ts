@@ -161,3 +161,27 @@ describe('Testing parsePath', () => {
 		});
 	});
 });
+
+describe('Testing normalizePath', () => {
+	test('empty path', () => {
+		expect(path.normalizePath('')).toEqual('.');
+	});
+	test('just /', () => {
+		expect(path.normalizePath('/')).toEqual('/');
+	});
+	test('path to folder', () => {
+		expect(path.normalizePath('/test/folder')).toEqual('/test/folder');
+	});
+	test('path with / at the end', () => {
+		expect(path.normalizePath('/test/folder/')).toEqual('/test/folder/');
+	});
+	test('path with extension', () => {
+		expect(path.normalizePath('/test/folder/file.txt')).toEqual('/test/folder/file.txt');
+	});
+	test('path with ..', () => {
+		expect(path.normalizePath('/test/folder/../file.txt')).toEqual('/test/file.txt');
+	});
+	test('path with .', () => {
+		expect(path.normalizePath('/test/folder/./file.txt')).toEqual('/test/folder/file.txt');
+	});
+});

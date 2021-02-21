@@ -71,7 +71,7 @@ class FileSystem {
 	 */
 	static async isFolder(path: string): Promise<{ success: boolean; folder: boolean }> {
 		if ((await this.checkAccessToPath(path)) === false) {
-			return { success: false, folder: undefined };
+			return { success: false, folder: false };
 		}
 
 		let isFolder;
@@ -80,7 +80,7 @@ class FileSystem {
 			isFolder = (await fs.promises.lstat(path)).isDirectory();
 		} catch (error) {
 			console.log(error);
-			return { success: false, folder: undefined };
+			return { success: false, folder: false };
 		}
 
 		return { success: true, folder: isFolder };

@@ -59,3 +59,18 @@ describe('Testing hasExtension', () => {
 		expect(path.hasExtension('/test/folder/file.txt')).toEqual(true);
 	});
 });
+
+describe('Testing getExtensions', () => {
+	test('empty path', () => {
+		expect(path.getExtensions('')).toEqual({success: false, data: ''});
+	});
+	test('path to folder', () => {
+		expect(path.getExtensions('/test/folder')).toEqual({success: false, data: ''});
+	});
+	test('path with / at the end', () => {
+		expect(path.getExtensions('/test/folder/')).toEqual({success: false, data: ''});
+	});
+	test('path with extension', () => {
+		expect(path.getExtensions('/test/folder/file.txt')).toEqual({success: true, data: '.txt'});
+	});
+});

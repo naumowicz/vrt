@@ -13,9 +13,9 @@ class Path {
 	static getFoler(path: string): { success: boolean; data: string } {
 		// if last element has extensions, it's a file
 		if (path === '' || this.hasExtension(path)) {
-			return { success: false, data: '' }
+			return { success: false, data: '' };
 		} else {
-			return { success: true, data: nodePath.posix.basename(path) }
+			return { success: true, data: nodePath.posix.basename(path) };
 		}
 	}
 
@@ -23,12 +23,12 @@ class Path {
 	 * Geting file from path. If path has no extensions, it'a assumed as folder and returning failure.
 	 * @param path - Path to folder.
 	 */
-	static getFile(path: string): { success: boolean; data: string }  {
+	static getFile(path: string): { success: boolean; data: string } {
 		// if last element has extensions, it's a file
 		if (this.hasExtension(path)) {
-			return { success: true, data: nodePath.posix.basename(path) }
+			return { success: true, data: nodePath.posix.basename(path) };
 		} else {
-			return { success: false, data: '' }
+			return { success: false, data: '' };
 		}
 	}
 
@@ -39,11 +39,11 @@ class Path {
 	static getExtensions(path: string): { success: boolean; data: string } {
 		const extension = nodePath.posix.extname(path);
 		//making sure that extension was found
-		return { success: extension !== '', data: extension }
+		return { success: extension !== '', data: extension };
 	}
 
 	/**
-	 * Checking if for given path extenstion is available. 
+	 * Checking if for given path extenstion is available.
 	 * @param path - Path to file.
 	 */
 	static hasExtension(path: string): boolean {
@@ -69,7 +69,7 @@ class Path {
 	 *   name: 'file' }
 	 * @param path - Path.
 	 */
-	static parsePath(path: string): {root: string, dir: string, base: string, ext: string, name: string} {
+	static parsePath(path: string): { root: string; dir: string; base: string; ext: string; name: string } {
 		return nodePath.posix.parse(path);
 	}
 

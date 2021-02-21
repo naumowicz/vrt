@@ -87,16 +87,18 @@ class FileSystem {
 	}
 
 	/**
-	 * Deleting folder under given path.
+	 * Deleting folder recursively under given path.
+	 * Ignoring if it is a file.
 	 * @param path - Path to folder.
 	 */
 	static async deleteFolder(path: string): Promise<boolean> {
-		if ((await this.checkAccessToPath(path)) === false) {
+		const isFolder = await this.isFolder(path);
+		if (isFolder.success === false || isFolder.folder === false) {
 			return false;
 		}
 
 		try {
-			fs.promises.rmdir(path);
+			fs.promises.rmdir(path, { recursive: true });
 		} catch (error) {
 			console.log(error);
 			return false;

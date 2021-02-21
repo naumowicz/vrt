@@ -10,9 +10,10 @@ class FileSystem {
 	 * @param data - Buffer to be saved.
 	 */
 	static async writeFile(path: string, data: Buffer | string): Promise<boolean> {
-		if ((await this.checkAccessToPath(path)) === false) {
-			return false;
-		}
+		//writing file also creates it, so below lines need another method
+		// if ((await this.checkAccessToPath(path)) === false) {
+		// 	return false;
+		// }
 
 		try {
 			await fs.promises.writeFile(path, data);

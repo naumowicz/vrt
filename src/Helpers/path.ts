@@ -12,8 +12,8 @@ class Path {
 	 */
 	static getFoler(path: string): { success: boolean; data: string } {
 		// if last element has extensions, it's a file
-		if (this.hasExtension(path)) {
-			return { success:false, data: '' }
+		if (path === '' || this.hasExtension(path)) {
+			return { success: false, data: '' }
 		} else {
 			return { success: true, data: nodePath.posix.basename(path) }
 		}
@@ -47,7 +47,7 @@ class Path {
 	 * @param path - Path to file.
 	 */
 	static hasExtension(path: string): boolean {
-		return nodePath.posix.extname(path) === '';
+		return nodePath.posix.extname(path) !== '';
 	}
 
 	/**

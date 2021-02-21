@@ -10,7 +10,7 @@ class Path {
 	 * Geting folder from path. If path contains extensions, it'a assumed as file and returning failure.
 	 * @param path - Path to folder.
 	 */
-	getFoler(path: string): { success: boolean; data: string } {
+	static getFoler(path: string): { success: boolean; data: string } {
 		// if last element has extensions, it's a file
 		if (this.hasExtension(path)) {
 			return { success:false, data: '' }
@@ -23,7 +23,7 @@ class Path {
 	 * Geting file from path. If path has no extensions, it'a assumed as folder and returning failure.
 	 * @param path - Path to folder.
 	 */
-	getFile(path: string): { success: boolean; data: string }  {
+	static getFile(path: string): { success: boolean; data: string }  {
 		// if last element has extensions, it's a file
 		if (this.hasExtension(path)) {
 			return { success: true, data: nodePath.posix.basename(path) }
@@ -36,7 +36,7 @@ class Path {
 	 * Geting extensions from path. If there is no extenstion method returns failure.
 	 * @param path - Path to file.
 	 */
-	getExtensions(path: string): { success: boolean; data: string } {
+	static getExtensions(path: string): { success: boolean; data: string } {
 		const extension = nodePath.posix.extname(path);
 		//making sure that extension was found
 		return { success: extension !== '', data: extension }
@@ -46,7 +46,7 @@ class Path {
 	 * Checking if for given path extenstion is available. 
 	 * @param path - Path to file.
 	 */
-	hasExtension(path: string): boolean {
+	static hasExtension(path: string): boolean {
 		return nodePath.posix.extname(path) === '';
 	}
 
@@ -55,7 +55,7 @@ class Path {
 
 	 * @param path - Path.
 	 */
-	convertToPosix(path: string): string {
+	static convertToPosix(path: string): string {
 		return path.replaceAll('\\', '/');
 	}
 
@@ -69,7 +69,7 @@ class Path {
 	 *   name: 'file' }
 	 * @param path - Path.
 	 */
-	parsePath(path: string): {root: string, dir: string, base: string, ext: string, name: string} {
+	static parsePath(path: string): {root: string, dir: string, base: string, ext: string, name: string} {
 		return nodePath.posix.parse(path);
 	}
 
@@ -79,7 +79,7 @@ class Path {
 	 * /foo/bar/baz/asdf
 	 * @param path - Path.
 	 */
-	normalizePath(path: string): string {
+	static normalizePath(path: string): string {
 		return nodePath.posix.normalize(path);
 	}
 }

@@ -1,5 +1,8 @@
 {
   "name": "vrt",
+  "scripts": {
+	"test": " jest"
+  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.15.0",
     "@typescript-eslint/parser": "^4.15.0",

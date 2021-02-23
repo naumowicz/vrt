@@ -150,7 +150,7 @@ class FileSystem {
 	 * @param path - Path to file.
 	 * @param data - Data to be appended.
 	 */
-	static async appendToFile(path: string, data: Buffer): Promise<boolean> {
+	static async appendToFile(path: string, data: Buffer | string): Promise<boolean> {
 		if ((await this.checkAccessToPath(path)) === false) {
 			return false;
 		}

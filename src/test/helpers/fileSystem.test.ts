@@ -1,4 +1,5 @@
 import FileSystem from '../../helpers/fileSystem';
+import readline from 'readline';
 
 const writeFileProperly = './src/test/sandbox/fileSystem/writingFileProperly.txt';
 const deleteFileProperly = './src/test/sandbox/fileSystem/deleteFileProperly.txt';
@@ -11,6 +12,7 @@ const createFolder = './src/test/sandbox/fileSystem/createFolder';
 const folderAlreadyExists = './src/test/sandbox/fileSystem/folderAlreadyExists';
 const folderDoesNotExists = './src/test/sandbox/fileSystem/folderDoesNotExists';
 const appendToFile = './src/test/sandbox/fileSystem/appendToFile.txt';
+const createReadStream = './src/test/sandbox/fileSystem/createReadStream.txt';
 
 describe('Testing writeFile', () => {
 	test('writing file properly', async () => {
@@ -134,5 +136,36 @@ describe('Testing appendToFile', () => {
 	});
 	test('path that does not exists', async () => {
 		expect(await FileSystem.appendToFile(writeFileWrongPath, 'OK')).toEqual(false);
+	});
+});
+
+describe('Testing createReadStream', () => {
+	test('path to folder that does not exists', async () => {
+		expect(await FileSystem.createReadStream(folderDoesNotExists)).toEqual({
+			success: false,
+			readStream: undefined,
+		});
+	});
+	test('path to folder that exists', async () => {
+		expect(await FileSystem.createReadStream(pathToFolder)).toEqual({ success: false, readStream: undefined });
+	});
+	test('path to file', async () => {
+		const readStreamResult = await FileSystem.createReadStream(createReadStream);
+
+		expect(readStreamResult.success).toEqual(true);
+
+		const readInterface = readline.createInterface({
+			input: readStreamResult.readStream,
+		});
+
+		readInterface.on('line', (line) => {
+			expect(line).toEqual('read me');
+		});
+	});
+	test('path that does not exists', async () => {
+		expect(await FileSystem.createReadStream(writeFileWrongPath)).toEqual({
+			success: false,
+			readStream: undefined,
+		});
 	});
 });

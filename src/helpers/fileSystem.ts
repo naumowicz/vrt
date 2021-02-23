@@ -170,11 +170,19 @@ class FileSystem {
 	 * @param path - Path to file.
 	 */
 	static async createReadStream(path: string): Promise<{ success: boolean; readStream: fs.ReadStream | undefined }> {
-		if ((await this.checkAccessToPath(path)) === false) {
+		if ((await this.checkAccessToPath(path)) === false || (await this.isFolder(path)).folder === true) {
 			return { success: false, readStream: undefined };
 		}
 
-		return { success: true, readStream: fs.createReadStream(path) };
+		let readStream;
+
+		try {
+			readStream = fs.createReadStream(path);
+		} catch (error) {
+			console.log(error);
+			return { success: false, readStream: undefined };
+		}
+		return { success: true, readStream: readStream };
 	}
 
 	/**

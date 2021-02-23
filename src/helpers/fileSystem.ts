@@ -92,13 +92,16 @@ class FileSystem {
 	 * @param path - Path to folder.
 	 */
 	static async deleteFolder(path: string): Promise<boolean> {
+		if ((await this.checkAccessToPath(path)) === false) {
+			return false;
+		}
 		const isFolder = await this.isFolder(path);
 		if (isFolder.success === false || isFolder.folder === false) {
 			return false;
 		}
 
 		try {
-			fs.promises.rmdir(path, { recursive: true });
+			await fs.promises.rmdir(path, { recursive: true });
 		} catch (error) {
 			console.log(error);
 			return false;
@@ -112,12 +115,13 @@ class FileSystem {
 	 * @param path Path to folder.
 	 */
 	static async createFolder(path: string): Promise<boolean> {
-		if ((await this.checkAccessToPath(path)) === false) {
+		//if folder already exists
+		if ((await this.checkAccessToPath(path)) === true) {
 			return false;
 		}
 
 		try {
-			fs.promises.mkdir(path);
+			await fs.promises.mkdir(path);
 		} catch (error) {
 			console.log(error);
 			return false;
@@ -152,7 +156,7 @@ class FileSystem {
 		}
 
 		try {
-			fs.promises.appendFile(path, data);
+			await fs.promises.appendFile(path, data);
 		} catch (error) {
 			console.log(error);
 			return false;
@@ -184,7 +188,7 @@ class FileSystem {
 		}
 
 		try {
-			fs.promises.writeFile(path, JSON.stringify(data));
+			await fs.promises.writeFile(path, JSON.stringify(data));
 		} catch (error) {
 			console.log(error);
 			return false;

@@ -6,7 +6,11 @@ const writeFileWrongPath = './src/test/sandbox/fileSystem/wrongFolder/writeFile.
 const readFileProperly = './src/test/sandbox/fileSystem/readFile.txt';
 const pathToFolder = './src/test/sandbox/fileSystem';
 const deleteFolder = './src/test/sandbox/fileSystem/deletingFolder';
-const deleteFilermdir = 'src/test/sandbox/fileSystem/deleteFilermdir.txt';
+const deleteFilermdir = './src/test/sandbox/fileSystem/deleteFilermdir.txt';
+const createFolder = './src/test/sandbox/fileSystem/createFolder';
+const folderAlreadyExists = './src/test/sandbox/fileSystem/folderAlreadyExists';
+const folderDoesNotExists = './src/test/sandbox/fileSystem/folderDoesNotExists';
+const appendToFile = './src/test/sandbox/fileSystem/appendToFile.txt';
 
 describe('Testing writeFile', () => {
 	test('writing file properly', async () => {
@@ -76,5 +80,59 @@ describe('Testing deleteFolder', () => {
 	});
 	test('path that does not exists', async () => {
 		expect(await FileSystem.deleteFolder(writeFileWrongPath)).toEqual(false);
+	});
+});
+
+describe('Testing createFolder', () => {
+	test('path to folder that does not exists', async () => {
+		expect(await FileSystem.createFolder(createFolder)).toEqual(true);
+
+		//cleanup
+		expect(await FileSystem.deleteFolder(createFolder)).toEqual(true);
+	});
+	test('path to folder that already exists', async () => {
+		expect(await FileSystem.createFolder(folderAlreadyExists)).toEqual(false);
+	});
+	test('path to file', async () => {
+		expect(await FileSystem.createFolder(deleteFilermdir)).toEqual(false);
+	});
+	test('path that does not exists', async () => {
+		expect(await FileSystem.createFolder(writeFileWrongPath)).toEqual(false);
+	});
+});
+
+describe('Testing checkAccessToPath', () => {
+	test('path to folder that does not exists', async () => {
+		expect(await FileSystem.checkAccessToPath(folderDoesNotExists)).toEqual(false);
+	});
+	test('path to folder that exists', async () => {
+		expect(await FileSystem.checkAccessToPath(pathToFolder)).toEqual(true);
+	});
+	test('path to file', async () => {
+		expect(await FileSystem.checkAccessToPath(readFileProperly)).toEqual(true);
+	});
+	test('path that does not exists', async () => {
+		expect(await FileSystem.checkAccessToPath(writeFileWrongPath)).toEqual(false);
+	});
+});
+
+describe('Testing appendToFile', () => {
+	test('path to folder that does not exists', async () => {
+		expect(await FileSystem.appendToFile(folderDoesNotExists, 'OK')).toEqual(false);
+	});
+	test('path to folder that exists', async () => {
+		expect(await FileSystem.appendToFile(pathToFolder, 'OK')).toEqual(false);
+	});
+	test('path to file for appending', async () => {
+		expect(await FileSystem.appendToFile(appendToFile, 'OK')).toEqual(true);
+
+		expect((await FileSystem.readFile(appendToFile)).data).toEqual(Buffer.from('OK'));
+
+		//cleanup
+		expect(await FileSystem.deleteFile(appendToFile)).toEqual(true);
+		expect(await FileSystem.writeFile(appendToFile, '')).toEqual(true);
+	});
+	test('path that does not exists', async () => {
+		expect(await FileSystem.appendToFile(writeFileWrongPath, 'OK')).toEqual(false);
 	});
 });

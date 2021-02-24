@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import pathHelper from './path';
 
 /**
  * Class designed for allowing to use methods from fs module with additional try-catching.
@@ -37,6 +38,7 @@ class FileSystem {
 		let fileContent;
 
 		try {
+			// eslint-disable-next-line prefer-const
 			fileContent = await fs.promises.readFile(path);
 		} catch (error) {
 			console.log(error);
@@ -77,6 +79,7 @@ class FileSystem {
 		let isFolder;
 
 		try {
+			// eslint-disable-next-line prefer-const
 			isFolder = (await fs.promises.lstat(path)).isDirectory();
 		} catch (error) {
 			console.log(error);
@@ -177,6 +180,7 @@ class FileSystem {
 		let readStream;
 
 		try {
+			// eslint-disable-next-line prefer-const
 			readStream = fs.createReadStream(path);
 		} catch (error) {
 			console.log(error);

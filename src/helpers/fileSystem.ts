@@ -191,7 +191,8 @@ class FileSystem {
 	 * @param data - JavaScript element.
 	 */
 	static async saveJSONToFile(path: string, data: unknown): Promise<boolean> {
-		if ((await this.checkAccessToPath(path)) === false) {
+		const pathExtenstion = pathHelper.getExtensions(path);
+		if (pathExtenstion.success === false || pathExtenstion.data !== '.json') {
 			return false;
 		}
 

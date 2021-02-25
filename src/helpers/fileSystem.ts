@@ -214,9 +214,14 @@ class FileSystem {
 	 * Reading values from JSON file.
 	 * @param path - Path to file.
 	 */
-	static async readJSONFile(path: string): Promise<{ success: boolean; data: Array<string> }> {
+	static async readJSONFile(path: string): Promise<{ success: boolean; data: Record<string, unknown> }> {
 		if ((await this.checkAccessToPath(path)) === false) {
-			return { success: false, data: [] };
+			return { success: false, data: {} };
+		}
+
+		const pathExtenstion = pathHelper.getExtensions(path);
+		if (pathExtenstion.success === false || pathExtenstion.data !== '.json') {
+			return { success: false, data: {} };
 		}
 
 		try {
@@ -226,7 +231,7 @@ class FileSystem {
 			}
 		} catch (error) {
 			console.log(error);
-			return { success: false, data: [] };
+			return { success: false, data: {} };
 		}
 	}
 }

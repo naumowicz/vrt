@@ -13,6 +13,12 @@ const folderAlreadyExists = './src/test/sandbox/fileSystem/folderAlreadyExists';
 const folderDoesNotExists = './src/test/sandbox/fileSystem/folderDoesNotExists';
 const appendToFile = './src/test/sandbox/fileSystem/appendToFile.txt';
 const createReadStream = './src/test/sandbox/fileSystem/createReadStream.txt';
+const saveJSON = './src/test/sandbox/fileSystem/saveJSON.json';
+const wrongExtensionJSON = './src/test/sandbox/fileSystem/saveWringExtensionJSON.txt';
+const noExtensionJSON = './src/test/sandbox/fileSystem/saveNoExtensionJSON';
+const readJSON = './src/test/sandbox/fileSystem/read.json';
+const readWrongExtensionJSON = './src/test/sandbox/fileSystem/readWringExtensionJSON.txt';
+const readNoExtensionJSON = './src/test/sandbox/fileSystem/readNoExtensionJSON';
 
 describe('Testing writeFile', () => {
 	test('writing file properly', async () => {
@@ -167,5 +173,61 @@ describe('Testing createReadStream', () => {
 			success: false,
 			readStream: undefined,
 		});
+	});
+});
+
+describe('Testing saveJSONToFile', () => {
+	const objectToSave: { a: number; b: string; c: null } = {
+		a: 1,
+		b: 'string',
+		c: null,
+	};
+	test('path to folder that does not exists', async () => {
+		expect(await FileSystem.saveJSONToFile(folderDoesNotExists, objectToSave)).toEqual(false);
+	});
+	test('path to folder that exists', async () => {
+		expect(await FileSystem.saveJSONToFile(pathToFolder, objectToSave)).toEqual(false);
+	});
+	test('path to file without .json extension', async () => {
+		expect(await FileSystem.saveJSONToFile(noExtensionJSON, objectToSave)).toEqual(false);
+	});
+	test('path to file with wrong extension', async () => {
+		expect(await FileSystem.saveJSONToFile(wrongExtensionJSON, objectToSave)).toEqual(false);
+	});
+	test('path to file with .json extension', async () => {
+		expect(await FileSystem.saveJSONToFile(saveJSON, objectToSave)).toEqual(true);
+
+		//cleanup
+		expect((await FileSystem.readFile(saveJSON)).data).toEqual(Buffer.from('{"a":1,"b":"string","c":null}'));
+		expect(await FileSystem.deleteFile(saveJSON)).toEqual(true);
+	});
+	test('path that does not exists', async () => {
+		expect(await FileSystem.saveJSONToFile(writeFileWrongPath, objectToSave)).toEqual(false);
+	});
+});
+
+describe('Testing readJSONFile', () => {
+	const objectToRead: { a: number; b: string; c: undefined } = {
+		a: 2,
+		b: 'string',
+		c: undefined,
+	};
+	test('path to folder that does not exists', async () => {
+		expect(await FileSystem.readJSONFile(folderDoesNotExists)).toEqual({ success: false, data: {} });
+	});
+	test('path to folder that exists', async () => {
+		expect(await FileSystem.readJSONFile(pathToFolder)).toEqual({ success: false, data: {} });
+	});
+	test('path to file without .json extension', async () => {
+		expect(await FileSystem.readJSONFile(readNoExtensionJSON)).toEqual({ success: false, data: {} });
+	});
+	test('path to file with wrong extension', async () => {
+		expect(await FileSystem.readJSONFile(readWrongExtensionJSON)).toEqual({ success: false, data: {} });
+	});
+	test('path to file with .json extension', async () => {
+		expect(await FileSystem.readJSONFile(readJSON)).toEqual({ success: true, data: objectToRead });
+	});
+	test('path that does not exists', async () => {
+		expect(await FileSystem.readJSONFile(writeFileWrongPath)).toEqual({ success: false, data: {} });
 	});
 });

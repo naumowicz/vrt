@@ -1,0 +1,78 @@
+{
+	"browser": "chrome",
+	"resolution": "1920x1080",
+	"headless": true,
+	"autosavingBaseline": true,
+	"ignoringAlgorithm": "nothing",
+	"errorType": "movement",
+	"errorColor": {
+		"red": 255,
+		"green": 0,
+		"blue": 255 
+	},
+	"transparency": 0.3,
+	"largeImageThreshold": 0,
+	"setReturnEarlyThreshold": "undefined",
+	"scaleToSameSize": true,
+	"scenarioTasks": [
+		{
+			"tag": ["name", "name2"],
+			"boundingBoxes": [
+				{
+					"left": 100,
+					"top": 200,
+					"right": 200,
+					"bottom": 600
+				},
+				{}
+			],
+			"ignoredBoxes": [
+				{
+					"left": 5,
+					"top": 5,
+					"right": 5,
+					"bottom": 5
+				},
+				{}
+			],
+			"script": null,
+			"actions": [
+				{
+					"action": "open",
+					"target": "URL",
+					"value": "https://www.google.com"
+				},
+				{
+					"action": "click",
+					"target": "//button",
+					"value": null
+				},
+				{
+					"action": "waitFor",
+					"target": "//body",
+					"value": null
+				},
+				{
+					"action": "screenshot",
+					"target": "//body",
+					"value": "name"
+				},
+				{
+					"action": "screenshot",
+					"target": "//body",
+					"value": "name2"
+				}
+			]
+		},
+		{
+			"tag": ["name3"],
+			"script": "pathToScriptInTheSameFolderAsScenario.js",
+			"actions": null
+		},
+		{
+			"tag": ["name4", "name5"],
+			"script": "pathToScriptInTheSameFolderAsScenario2.js",
+			"actions": null
+		}
+	]
+}

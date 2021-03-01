@@ -1,4 +1,4 @@
-interface scenarioDefinition {
+interface ScenarioDefinition {
 	browser: string;
 	resolution: RegExp;
 	headless: boolean;
@@ -55,26 +55,26 @@ class scenarioRules {
 	}
 
 	isUsingProperBrowser(): boolean {
-		const expectedScenarioType = this.scenario as scenarioDefinition;
+		const expectedScenarioType = this.scenario as ScenarioDefinition;
 		return 'browser' in expectedScenarioType ? this.browser.includes(expectedScenarioType.browser) : false;
 	}
 
 	isUsingProperResolutionFormat(): boolean {
-		const expectedScenarioType = this.scenario as scenarioDefinition;
+		const expectedScenarioType = this.scenario as ScenarioDefinition;
 		return 'resolution' in expectedScenarioType
 			? this.resolution.test(expectedScenarioType.resolution.toString())
 			: false;
 	}
 
 	isUsingProperIgnoringAlghoritm(): boolean {
-		const expectedScenarioType = this.scenario as scenarioDefinition;
+		const expectedScenarioType = this.scenario as ScenarioDefinition;
 		return 'ignoringAlgorithm' in expectedScenarioType
 			? this.ignoringAlgorithm.includes(expectedScenarioType.ignoringAlgorithm)
 			: false;
 	}
 
 	isUsingProperErrorType(): boolean {
-		const expectedScenarioType = this.scenario as scenarioDefinition;
+		const expectedScenarioType = this.scenario as ScenarioDefinition;
 		return 'errorType' in expectedScenarioType ? this.errorType.includes(expectedScenarioType.errorType) : false;
 	}
 }

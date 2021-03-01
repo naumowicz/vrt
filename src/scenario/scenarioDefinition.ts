@@ -1,4 +1,4 @@
-interface ScenarioDefinition {
+interface ScenarioRules {
 	browser: string;
 	resolution: RegExp;
 	headless: boolean;
@@ -38,7 +38,7 @@ interface Action {
 	value: string;
 }
 
-class scenarioRules {
+class ScenarioDefinition {
 	browser: Array<string> = ['chrome'];
 	resolution = /\d+x\d+/;
 	ignoringAlgorithm: Array<string> = ['nothing', 'less', 'antialiasing', 'colors', 'alpha'];
@@ -50,29 +50,29 @@ class scenarioRules {
 		'diffOnly',
 	];
 
-	isUsingProperBrowser(scenario: unknown): scenario is ScenarioDefinition {
-		const expectedScenarioType = scenario as ScenarioDefinition;
+	isUsingProperBrowser(scenario: unknown): scenario is ScenarioRules {
+		const expectedScenarioType = scenario as ScenarioRules;
 		return 'browser' in expectedScenarioType ? this.browser.includes(expectedScenarioType.browser) : false;
 	}
 
-	isUsingProperResolutionFormat(scenario: unknown): scenario is ScenarioDefinition {
-		const expectedScenarioType = scenario as ScenarioDefinition;
+	isUsingProperResolutionFormat(scenario: unknown): scenario is ScenarioRules {
+		const expectedScenarioType = scenario as ScenarioRules;
 		return 'resolution' in expectedScenarioType
 			? this.resolution.test(expectedScenarioType.resolution.toString())
 			: false;
 	}
 
-	isUsingProperIgnoringAlghoritm(scenario: unknown): scenario is ScenarioDefinition {
-		const expectedScenarioType = scenario as ScenarioDefinition;
+	isUsingProperIgnoringAlghoritm(scenario: unknown): scenario is ScenarioRules {
+		const expectedScenarioType = scenario as ScenarioRules;
 		return 'ignoringAlgorithm' in expectedScenarioType
 			? this.ignoringAlgorithm.includes(expectedScenarioType.ignoringAlgorithm)
 			: false;
 	}
 
-	isUsingProperErrorType(scenario: unknown): scenario is ScenarioDefinition {
-		const expectedScenarioType = scenario as ScenarioDefinition;
+	isUsingProperErrorType(scenario: unknown): scenario is ScenarioRules {
+		const expectedScenarioType = scenario as ScenarioRules;
 		return 'errorType' in expectedScenarioType ? this.errorType.includes(expectedScenarioType.errorType) : false;
 	}
 }
 
-export default scenarioRules;
+export default ScenarioDefinition;

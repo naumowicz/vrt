@@ -49,32 +49,28 @@ class scenarioRules {
 		'movementDifferenceIntensity',
 		'diffOnly',
 	];
-	scenario: unknown;
-	constructor(scenario: unknown) {
-		this.scenario = scenario;
-	}
 
-	isUsingProperBrowser(): boolean {
-		const expectedScenarioType = this.scenario as ScenarioDefinition;
+	isUsingProperBrowser(scenario: unknown): scenario is ScenarioDefinition {
+		const expectedScenarioType = scenario as ScenarioDefinition;
 		return 'browser' in expectedScenarioType ? this.browser.includes(expectedScenarioType.browser) : false;
 	}
 
-	isUsingProperResolutionFormat(): boolean {
-		const expectedScenarioType = this.scenario as ScenarioDefinition;
+	isUsingProperResolutionFormat(scenario: unknown): scenario is ScenarioDefinition {
+		const expectedScenarioType = scenario as ScenarioDefinition;
 		return 'resolution' in expectedScenarioType
 			? this.resolution.test(expectedScenarioType.resolution.toString())
 			: false;
 	}
 
-	isUsingProperIgnoringAlghoritm(): boolean {
-		const expectedScenarioType = this.scenario as ScenarioDefinition;
+	isUsingProperIgnoringAlghoritm(scenario: unknown): scenario is ScenarioDefinition {
+		const expectedScenarioType = scenario as ScenarioDefinition;
 		return 'ignoringAlgorithm' in expectedScenarioType
 			? this.ignoringAlgorithm.includes(expectedScenarioType.ignoringAlgorithm)
 			: false;
 	}
 
-	isUsingProperErrorType(): boolean {
-		const expectedScenarioType = this.scenario as ScenarioDefinition;
+	isUsingProperErrorType(scenario: unknown): scenario is ScenarioDefinition {
+		const expectedScenarioType = scenario as ScenarioDefinition;
 		return 'errorType' in expectedScenarioType ? this.errorType.includes(expectedScenarioType.errorType) : false;
 	}
 }

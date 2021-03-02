@@ -211,7 +211,7 @@ class FileSystem {
 	}
 
 	/**
-	 * Reading values from JSON file.
+	 * Reading values from JSON file. Makes sure about JSON syntax.
 	 * @param path - Path to file.
 	 */
 	static async readJSONFile(path: string): Promise<{ success: boolean; data: Record<string, unknown> }> {

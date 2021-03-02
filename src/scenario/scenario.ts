@@ -15,7 +15,7 @@ class Scenario {
 	async readScenarioFile(): Promise<boolean> {
 		const result = await fileSystem.readJSONFile(this.path);
 		if (result.success) {
-			// how to check if it was json?
+			// fix name
 			this.scenario = result.data;
 			return true;
 		} else {

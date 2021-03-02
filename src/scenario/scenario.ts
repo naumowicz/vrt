@@ -27,28 +27,31 @@ class Scenario {
 		const scenarioDefinition = new ScenarioDefinition();
 		if (scenarioDefinition.isUsingProperBrowser(this.scenario)) {
 			//ok browser
-			if (scenarioDefinition.isUsingProperResolutionFormat(this.scenario)) {
-				//ok resolution
-				if (scenarioDefinition.isUsingProperIgnoringAlghoritm(this.scenario)) {
-					//ok ignoring algorithm
-					if (scenarioDefinition.isUsingProperErrorType(this.scenario)) {
-						//ok error type
-						//all ok
-						return true;
-					} else {
-						//wrong error type
-						return false;
-					}
-				} else {
-					//wrong ignoring algorithm
-					return false;
-				}
-			} else {
-				//wrong resolution
-				return false;
-			}
 		} else {
 			//wrong browser
+			return false;
+		}
+
+		if (scenarioDefinition.isUsingProperResolutionFormat(this.scenario)) {
+			//ok resolution
+		} else {
+			//wrong resolution
+			return false;
+		}
+
+		if (scenarioDefinition.isUsingProperIgnoringAlghoritm(this.scenario)) {
+			//ok ignoring algorithm
+		} else {
+			//wrong ignoring algorithm
+			return false;
+		}
+
+		if (scenarioDefinition.isUsingProperErrorType(this.scenario)) {
+			//ok error type
+			//all ok
+			return true;
+		} else {
+			//wrong error type
 			return false;
 		}
 	}

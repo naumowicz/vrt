@@ -19,6 +19,7 @@ const noExtensionJSON = './src/test/sandbox/fileSystem/saveNoExtensionJSON';
 const readJSON = './src/test/sandbox/fileSystem/read.json';
 const readWrongExtensionJSON = './src/test/sandbox/fileSystem/readWringExtensionJSON.txt';
 const readNoExtensionJSON = './src/test/sandbox/fileSystem/readNoExtensionJSON';
+const readJSONWrongContent = './src/test/sandbox/fileSystem/readJSONWrongContent.json';
 
 describe('Testing writeFile', () => {
 	test('writing file properly', async () => {
@@ -229,5 +230,8 @@ describe('Testing readJSONFile', () => {
 	});
 	test('path that does not exists', async () => {
 		expect(await FileSystem.readJSONFile(writeFileWrongPath)).toEqual({ success: false, data: {} });
+	});
+	test('path to .json file but content is a string', async () => {
+		expect(await FileSystem.readJSONFile(readJSONWrongContent)).toEqual({ success: false, data: {} });
 	});
 });

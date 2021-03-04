@@ -201,7 +201,7 @@ class ScenarioDefinition {
 		const expectedBox = box as Box;
 		if ('left' in expectedBox && 'top' in expectedBox && 'right' in expectedBox && 'bottom' in expectedBox) {
 			const maxReasonableSize = 10000;
-			for (const [key, value] of Object.entries(expectedBox)) {
+			for (const [, value] of Object.entries(expectedBox)) {
 				if (Number.isInteger(value) && (value < 0 || value > maxReasonableSize)) {
 					return false;
 				}

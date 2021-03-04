@@ -176,7 +176,10 @@ class ScenarioDefinition {
 			'largeImageThreshold' in expectedScenarioType &&
 			typeof expectedScenarioType.largeImageThreshold === 'number'
 		) {
-			if (expectedScenarioType.largeImageThreshold < 0 && expectedScenarioType.largeImageThreshold % 1 === 0) {
+			if (
+				expectedScenarioType.largeImageThreshold < 0 &&
+				Number.isInteger(expectedScenarioType.largeImageThreshold)
+			) {
 				//wrong value of largeImageThreshold, or is float
 				return false;
 			}

@@ -87,20 +87,17 @@ class ScenarioDefinition {
 	isUsingProperErrorColorFormat(scenario: unknown): scenario is ScenarioRules {
 		const expectedScenarioType = scenario as ScenarioRules;
 		if ('errorColor' in expectedScenarioType && typeof expectedScenarioType === 'object') {
-			if (
-				typeof expectedScenarioType.errorColor.red === 'number' &&
-				typeof expectedScenarioType.errorColor.green === 'number' &&
-				typeof expectedScenarioType.errorColor.blue === 'number'
-			) {
-				if (expectedScenarioType.errorColor.red < 0 && expectedScenarioType.errorColor.red > 255) {
+			const { red, green, blue } = expectedScenarioType.errorColor;
+			if (Number.isInteger(red) && Number.isInteger(green) && Number.isInteger(blue)) {
+				if (red < 0 && red > 255) {
 					//wrong value for red
 					return false;
 				}
-				if (expectedScenarioType.errorColor.green < 0 && expectedScenarioType.errorColor.green > 255) {
+				if (green < 0 && green > 255) {
 					//wrong value for green
 					return false;
 				}
-				if (expectedScenarioType.errorColor.blue < 0 && expectedScenarioType.errorColor.blue > 255) {
+				if (blue < 0 && blue > 255) {
 					//wrong value for blue
 					return false;
 				}

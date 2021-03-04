@@ -175,23 +175,12 @@ class ScenarioDefinition {
 
 	isUsingScaleToSameSizeProperType(scenario: unknown): scenario is ScenarioRules {
 		const expectedScenarioType = scenario as ScenarioRules;
-		if (
-			'largeImageThreshold' in expectedScenarioType &&
-			typeof expectedScenarioType.largeImageThreshold === 'number'
-		) {
-			if (
-				expectedScenarioType.largeImageThreshold < 0 &&
-				Number.isInteger(expectedScenarioType.largeImageThreshold) === false
-			) {
-				//wrong value of largeImageThreshold, or is float
-				return false;
-			}
+		if ('scaleToSameSize' in expectedScenarioType && typeof expectedScenarioType.scaleToSameSize === 'boolean') {
+			return true;
 		} else {
 			//wrong type or no property available
 			return false;
 		}
-
-		return true;
 	}
 
 	isHavingProperFormatOfScenarioTasks(scenario: unknown): scenario is ScenarioRules {

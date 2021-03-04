@@ -158,7 +158,10 @@ class ScenarioDefinition {
 			(typeof expectedScenarioType.setReturnEarlyThreshold === 'number' ||
 				typeof expectedScenarioType.setReturnEarlyThreshold === 'string')
 		) {
-			if (expectedScenarioType.setReturnEarlyThreshold < 0 && expectedScenarioType.setReturnEarlyThreshold > 1) {
+			if (
+				expectedScenarioType.setReturnEarlyThreshold < 0 &&
+				Number.isInteger(expectedScenarioType.setReturnEarlyThreshold) === false
+			) {
 				//wrong value of setReturnEarlyThreshold
 				return false;
 			}
@@ -178,7 +181,7 @@ class ScenarioDefinition {
 		) {
 			if (
 				expectedScenarioType.largeImageThreshold < 0 &&
-				Number.isInteger(expectedScenarioType.largeImageThreshold)
+				Number.isInteger(expectedScenarioType.largeImageThreshold) === false
 			) {
 				//wrong value of largeImageThreshold, or is float
 				return false;

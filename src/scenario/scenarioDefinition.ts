@@ -134,7 +134,7 @@ class ScenarioDefinition {
 		const expectedScenarioType = scenario as ScenarioRules;
 		if (
 			'largeImageThreshold' in expectedScenarioType &&
-			Number.isInteger(expectedScenarioType.largeImageThreshold) === false
+			Number.isInteger(expectedScenarioType.largeImageThreshold)
 		) {
 			if (expectedScenarioType.largeImageThreshold < 0) {
 				//wrong value of largeImageThreshold, or is float

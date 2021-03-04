@@ -12,7 +12,7 @@ interface ScenarioRules {
 	};
 	transparency: number;
 	largeImageThreshold: number;
-	setReturnEarlyThreshold: number | undefined; //be sure about checking type
+	setReturnEarlyThreshold: number;
 	scaleToSameSize: boolean;
 	scenarioTasks: Array<ScenarioTask>;
 }
@@ -150,21 +150,15 @@ class ScenarioDefinition {
 
 	isUsingSetReturnEarlyThresholdProperType(scenario: unknown): scenario is ScenarioRules {
 		const expectedScenarioType = scenario as ScenarioRules;
-		if (
-			'setReturnEarlyThreshold' in expectedScenarioType &&
-			(typeof expectedScenarioType.setReturnEarlyThreshold === 'number' ||
-				typeof expectedScenarioType.setReturnEarlyThreshold === 'string')
-		) {
-			if (
-				expectedScenarioType.setReturnEarlyThreshold < 0 &&
-				Number.isInteger(expectedScenarioType.setReturnEarlyThreshold) === false
-			) {
-				//wrong value of setReturnEarlyThreshold
-				return false;
+		const setReturnEarlyThreshold = expectedScenarioType.setReturnEarlyThreshold;
+		if ('setReturnEarlyThreshold' in expectedScenarioType && Number.isInteger(setReturnEarlyThreshold)) {
+			if (Number.isInteger(setReturnEarlyThreshold)) {
+				if (setReturnEarlyThreshold >= 0) {
+					return true;
+				} else {
+					return false;
+				}
 			}
-		} else {
-			//wrong type or no property available
-			return false;
 		}
 
 		return true;

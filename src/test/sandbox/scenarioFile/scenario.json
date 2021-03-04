@@ -12,7 +12,7 @@
 	},
 	"transparency": 0.3,
 	"largeImageThreshold": 0,
-	"setReturnEarlyThreshold": "undefined",
+	"setReturnEarlyThreshold": 0,
 	"scaleToSameSize": true,
 	"scenarioTasks": [
 		{

@@ -187,6 +187,29 @@ class ScenarioDefinition {
 
 		return true;
 	}
+
+	isHavingProperFormatOfScenarioTasks(scenario: unknown): scenario is ScenarioRules {
+		const expectedScenarioType = scenario as ScenarioRules;
+		if ('scenarioTasks' in expectedScenarioType && Array.isArray(expectedScenarioType.scenarioTasks)) {
+			//scenario tasks exist and is array
+			expectedScenarioType.scenarioTasks.forEach((scenarioTask) => {
+				if (Array.isArray(scenarioTask.tags) === false || scenarioTask.tags.length === 0) {
+					// if there are no tags
+					return false;
+				} else {
+					scenarioTask.tags.forEach((tag) => {
+						// if any of tag has length of 0
+						if (tag.length === 0) {
+							return false;
+						}
+					});
+				}
+			});
+		} else {
+			return false;
+		}
+		return true;
+	}
 }
 
 export default ScenarioDefinition;

@@ -19,8 +19,8 @@ interface ScenarioRules {
 
 interface ScenarioTask {
 	tag: Array<string>;
-	boundingBoxes: [Box | Record<string, never>];
-	ignoredBoxes: [Box | Record<string, never>];
+	boundingBoxes: [Box] | Record<string, never>;
+	ignoredBoxes: [Box] | Record<string, never>;
 	script: null | string;
 	actions: null | [Action];
 }

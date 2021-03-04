@@ -200,6 +200,7 @@ class ScenarioDefinition {
 	isBoxHavingProperFormat(box: unknown): box is Box {
 		const expectedBox = box as Box;
 		if ('left' in expectedBox && 'top' in expectedBox && 'right' in expectedBox && 'bottom' in expectedBox) {
+			//consider removing max size
 			const maxReasonableSize = 10000;
 			for (const [, value] of Object.entries(expectedBox)) {
 				if (Number.isInteger(value) && (value < 0 || value > maxReasonableSize)) {

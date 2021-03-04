@@ -16,7 +16,7 @@
 	"scaleToSameSize": true,
 	"scenarioTasks": [
 		{
-			"tag": ["name", "name2"],
+			"tags": ["name", "name2"],
 			"boundingBoxes": [
 				{
 					"left": 100,
@@ -65,12 +65,12 @@
 			]
 		},
 		{
-			"tag": ["name3"],
+			"tags": ["name3"],
 			"script": "pathToScriptInTheSameFolderAsScenario.js",
 			"actions": null
 		},
 		{
-			"tag": ["name4", "name5"],
+			"tags": ["name4", "name5"],
 			"script": "pathToScriptInTheSameFolderAsScenario2.js",
 			"actions": null
 		}
